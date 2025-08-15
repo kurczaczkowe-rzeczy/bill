@@ -5,6 +5,7 @@ import pl.kurczaczkowe.bill.core.networking.RemoteClient
 import pl.kurczaczkowe.bill.core.networking.supabase
 import pl.kurczaczkowe.bill.core.util.NetworkError
 import pl.kurczaczkowe.bill.core.util.Result
+import pl.kurczaczkowe.bill.shoppingList.dto.CreateShoppingListParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingList
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDesc
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDescParameters
@@ -12,6 +13,7 @@ import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDetails
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ToggleProductInCartParameters
 import kotlin.js.JsExport
+import kotlin.time.ExperimentalTime
 
 @JsExport
 class ShoppingListClient {
@@ -40,8 +42,7 @@ class ShoppingListClient {
     ): Result<List<ShoppingListDetails>, NetworkError> {
         return try {
             client.post<ShoppingListParameters, List<ShoppingListDetails>>(
-                rpcFunction = "get_shopping_list",
-                parameters = ShoppingListParameters(
+                rpcFunction = "get_shopping_list", parameters = ShoppingListParameters(
                     shopping_list_id = shoppingListId
                 )
             )
@@ -55,9 +56,15 @@ class ShoppingListClient {
     @JsExport.Ignore
     suspend fun getShoppingLists(): Result<List<ShoppingList>, NetworkError> {
         return try {
-            client.post<List<ShoppingList>>(
-                rpcFunction = "get_shopping_lists",
-            )
+            when (val res = client.post<List<ShoppingList>>(rpcFunction = "get_shopping_lists")) {
+                is Result.Success -> {
+                    val sorted = res.result.sortedByDescending { it.createdAt }
+                    Result.Success(sorted)
+                }
+
+                is Result.Error -> res
+            }
+
         } catch (e: Exception) {
             println(e)
             Result.Error(NetworkError.UNKNOWN)
@@ -71,6 +78,23 @@ class ShoppingListClient {
             client.post<ToggleProductInCartParameters, Unit>(
                 rpcFunction = "toggle_product_in_cart",
                 parameters = ToggleProductInCartParameters(productInCartId)
+            )
+        } catch (e: Exception) {
+            println(e)
+            Result.Error(NetworkError.UNKNOWN)
+        }
+    }
+
+    @OptIn(ExperimentalTime::class)
+    @JsPromise
+    @JsExport.Ignore
+    suspend fun createShoppingList(name: String): Result<Unit, NetworkError> {
+        return try {
+            val nowIso = kotlin.time.Clock.System.now().toString()
+
+            client.post<CreateShoppingListParameters, Unit>(
+                rpcFunction = "create_shopping_list",
+                parameters = CreateShoppingListParameters(name, nowIso)
             )
         } catch (e: Exception) {
             println(e)

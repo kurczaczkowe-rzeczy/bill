@@ -11,7 +11,7 @@ definePageMeta({
 
 const shoppingListClient = new ShoppingListClient();
 
-const { data, error } = await useAsyncData("shoppingLists", async () => {
+const { data, error, refresh } = await useAsyncData("shoppingLists", async () => {
   const response = await shoppingListClient.getShoppingListsAsync();
 
   if (response instanceof Result.Error) {
@@ -24,14 +24,52 @@ const { data, error } = await useAsyncData("shoppingLists", async () => {
 
   throw new Error("Unsupported response type: " + response.constructor.name + "");
 });
+
+const formNameError = ref("");
+
+const nameRef = ref("");
+
+async function addShoppingList(e: SubmitEvent) {
+  if (nameRef.value.trim() === "") {
+    formNameError.value = "Nazwa powinna być wypełniona";
+    return;
+  }
+  shoppingListClient.createShoppingListAsync(nameRef.value).then(() => {
+    (e.currentTarget as HTMLFormElement)?.reset();
+    resetShoppingListForm();
+    refresh();
+  });
+}
+
+function resetShoppingListForm() {
+  nameRef.value = "";
+  formNameError.value = "";
+}
 </script>
 
 <template>
   <div class="card flex justify-center max-w-xl m-auto">
     <ul class="card-body list bg-base-100 rounded-box shadow-md w-full">
-      <li v-for="datum in data" v-if="data?.length" :key="datum.id" class="list-row" >
-        <span>{{ datum.date }}</span>
-        <NuxtLink :to="{ name: 'lists-id', params: { id: datum.id } }">
+      <li>
+        <form class="list-row" @submit.prevent="addShoppingList">
+          <label class="list-col-grow">
+            <input
+                v-model="nameRef"
+                :aria-invalid="!!formNameError"
+                class="input input-ghost validator"
+                placeholder="Nazwa listy"
+                required
+                type="text"
+            />
+            <span v-if="!!formNameError.trim()" class="validator-hint hidden">{{ formNameError }}</span>
+          </label>
+          <button class="btn btn-ghost btn-square">
+            <Icon name="streamline-freehand:add-sign-bold" />
+          </button>
+        </form>
+      </li>
+      <li v-for="datum in data" v-if="data?.length" :key="datum.id" class="list-row">
+        <NuxtLink :to="{ name: 'lists-id', params: { id: datum.id } }" class="list-col-grow">
           <span>{{ datum.name }}</span>
         </NuxtLink>
         <span>{{ datum.productAmount }} <Icon name="streamline-freehand:shopping-cart-trolley" /></span>

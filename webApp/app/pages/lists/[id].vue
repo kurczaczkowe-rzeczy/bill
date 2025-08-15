@@ -21,6 +21,7 @@ const { data, error, refresh } = await useAsyncData("shoppingListDetails", async
 
   return ktToJs(response.result as KtList<ShoppingListDetails>);
 });
+
 async function toggleInCart(id: number) {
   shoppingListClient.toggleProductInCartAsync(id).then((response) => {
     if ("error" in response) {
