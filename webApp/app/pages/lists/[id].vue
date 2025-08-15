@@ -8,7 +8,7 @@ const route = useRoute();
 
 const shoppingListClient = new ShoppingListClient();
 
-const { data, error } = await useAsyncData("shoppingListDetails", async () => {
+const { data, error, refresh } = await useAsyncData("shoppingListDetails", async () => {
   const response = await shoppingListClient.getShoppingListAsync(route.params.id);
 
   if ("error" in response) {
@@ -21,8 +21,14 @@ const { data, error } = await useAsyncData("shoppingListDetails", async () => {
 
   return ktToJs(response.result as KtList<ShoppingListDetails>);
 });
-function toggleInCart(inCart: boolean) {
-  console.log("togleInCart->", inCart);
+async function toggleInCart(id: number) {
+  shoppingListClient.toggleProductInCartAsync(id).then((response) => {
+    if ("error" in response) {
+      console.error(response.error);
+    }
+
+    refresh();
+  });
 }
 </script>
 
@@ -40,10 +46,9 @@ function toggleInCart(inCart: boolean) {
           :key="datum.id"
           :class="{ 'line-through': datum.inCart}"
           class="list-row"
-          @click="toggleInCart( datum.inCart )"
+          @click="toggleInCart( datum.id )"
       >
         <span class="list-col-grow">{{ datum.name }} : {{ datum.unit }}</span>
-        <!--      <span>category: {{ datum.category }}</span>-->
         <span>{{ datum.quantity }} {{ datum.unit }}</span>
       </li>
       <li v-else class="list-row">Brak produktów na liście</li>

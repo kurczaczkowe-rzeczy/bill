@@ -24,7 +24,12 @@ class RemoteClient(
         crossinline rpcCall: suspend () -> PostgrestResult
     ): Result<R, NetworkError> {
         return try {
-            rpcCall().decodeAs<Result.Success<R>>()
+            val response = rpcCall().decodeAsOrNull<Result.Success<R>>()
+            if (response == null) {
+                return Result.Success(Unit as R)
+            }
+
+            return response
         } catch (e: PostgrestRestException) {
             println(e)
             when(e.statusCode) {

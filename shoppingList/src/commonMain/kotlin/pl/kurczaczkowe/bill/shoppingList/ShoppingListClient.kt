@@ -10,6 +10,7 @@ import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDesc
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDescParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDetails
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListParameters
+import pl.kurczaczkowe.bill.shoppingList.dto.ToggleProductInCartParameters
 import kotlin.js.JsExport
 
 @JsExport
@@ -56,6 +57,20 @@ class ShoppingListClient {
         return try {
             client.post<List<ShoppingList>>(
                 rpcFunction = "get_shopping_lists",
+            )
+        } catch (e: Exception) {
+            println(e)
+            Result.Error(NetworkError.UNKNOWN)
+        }
+    }
+
+    @JsPromise
+    @JsExport.Ignore
+    suspend fun toggleProductInCart(productInCartId: Long): Result<Unit, NetworkError> {
+        return try {
+            client.post<ToggleProductInCartParameters, Unit>(
+                rpcFunction = "toggle_product_in_cart",
+                parameters = ToggleProductInCartParameters(productInCartId)
             )
         } catch (e: Exception) {
             println(e)
