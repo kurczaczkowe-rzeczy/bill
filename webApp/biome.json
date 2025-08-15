@@ -106,17 +106,5 @@
     "assist": {
       "enabled": true
     }
-  },
-  "overrides": [
-    {
-      "includes": ["**/*.vue"],
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noUnusedImports": "off"
-          }
-        }
-      }
-    }
-  ]
+  }
 }
