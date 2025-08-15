@@ -1,0 +1,122 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "**/*.{js,cjs,mjs,ts,mts,cts,vue,glsl,css}",
+      "!.idea",
+      "!.nuxt",
+      "!.output",
+      "!dist",
+      "!node_modules"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "indentStyle": "space",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "expand": "auto",
+    "attributePosition": "auto"
+  },
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "vue": "recommended"
+    },
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "recommended": true,
+        "noUnusedFunctionParameters": {
+          "level": "warn",
+          "fix": "none",
+          "options": {
+            "ignoreRestSiblings": true
+          }
+        },
+        "noUnusedVariables": {
+          "fix": "none",
+          "level": "warn",
+          "options": {
+            "ignoreRestSiblings": true
+          }
+        }
+      },
+      "style": {
+        "recommended": true,
+        "noNegationElse": "error",
+        "noNestedTernary": "error",
+        "useCollapsedIf": "error",
+        "useCollapsedElseIf": "error",
+        "useImportType": "error"
+      }
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              [":PACKAGE:", ":PACKAGE_WITH_PROTOCOL:"],
+              ":BLANK_LINE:",
+              ":ALIAS:",
+              ":BLANK_LINE:",
+              ":PATH:"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "double",
+      "jsxQuoteStyle": "double",
+      "bracketSpacing": true
+    },
+    "assist": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
+  "css": {
+    "parser": {
+      "cssModules": true
+    },
+    "formatter": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": true
+    },
+    "assist": {
+      "enabled": true
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.vue"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedImports": "off"
+          }
+        }
+      }
+    }
+  ]
+}
