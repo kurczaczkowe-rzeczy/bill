@@ -5,6 +5,7 @@ import pl.kurczaczkowe.bill.core.networking.RemoteClient
 import pl.kurczaczkowe.bill.core.networking.supabase
 import pl.kurczaczkowe.bill.core.util.NetworkError
 import pl.kurczaczkowe.bill.core.util.Result
+import pl.kurczaczkowe.bill.shoppingList.dto.AddToShoppingListParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.CreateShoppingListParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingList
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDesc
@@ -12,6 +13,7 @@ import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDescParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDetails
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ToggleProductInCartParameters
+import pl.kurczaczkowe.bill.shoppingList.dto.UnitEnum
 import kotlin.js.JsExport
 import kotlin.time.ExperimentalTime
 
@@ -77,7 +79,7 @@ class ShoppingListClient {
         return try {
             client.post<ToggleProductInCartParameters, Unit>(
                 rpcFunction = "toggle_product_in_cart",
-                parameters = ToggleProductInCartParameters(productInCartId)
+                parameters = ToggleProductInCartParameters(product_in_shopping_list_id = productInCartId)
             )
         } catch (e: Exception) {
             println(e)
@@ -94,7 +96,34 @@ class ShoppingListClient {
 
             client.post<CreateShoppingListParameters, Unit>(
                 rpcFunction = "create_shopping_list",
-                parameters = CreateShoppingListParameters(name, nowIso)
+                parameters = CreateShoppingListParameters( name = name, date = nowIso )
+            )
+        } catch (e: Exception) {
+            println(e)
+            Result.Error(NetworkError.UNKNOWN)
+        }
+    }
+
+    @OptIn(ExperimentalTime::class)
+    @JsPromise
+    @JsExport.Ignore
+    suspend fun addToShoppingList(
+        shoppingListId: Long,
+        productUnit: UnitEnum,
+        productQuantity: Double,
+        productName: String,
+        categoryId: Long,
+    ): Result<Unit, NetworkError> {
+        return try {
+            client.post<AddToShoppingListParameters, Unit>(
+                rpcFunction = "add_product_to_shopping_list",
+                parameters = AddToShoppingListParameters(
+                    shopping_list_id = shoppingListId,
+                    product_unit = productUnit,
+                    product_quantity = productQuantity,
+                    product_name = productName,
+                    category_id = categoryId,
+                )
             )
         } catch (e: Exception) {
             println(e)
