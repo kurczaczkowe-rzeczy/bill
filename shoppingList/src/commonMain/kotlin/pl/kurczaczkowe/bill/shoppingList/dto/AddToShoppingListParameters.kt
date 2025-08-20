@@ -8,7 +8,7 @@ import kotlin.js.JsExport
 data class AddToShoppingListParameters(
     val shopping_list_id: Long,
     val product_unit: UnitEnum,
-    val product_quantity: Double,
+    val product_quantity: Float,
     val product_name: String,
     val category_id: Long,
 )

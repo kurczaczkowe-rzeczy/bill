@@ -6,4 +6,4 @@ import pl.kurczaczkowe.bill.shoppingList.utils.json
 
 @JsExport.Ignore
 @OptIn(ExperimentalSerializationApi::class)
-fun ShoppingList.toJs(): dynamic = json.encodeToDynamic(this)
+fun UnitEnum.toJs(): dynamic = json.encodeToDynamic(this)

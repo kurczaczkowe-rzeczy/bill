@@ -2,7 +2,7 @@ package pl.kurczaczkowe.bill.shoppingList
 
 import love.forte.plugin.suspendtrans.annotation.JsPromise
 import pl.kurczaczkowe.bill.core.networking.RemoteClient
-import pl.kurczaczkowe.bill.core.networking.supabase
+import pl.kurczaczkowe.bill.core.networking.supabaseRemoteClient
 import pl.kurczaczkowe.bill.core.util.NetworkError
 import pl.kurczaczkowe.bill.core.util.Result
 import pl.kurczaczkowe.bill.shoppingList.dto.AddToShoppingListParameters
@@ -18,9 +18,7 @@ import kotlin.js.JsExport
 import kotlin.time.ExperimentalTime
 
 @JsExport
-class ShoppingListClient {
-    private val client = RemoteClient(client = supabase)
-
+class ShoppingListClient(private val client: RemoteClient = supabaseRemoteClient) {
     @JsPromise
     @JsExport.Ignore
     suspend fun getShoppingListDesc(
@@ -104,13 +102,12 @@ class ShoppingListClient {
         }
     }
 
-    @OptIn(ExperimentalTime::class)
     @JsPromise
     @JsExport.Ignore
     suspend fun addToShoppingList(
         shoppingListId: Long,
         productUnit: UnitEnum,
-        productQuantity: Double,
+        productQuantity: Float,
         productName: String,
         categoryId: Long,
     ): Result<Unit, NetworkError> {

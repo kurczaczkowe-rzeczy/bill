@@ -1,8 +1,6 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JsModuleKind
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import love.forte.plugin.suspendtrans.configuration.SuspendTransformConfigurations
 import love.forte.plugin.suspendtrans.configuration.SuspendTransformConfigurations.kotlinJsExportIgnoreClassInfo
 
 plugins {
@@ -45,6 +43,7 @@ kotlin {
         compilations.all {
             packageJson {
                 customField("types", "kotlin/$name.d.ts")
+                customField("type", "module")
             }
         }
     }
@@ -54,6 +53,7 @@ kotlin {
         androidMain.dependencies {
         }
         commonMain.dependencies {
+            implementation(projects.product)
             implementation(projects.shoppingList)
             implementation(projects.core)
             implementation(libs.androidx.lifecycle.viewmodel)

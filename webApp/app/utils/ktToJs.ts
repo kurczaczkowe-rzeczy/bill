@@ -1,5 +1,3 @@
-import { ShoppingList } from '@bill/Bill-shoppingList';
-import { isKtUnitEnum, ktUnitEnumToString } from '~/utils/ktUnitEnumToString'
 import { isKtList, ktListToArray, type KtList } from './ktListToArray'
 import { isKtLong, ktLongToNumber, type KtLong } from './ktLongToNumber'
 
@@ -22,9 +20,6 @@ export function ktToJs<T>(data: T): KtToJs<T> {
     return ktToJs(data.toJs()) as any
   }
 
-  if (isKtUnitEnum(data)) {
-    return ktUnitEnumToString(data) as any
-  }
   if (isKtList(data)) {
     const jsArray = ktListToArray(data as any)
     return jsArray.map(item => ktToJs(item)) as any
@@ -54,6 +49,5 @@ export function ktToJs<T>(data: T): KtToJs<T> {
     const value = obj[key]
     obj[key] = ktToJs(value as any)
   }
-  return data as any
-
+  return obj as any
 }

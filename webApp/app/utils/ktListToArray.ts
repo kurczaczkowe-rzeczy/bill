@@ -11,7 +11,7 @@ export function ktListToArray<Item>(list?: KtList<Item>): Item[] {
 }
 
 export function isKtList<T>(value: any): value is KtList<T> {
-  return value && typeof value === 'object' && 'toArray' in value && 'asJsReadonlyArrayView' in value && value.toArray && value.asJsReadonlyArrayView
+  return value && typeof value === 'object' && 'toArray' in value && value.toArray
 }
 
 export interface KtList<T> {

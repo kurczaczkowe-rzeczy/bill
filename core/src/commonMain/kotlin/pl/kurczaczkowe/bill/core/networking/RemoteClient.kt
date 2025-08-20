@@ -4,7 +4,6 @@ import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.exception.PostgrestRestException
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.result.PostgrestResult
-import io.ktor.client.call.body
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
@@ -42,7 +41,7 @@ class RemoteClient(
                 else -> Result.Error(NetworkError.UNKNOWN)
             }
         } catch (e: Exception) {
-            println(e)
+            println("RPC Exception: $e")
             Result.Error(NetworkError.UNKNOWN)
         }
     }

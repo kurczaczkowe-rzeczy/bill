@@ -6,21 +6,21 @@ android-targetSdk = "34"
 androidx-activityCompose = "1.10.1"
 androidx-appcompat = "1.7.1"
 androidx-constraintlayout = "2.2.1"
-androidx-core-ktx = "1.16.0"
+androidx-core-ktx = "1.17.0"
 androidx-espresso-core = "3.7.0"
-androidx-lifecycle = "2.9.1"
+androidx-lifecycle = "2.9.2"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.3.0"
 compose-multiplatform = "1.8.2"
 junit = "4.13.2"
-kotlin = "2.2.0"
+kotlin = "2.2.10"
 ktor = "3.2.3"
 supabase-bom = "3.2.2"
-suspend-transform = "2.2.0-0.13.1"
-kotlinStdlib = "2.2.0"
+suspend-transform = "2.2.10-0.13.1"
+kotlinStdlib = "2.2.10"
 androidx-runner = "1.7.0"
 androidx-core = "1.7.0"
-jetbrainsKotlinJvm = "2.2.0"
+jetbrainsKotlinJvm = "2.2.10"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -66,6 +66,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 suspend-transform = { id = "love.forte.plugin.suspend-transform", version.ref = "suspend-transform" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+android-lint = { id = "com.android.lint", version.ref = "agp" }
 
 
 [bundles]
