@@ -1,6 +1,7 @@
 package pl.kurczaczkowe.bill.shoppingList.utils
 
 import pl.kurczaczkowe.bill.shoppingList.dto.Category
+import pl.kurczaczkowe.bill.shoppingList.dto.CategoryWithProducts
 import pl.kurczaczkowe.bill.shoppingList.dto.Product
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingList
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDesc
@@ -24,6 +25,7 @@ fun installToJsMethods() {
     val shoppingListDetailsCtor: dynamic = ShoppingListDetails::class.js
 
     val categoryCtor: dynamic = Category::class.js
+    val categoryWithProductsCtor: dynamic = CategoryWithProducts::class.js
 
     val productCtor: dynamic = Product::class.js
 
@@ -32,6 +34,7 @@ fun installToJsMethods() {
     ensureMethod(shoppingListDetailsCtor) { self -> self.unsafeCast<ShoppingListDetails>().toJs() }
 
     ensureMethod(categoryCtor) { self -> self.unsafeCast<Category>().toJs() }
+    ensureMethod(categoryWithProductsCtor) { self -> self.unsafeCast<CategoryWithProducts>().toJs() }
 
     ensureMethod(productCtor) { self -> self.unsafeCast<Product>().toJs() }
 }

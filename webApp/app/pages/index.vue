@@ -34,11 +34,20 @@ async function addShoppingList(e: SubmitEvent) {
     formNameError.value = "Nazwa powinna być wypełniona";
     return;
   }
-  shoppingListClient.createShoppingListAsync(nameRef.value).then(() => {
-    (e.currentTarget as HTMLFormElement)?.reset();
-    resetShoppingListForm();
-    refresh();
-  });
+  shoppingListClient
+    .createShoppingListAsync(nameRef.value)
+    .then((data) => {
+      if ("error" in data) {
+        throw data.error;
+      }
+      (e.currentTarget as HTMLFormElement)?.reset();
+      resetShoppingListForm();
+      refresh();
+    })
+    .catch((err) => {
+      console.error(err);
+      formNameError.value = err.toString();
+    });
 }
 
 function resetShoppingListForm() {
