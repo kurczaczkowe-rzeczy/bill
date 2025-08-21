@@ -8,9 +8,11 @@ export default defineNuxtConfig({
   alias: {
     "@bill": fileURLToPath(new URL("../build/js/packages/", import.meta.url)),
   },
-
+  nitro: {
+    preset: "github_pages",
+  },
   app: {
-    baseURL: "/",
+    baseURL: "/bill/",
   },
 
   devServer: {

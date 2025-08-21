@@ -27,22 +27,26 @@ const {
   error: shoppingListDetailsError,
   refresh: shoppingListDetailsRefresh,
   status: shoppingListDetailsStatus,
-} = await useAsyncData(`shoppingListDetails:${route.params.id}`, async () => {
-  if (isNaN(Number(route.params.id))) {
-    return [];
-  }
-  const response = await shoppingListClient.getShoppingListAsync(route.params.id);
+} = await useAsyncData(
+  `shoppingListDetails:${route.params.id}`,
+  async () => {
+    if (isNaN(Number(route.params.id))) {
+      return [];
+    }
+    const response = await shoppingListClient.getShoppingListAsync(route.params.id);
 
-  if ("error" in response) {
-    throw new Error(response as any);
-  }
+    if ("error" in response) {
+      throw new Error(response as any);
+    }
 
-  if (!("result" in response)) {
-    throw new Error("Unsupported response type: " + response.constructor.name + "");
-  }
+    if (!("result" in response)) {
+      throw new Error("Unsupported response type: " + response.constructor.name + "");
+    }
 
-  return ktToJs(response.result as KtList<ShoppingListDetails>);
-});
+    return ktToJs(response.result as KtList<ShoppingListDetails>);
+  },
+  { server: false },
+);
 
 const formErrors = reactive({
   name: "",
@@ -169,19 +173,23 @@ const {
   data: categories,
   error: categoriesError,
   status: categoriesStatus,
-} = await useAsyncData(`categories`, async () => {
-  const response = await categoryClient.getCategoriesAsync();
+} = await useAsyncData(
+  `categories`,
+  async () => {
+    const response = await categoryClient.getCategoriesAsync();
 
-  if ("error" in response) {
-    throw new Error(response as any);
-  }
+    if ("error" in response) {
+      throw new Error(response as any);
+    }
 
-  if (!("result" in response)) {
-    throw new Error("Unsupported response type: " + response.constructor.name + "");
-  }
+    if (!("result" in response)) {
+      throw new Error("Unsupported response type: " + response.constructor.name + "");
+    }
 
-  return ktToJs(response.result as KtList<Category>);
-});
+    return ktToJs(response.result as KtList<Category>);
+  },
+  { server: false },
+);
 
 const selectedCategory = ref<Category | null>(null);
 const categoriesOpen = ref(false);
@@ -393,7 +401,7 @@ function resetAddToShoppingListParameters() {
             </span>
           <span>{{ categoryWithProducts.category.name }}</span>
         </span>
-        <ul>
+        <ul class="list">
           <li
               v-for="product in categoryWithProducts.products"
               v-if="categoryWithProducts.products?.length"

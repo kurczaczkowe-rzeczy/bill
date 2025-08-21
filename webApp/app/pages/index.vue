@@ -11,19 +11,23 @@ definePageMeta({
 
 const shoppingListClient = new ShoppingListClient();
 
-const { data, error, refresh } = await useAsyncData("shoppingLists", async () => {
-  const response = await shoppingListClient.getShoppingListsAsync();
+const { data, error, refresh } = await useAsyncData(
+  "shoppingLists",
+  async () => {
+    const response = await shoppingListClient.getShoppingListsAsync();
 
-  if (response instanceof Result.Error) {
-    throw new Error(response as any);
-  }
+    if (response instanceof Result.Error) {
+      throw new Error(response as any);
+    }
 
-  if (response instanceof Result.Success) {
-    return ktToJs(response.result as KtList<ShoppingList>);
-  }
+    if (response instanceof Result.Success) {
+      return ktToJs(response.result as KtList<ShoppingList>);
+    }
 
-  throw new Error("Unsupported response type: " + response.constructor.name + "");
-});
+    throw new Error("Unsupported response type: " + response.constructor.name + "");
+  },
+  { server: false },
+);
 
 const formNameError = ref("");
 

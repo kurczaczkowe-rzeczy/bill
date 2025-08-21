@@ -13,7 +13,7 @@ fun groupProductsByCategory(
     val groupedProducts = products.groupBy { it.category.id }
 
     return categories.mapNotNull { category ->
-        val categoryProducts = groupedProducts[category.id] ?: emptyList()
+        val categoryProducts = groupedProducts[category.id]?.sortedBy { it.inCart } ?: emptyList()
 
         if (categoryProducts.isEmpty()) {
             null
