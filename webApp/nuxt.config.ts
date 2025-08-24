@@ -3,7 +3,13 @@ import { fileURLToPath } from "url";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+    vscode: { enabled: false },
+    vueDevTools: true,
+  },
+
+  extends: ["./layers/ui"],
 
   alias: {
     "@bill": fileURLToPath(new URL("../build/js/packages/", import.meta.url)),

@@ -1,19 +1,13 @@
 package pl.kurczaczkowe.bill.shoppingList
 
+import io.github.jan.supabase.realtime.PostgresAction
+import kotlinx.coroutines.CoroutineScope
 import love.forte.plugin.suspendtrans.annotation.JsPromise
 import pl.kurczaczkowe.bill.core.networking.RemoteClient
 import pl.kurczaczkowe.bill.core.networking.supabaseRemoteClient
 import pl.kurczaczkowe.bill.core.util.NetworkError
 import pl.kurczaczkowe.bill.core.util.Result
-import pl.kurczaczkowe.bill.shoppingList.dto.AddToShoppingListParameters
-import pl.kurczaczkowe.bill.shoppingList.dto.CreateShoppingListParameters
-import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingList
-import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDesc
-import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDescParameters
-import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDetails
-import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListParameters
-import pl.kurczaczkowe.bill.shoppingList.dto.ToggleProductInCartParameters
-import pl.kurczaczkowe.bill.shoppingList.dto.UnitEnum
+import pl.kurczaczkowe.bill.shoppingList.dto.*
 import kotlin.js.JsExport
 import kotlin.time.ExperimentalTime
 
@@ -126,5 +120,19 @@ class ShoppingListClient(private val client: RemoteClient = supabaseRemoteClient
             println(e)
             Result.Error(NetworkError.UNKNOWN)
         }
+    }
+
+    @JsPromise(markName = "listenForChangesShoppingList_withScope")
+    @JsExport.Ignore
+    suspend fun listenForChangesShoppingList(
+        listId: Long,
+        action: suspend (PostgresAction) -> Unit,
+        scope: CoroutineScope,
+    ) {
+        client.listenFor(
+            channelName = "shopping-list-$listId",
+            action = action,
+            scope = scope
+        )
     }
 }

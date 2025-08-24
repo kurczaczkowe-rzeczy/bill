@@ -4,21 +4,37 @@ import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.exception.PostgrestRestException
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.result.PostgrestResult
+import io.github.jan.supabase.realtime.PostgresAction
+import io.github.jan.supabase.realtime.channel
+import io.github.jan.supabase.realtime.postgresChangeFlow
+import io.github.jan.supabase.realtime.realtime
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
+import love.forte.plugin.suspendtrans.annotation.JsPromise
 import pl.kurczaczkowe.bill.core.util.Result
 import pl.kurczaczkowe.bill.core.util.NetworkError
+import kotlin.js.JsExport
+import kotlin.js.JsName
 
+@JsExport
 class RemoteClient(
+    @JsName("client")
     val client: SupabaseClient
 ) {
+    @JsPromise
+    @JsExport.Ignore
     suspend fun close() = client.close()
 
     fun get(url: String) {
         println("GET is not supported yet")
     }
 
+    @JsPromise
+    @JsExport.Ignore
     suspend inline fun <reified R> rpcCall(
         crossinline rpcCall: suspend () -> PostgrestResult
     ): Result<R, NetworkError> {
@@ -42,16 +58,19 @@ class RemoteClient(
             }
         } catch (e: Exception) {
             println("RPC Exception: $e")
+            e.printStackTrace()
             Result.Error(NetworkError.UNKNOWN)
         }
     }
 
+    @JsExport.Ignore
     suspend inline fun <reified R> post(rpcFunction: String): Result<R, NetworkError> {
         return rpcCall<R> {
             client.postgrest.rpc(rpcFunction)
         }
     }
 
+    @JsExport.Ignore
     suspend inline fun <reified P, reified R> post(
         rpcFunction: String,
         parameters: P
@@ -60,5 +79,23 @@ class RemoteClient(
             val jsonParams = Json.encodeToJsonElement(parameters) as JsonObject
             client.postgrest.rpc(function = rpcFunction, parameters = jsonParams)
         }
+    }
+
+    @JsPromise
+    @JsExport.Ignore
+    suspend fun listenFor(
+        channelName: String,
+        action: suspend (PostgresAction) -> Unit,
+        scope: CoroutineScope
+    ) {
+        val myChannel = client.realtime.channel(channelName)
+
+        val changes = myChannel.postgresChangeFlow<PostgresAction>(schema = "public")
+
+        changes
+            .onEach( action = action )
+            .launchIn( scope = scope )
+
+        myChannel.subscribe()
     }
 }
