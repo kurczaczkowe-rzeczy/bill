@@ -5,7 +5,6 @@ import io.github.jan.supabase.realtime.decodeOldRecord
 import io.github.jan.supabase.realtime.decodeRecord
 import pl.kurczaczkowe.bill.shoppingList.ShoppingListClient
 import pl.kurczaczkowe.bill.shoppingList.dto.JsPostgresAction
-import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDetail
 import pl.kurczaczkowe.bill.shoppingList.listenForShoppingListChanges
 import pl.kurczaczkowe.bill.shoppingList.listenForShoppingListsChanges
 import kotlin.js.unsafeCast
@@ -50,23 +49,23 @@ private fun preparePayload(payload: PostgresAction): JsPostgresAction {
         is PostgresAction.Insert -> JsPostgresAction(
             columns = payload.columns.toTypedArray(),
             commitTimestamp = payload.commitTimestamp.toString(),
-            record = payload.decodeRecord<ShoppingListDetail>(),
+            record = payload.decodeRecord(),
         )
         is PostgresAction.Update -> JsPostgresAction(
             columns = payload.columns.toTypedArray(),
             commitTimestamp = payload.commitTimestamp.toString(),
-            record = payload.decodeRecord<ShoppingListDetail>(),
-            oldRecord = payload.decodeOldRecord<ShoppingListDetail>(),
+            record = payload.decodeRecord(),
+            oldRecord = payload.decodeOldRecord(),
         )
         is PostgresAction.Delete -> JsPostgresAction(
             columns = payload.columns.toTypedArray(),
             commitTimestamp = payload.commitTimestamp.toString(),
-            oldRecord = payload.decodeOldRecord<ShoppingListDetail>(),
+            oldRecord = payload.decodeOldRecord(),
         )
         is PostgresAction.Select -> JsPostgresAction(
             columns = payload.columns.toTypedArray(),
             commitTimestamp = payload.commitTimestamp.toString(),
-            record = payload.decodeRecord<ShoppingListDetail>(),
+            record = payload.decodeRecord(),
         )
     }
 }

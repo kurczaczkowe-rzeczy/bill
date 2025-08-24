@@ -318,7 +318,37 @@ onMounted(() => {
       const jsPayload = ktToJs(payload);
       const pid = shoppingListDetails.value?.findIndex((p) => p.id === jsPayload.record?.id);
 
-      if (pid === -1 || pid === undefined) return;
+      if (pid === -1 || pid === undefined) {
+        if (
+          jsPayload.oldRecord === null &&
+          jsPayload.record !== null &&
+          jsPayload.record !== undefined
+        ) {
+          const category =
+            categories.value?.find((c) => c.id === jsPayload.record.categoryId) ??
+            categories.value?.[0];
+
+          if (!category) {
+            console.error("Category not found");
+            return;
+          }
+
+          shoppingListDetails.value = [
+            ...(shoppingListDetails.value ?? []),
+            {
+              id: jsPayload.record.id,
+              createdAt: new Date().toISOString(),
+              quantity: jsPayload.record.quantity!,
+              unit: UnitEnum.GRAM.name,
+              name: `Produkt z id ${jsPayload.record.id}`, //ToDo: Think about fetching product here
+              inCart: jsPayload.record.inCart!,
+              category,
+            } as unknown as ShoppingListDetails,
+          ];
+        }
+
+        return;
+      }
 
       shoppingListDetails.value = shoppingListDetails.value?.toSpliced(pid, 1, {
         ...shoppingListDetails.value![pid],
