@@ -122,9 +122,9 @@ class ShoppingListClient(private val client: RemoteClient = supabaseRemoteClient
         }
     }
 
-    @JsPromise(markName = "listenForChangesShoppingList_withScope")
+    @JsPromise(markName = "listenForShoppingListChanges_withScope")
     @JsExport.Ignore
-    suspend fun listenForChangesShoppingList(
+    suspend fun listenForShoppingListChanges(
         listId: Long,
         action: suspend (PostgresAction) -> Unit,
         scope: CoroutineScope,

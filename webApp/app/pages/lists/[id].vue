@@ -17,7 +17,7 @@ import { ktToJs } from "~/utils/ktToJs";
 
 declare module "@bill/Bill-shoppingList" {
   interface ShoppingListClient {
-    listenForChangesShoppingList(
+    listenForShoppingListChanges(
       listId: number,
       action: (payload: JsPostgresAction) => void,
     ): Subscription;
@@ -312,7 +312,7 @@ function routeListIdToNumber(id: typeof route.params.id): number {
 }
 
 onMounted(() => {
-  subscriber.value = shoppingListClient.listenForChangesShoppingList(
+  subscriber.value = shoppingListClient.listenForShoppingListChanges(
     routeListIdToNumber(route.params.id),
     (payload) => {
       const jsPayload = ktToJs(payload);
