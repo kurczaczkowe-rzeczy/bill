@@ -48,6 +48,23 @@ class ShoppingListClient(private val client: RemoteClient = supabaseRemoteClient
 
     @JsPromise
     @JsExport.Ignore
+    suspend fun getShoppingListProduct(
+        productInShoppingListId: Long,
+    ): Result<ShoppingListDetails, NetworkError> {
+        return try {
+            client.post<ShoppingListProductParameters, ShoppingListDetails>(
+                rpcFunction = "get_product_from_shopping_list", parameters = ShoppingListProductParameters(
+                    product_in_shopping_list_id = productInShoppingListId
+                )
+            )
+        } catch (e: Exception) {
+            println(e)
+            Result.Error(NetworkError.UNKNOWN)
+        }
+    }
+
+    @JsPromise
+    @JsExport.Ignore
     suspend fun getShoppingLists(): Result<List<ShoppingList>, NetworkError> {
         return try {
             when (val res = client.post<List<ShoppingList>>(rpcFunction = "get_shopping_lists")) {

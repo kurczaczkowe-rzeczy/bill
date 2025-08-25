@@ -36,7 +36,6 @@ const units = UnitEnum.values();
 const {
   data: shoppingListDetails,
   error: shoppingListDetailsError,
-  refresh: shoppingListDetailsRefresh,
   status: shoppingListDetailsStatus,
 } = await useAsyncData(
   `shoppingListDetails:${route.params.id}`,
@@ -44,7 +43,9 @@ const {
     if (isNaN(Number(route.params.id))) {
       return [];
     }
-    const response = await shoppingListClient.getShoppingListAsync(route.params.id);
+    const response = await shoppingListClient.getShoppingListAsync(
+      routeListIdToNumber(route.params.id),
+    );
 
     if ("error" in response) {
       throw new Error(response as any);
@@ -285,7 +286,6 @@ async function addToShoppingList(e: SubmitEvent) {
     .then(() => {
       (e.currentTarget as HTMLFormElement)?.reset();
       resetAddToShoppingListParameters();
-      shoppingListDetailsRefresh();
     });
 }
 
@@ -294,6 +294,8 @@ function resetAddToShoppingListParameters() {
   addToShoppingListParameters.quantity = 1;
   formErrors.name = "";
 }
+
+function upsertProduct(product: Product) {}
 
 function routeListIdToNumber(id: typeof route.params.id): number {
   const preparedId = Array.isArray(id) ? id[0] : id;
@@ -314,8 +316,9 @@ function routeListIdToNumber(id: typeof route.params.id): number {
 onMounted(() => {
   subscriber.value = shoppingListClient.listenForShoppingListChanges(
     routeListIdToNumber(route.params.id),
-    (payload) => {
+    async (payload) => {
       const jsPayload = ktToJs(payload);
+
       const pid = shoppingListDetails.value?.findIndex((p) => p.id === jsPayload.record?.id);
 
       if (pid === -1 || pid === undefined) {
@@ -324,8 +327,30 @@ onMounted(() => {
           jsPayload.record !== null &&
           jsPayload.record !== undefined
         ) {
+          shoppingListClient
+            .getShoppingListProductAsync(jsPayload.record.id)
+            .then((response) => {
+              if ("error" in response) {
+                throw new Error(response as any);
+              }
+
+              if (!("result" in response)) {
+                throw new Error("Unsupported response type: " + response.constructor.name + "");
+              }
+              const result = ktToJs(response.result as ShoppingListDetails);
+
+              shoppingListDetails.value = [
+                ...(shoppingListDetails.value?.filter(
+                  (p) => Number(p.id) !== Number(jsPayload.record?.id),
+                ) ?? []),
+                result,
+              ];
+            })
+            .catch((error) => {
+              console.error(error);
+            });
           const category =
-            categories.value?.find((c) => c.id === jsPayload.record.categoryId) ??
+            categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
             categories.value?.[0];
 
           if (!category) {
@@ -338,10 +363,10 @@ onMounted(() => {
             {
               id: jsPayload.record.id,
               createdAt: new Date().toISOString(),
-              quantity: jsPayload.record.quantity!,
+              quantity: jsPayload.record.quantity,
               unit: UnitEnum.GRAM.name,
-              name: `Produkt z id ${jsPayload.record.id}`, //ToDo: Think about fetching product here
-              inCart: jsPayload.record.inCart!,
+              name: `Produkt`, //ToDo: Add shrimmerlike thing
+              inCart: jsPayload.record.inCart,
               category,
             } as unknown as ShoppingListDetails,
           ];
