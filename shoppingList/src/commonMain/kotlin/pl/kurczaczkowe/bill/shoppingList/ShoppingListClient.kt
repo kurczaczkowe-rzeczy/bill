@@ -147,9 +147,12 @@ class ShoppingListClient(private val client: RemoteClient = supabaseRemoteClient
         scope: CoroutineScope,
     ) {
         client.listenFor(
-            channelName = "shopping-list-$listId",
+            channelName = getShoppingListChannelName(listId = listId),
             action = action,
             scope = scope
         )
     }
 }
+
+@JsExport
+fun getShoppingListChannelName(listId: Long) = "shopping-list-$listId"

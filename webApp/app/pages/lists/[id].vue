@@ -1,75 +1,31 @@
 <script lang="ts" setup>
-import {
-  type Category,
-  CategoryClient,
-  type CategoryWithProducts,
-  groupProductsByCategoryJs,
-  type Product,
-  ProductClient,
-  ShoppingListClient,
-  type ShoppingListDetails,
-  type Subscription,
-  UnitEnum,
-} from "@bill/Bill-shoppingList";
+import { type Category, type Product, UnitEnum } from "@bill/Bill-shoppingList";
 
+import {
+  type AddToShoppingListParameters,
+  useShoppingList,
+} from "~/composables/useShoppingListClient";
+import { categoryClient, productClient } from "~/constants";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 
-declare module "@bill/Bill-shoppingList" {
-  interface ShoppingListClient {
-    listenForShoppingListChanges(
-      listId: number,
-      action: (payload: JsPostgresAction) => void,
-    ): Subscription;
-  }
-}
-
 const route = useRoute();
-const shoppingListClient = new ShoppingListClient();
-const productClient = new ProductClient();
-const categoryClient = new CategoryClient();
-
-const subscriber = ref<Subscription>();
 
 const units = UnitEnum.values();
 
 const {
-  data: shoppingListDetails,
+  categoriesWithProducts,
   error: shoppingListDetailsError,
-  status: shoppingListDetailsStatus,
-} = await useAsyncData(
-  `shoppingListDetails:${route.params.id}`,
-  async () => {
-    if (isNaN(Number(route.params.id))) {
-      return [];
-    }
-    const response = await shoppingListClient.getShoppingListAsync(
-      routeListIdToNumber(route.params.id),
-    );
-
-    if ("error" in response) {
-      throw new Error(response as any);
-    }
-
-    if (!("result" in response)) {
-      throw new Error("Unsupported response type: " + response.constructor.name + "");
-    }
-
-    return ktToJs(response.result as KtList<ShoppingListDetails>);
-  },
-  { server: false },
-);
+  loading: shoppingListDetailsLoading,
+  toggleInCart,
+  addToShoppingList,
+} = await useShoppingList(route.params.id, {
+  useAutoListenFor: ["shoppingListChanges"],
+});
 
 const formErrors = reactive({
   name: "",
 });
-
-interface AddToShoppingListParameters {
-  name: string;
-  quantity: number;
-  unit: UnitEnum;
-  categoryId: number;
-}
 
 const addToShoppingListParameters = reactive<AddToShoppingListParameters>({
   name: "",
@@ -227,65 +183,17 @@ const selectCategory = (category: Category) => {
   addToShoppingListParameters.categoryId = category.id;
 };
 
-const categoriesWithProducts = computed(() =>
-  shoppingListDetails.value && categories.value
-    ? ktToJs(
-        groupProductsByCategoryJs(
-          shoppingListDetails.value,
-          categories.value,
-        ) as KtList<CategoryWithProducts>,
-      )
-    : [],
-);
-
-async function toggleInCart(id: number) {
-  if (!shoppingListDetails.value) return;
-
-  const productId = shoppingListDetails.value.findIndex((p) => p.id === id);
-  if (
-    productId === -1 ||
-    shoppingListDetails.value[productId] === null ||
-    shoppingListDetails.value[productId] === undefined
-  )
-    return;
-
-  const prev = { ...shoppingListDetails.value[productId] };
-  shoppingListDetails.value = shoppingListDetails.value.toSpliced(productId, 1, {
-    ...prev,
-    inCart: !prev.inCart,
-  });
-
-  shoppingListClient
-    .toggleProductInCartAsync(id)
-    .then((response) => {
-      if ("error" in response) {
-        shoppingListDetails.value = shoppingListDetails.value?.toSpliced(productId, 1, prev);
-        console.error(response.error);
-      }
-    })
-    .catch((error) => {
-      shoppingListDetails.value = shoppingListDetails.value?.toSpliced(productId, 1, prev);
-      console.error(error);
-    });
-}
-
-async function addToShoppingList(e: SubmitEvent) {
-  if (addToShoppingListParameters.name.trim() === "") {
-    formErrors.name = "Nazwa powinna być wypełniona";
-    return;
-  }
-
-  shoppingListClient
-    .addToShoppingListAsync(
-      route.params.id,
-      UnitEnum.valueOf(addToShoppingListParameters.unit.name),
-      addToShoppingListParameters.quantity,
-      addToShoppingListParameters.name,
-      addToShoppingListParameters.categoryId,
-    )
+async function handleAddToShoppingList(e: SubmitEvent) {
+  addToShoppingList({
+    listId: route.params.id,
+    ...addToShoppingListParameters,
+  })
     .then(() => {
       (e.currentTarget as HTMLFormElement)?.reset();
       resetAddToShoppingListParameters();
+    })
+    .catch((err) => {
+      formErrors.name = err.message;
     });
 }
 
@@ -294,97 +202,6 @@ function resetAddToShoppingListParameters() {
   addToShoppingListParameters.quantity = 1;
   formErrors.name = "";
 }
-
-function upsertProduct(product: Product) {}
-
-function routeListIdToNumber(id: typeof route.params.id): number {
-  const preparedId = Array.isArray(id) ? id[0] : id;
-
-  if (preparedId === undefined || preparedId === null) {
-    throw new Error(
-      `Invalid list ID. It should be a string or number. Actual value: ${preparedId}`,
-    );
-  }
-
-  const parsedId = parseInt(preparedId, 10);
-  if (Number.isNaN(parsedId)) {
-    throw new Error(`Invalid list ID. Is not a number. Actual value: ${preparedId}`);
-  }
-  return parsedId;
-}
-
-onMounted(() => {
-  subscriber.value = shoppingListClient.listenForShoppingListChanges(
-    routeListIdToNumber(route.params.id),
-    async (payload) => {
-      const jsPayload = ktToJs(payload);
-
-      const pid = shoppingListDetails.value?.findIndex((p) => p.id === jsPayload.record?.id);
-
-      if (pid === -1 || pid === undefined) {
-        if (
-          jsPayload.oldRecord === null &&
-          jsPayload.record !== null &&
-          jsPayload.record !== undefined
-        ) {
-          shoppingListClient
-            .getShoppingListProductAsync(jsPayload.record.id)
-            .then((response) => {
-              if ("error" in response) {
-                throw new Error(response as any);
-              }
-
-              if (!("result" in response)) {
-                throw new Error("Unsupported response type: " + response.constructor.name + "");
-              }
-              const result = ktToJs(response.result as ShoppingListDetails);
-
-              shoppingListDetails.value = [
-                ...(shoppingListDetails.value?.filter(
-                  (p) => Number(p.id) !== Number(jsPayload.record?.id),
-                ) ?? []),
-                result,
-              ];
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-          const category =
-            categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
-            categories.value?.[0];
-
-          if (!category) {
-            console.error("Category not found");
-            return;
-          }
-
-          shoppingListDetails.value = [
-            ...(shoppingListDetails.value ?? []),
-            {
-              id: jsPayload.record.id,
-              createdAt: new Date().toISOString(),
-              quantity: jsPayload.record.quantity,
-              unit: UnitEnum.GRAM.name,
-              name: `Produkt`, //ToDo: Add shrimmerlike thing
-              inCart: jsPayload.record.inCart,
-              category,
-            } as unknown as ShoppingListDetails,
-          ];
-        }
-
-        return;
-      }
-
-      shoppingListDetails.value = shoppingListDetails.value?.toSpliced(pid, 1, {
-        ...shoppingListDetails.value![pid],
-        inCart: jsPayload.record?.inCart ?? shoppingListDetails.value![pid]?.inCart,
-      } as (typeof shoppingListDetails.value)[0]);
-    },
-  );
-});
-onUnmounted(() => {
-  subscriber.value?.unsubscribe();
-});
 </script>
 
 <template>
@@ -394,10 +211,10 @@ onUnmounted(() => {
         <NuxtLink to="/">
           <Icon name="streamline-freehand:keyboard-arrow-return" />
         </NuxtLink>
-        <Icon v-if="shoppingListDetailsStatus === 'pending'" class="animate-spin text-info" name="streamline-freehand:loading-star-1" />
+        <Icon v-if="shoppingListDetailsLoading" class="animate-spin text-info" name="streamline-freehand:loading-star-1" />
       </li>
       <li class="list-row-separator">
-        <form class="grid grid-cols-[80px_minmax(0,_auto)_45px]" @submit.prevent="addToShoppingList">
+        <form class="grid grid-cols-[80px_minmax(0,_auto)_45px]" @submit.prevent="handleAddToShoppingList">
           <button class="btn btn-ghost btn-square ">
             <Icon name="streamline-freehand:add-sign-bold" />
           </button>

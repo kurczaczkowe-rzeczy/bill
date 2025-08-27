@@ -1,15 +1,36 @@
 import { isKtList, type KtList, ktListToArray } from "./ktListToArray";
 import { isKtLong, type KtLong, ktLongToNumber } from "./ktLongToNumber";
 
-export type KtToJs<T> = T extends KtList<infer U>
-  ? KtToJs<U>[]
-  : T extends KtLong
-    ? number
-    : T extends (infer E)[]
-      ? KtToJs<E>[]
-      : T extends object
-        ? { -readonly [K in keyof T]: KtToJs<T[K]> }
-        : T;
+export type KtToJs<T> = T extends (...args: any) => any
+  ? T
+  : T extends { toJs: () => infer U }
+    ? KtToJs<U>
+    : T extends KtList<infer U>
+      ? KtToJs<U>[]
+      : T extends KtLong
+        ? number
+        : T extends (infer E)[]
+          ? KtToJs<E>[]
+          : T extends
+                | Date
+                | RegExp
+                | Map<any, any>
+                | Set<any>
+                | ArrayBuffer
+                | DataView
+                | Int8Array
+                | Uint8Array
+                | Uint8ClampedArray
+                | Int16Array
+                | Uint16Array
+                | Int32Array
+                | Uint32Array
+                | Float32Array
+                | Float64Array
+            ? T
+            : T extends object
+              ? { -readonly [K in keyof T]: KtToJs<T[K]> }
+              : T;
 
 export function ktToJs<T>(data: T): KtToJs<T> {
   if (data === null || typeof data !== "object") {
@@ -21,7 +42,7 @@ export function ktToJs<T>(data: T): KtToJs<T> {
   }
 
   if (isKtList(data)) {
-    const jsArray = ktListToArray(data as any);
+    const jsArray = ktListToArray(data);
     return jsArray.map((item) => ktToJs(item)) as any;
   }
 
