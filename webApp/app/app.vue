@@ -3,8 +3,12 @@
 
 <template>
   <div>
+    <NuxtPwaManifest />
     <NuxtRouteAnnouncer />
     <NuxtPage />
+    <ClientOnly>
+      <PWAUpdate />
+    </ClientOnly>
   </div>
 </template>
 
