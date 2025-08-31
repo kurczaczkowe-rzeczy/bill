@@ -1,77 +1,70 @@
 <script lang="ts" setup>
-import { type ShoppingList, ShoppingListClient } from "@bill/Bill-shoppingList";
-import { Result } from "@bill/Bill-shoppingList/kotlin/Bill-core.mjs";
-
-import type { KtList } from "~/utils/ktListToArray";
-import { ktToJs } from "~/utils/ktToJs";
+import { definePageMeta } from "#imports";
+import { useShoppingLists } from "~/composables/useShoppingListsClient";
+import { handleResponseError } from "~/utils/handleResponseError";
 
 definePageMeta({
   layout: "list",
 });
 
-const shoppingListClient = new ShoppingListClient();
-
-const { data, error, refresh } = await useAsyncData(
-  "shoppingLists",
-  async () => {
-    const response = await shoppingListClient.getShoppingListsAsync();
-
-    if (response instanceof Result.Error) {
-      throw new Error(response as any);
-    }
-
-    if (response instanceof Result.Success) {
-      return ktToJs(response.result as KtList<ShoppingList>);
-    }
-
-    throw new Error("Unsupported response type: " + response.constructor.name + "");
-  },
-  { server: false },
-);
+const {
+  shoppingLists,
+  loading,
+  error: shoppingListsError,
+  addShoppingList,
+  deleteShoppingList,
+  updateShoppingList,
+} = await useShoppingLists({ useAutoListenFor: ["shoppingListsChanges"] });
 
 const formNameError = ref("");
 
 const nameRef = ref("");
 
-async function addShoppingList(e: SubmitEvent) {
-  if (nameRef.value.trim() === "") {
-    formNameError.value = "Nazwa powinna być wypełniona";
-    return;
-  }
-  shoppingListClient
-    .createShoppingListAsync(nameRef.value)
-    .then((data) => {
-      if ("error" in data) {
-        throw data.error;
-      }
+async function handleAddShoppingList(e: SubmitEvent) {
+  addShoppingList({ name: nameRef.value || defaultName() })
+    .then((response) => {
+      handleResponseError(response);
       (e.currentTarget as HTMLFormElement)?.reset();
       resetShoppingListForm();
-      refresh();
     })
     .catch((err) => {
-      console.error(err);
       formNameError.value = err.toString();
     });
+}
+
+async function handleDelete(id: number) {
+  deleteShoppingList({ id });
+}
+
+async function handleUpdate(id: number) {
+  updateShoppingList({ id });
 }
 
 function resetShoppingListForm() {
   nameRef.value = "";
   formNameError.value = "";
 }
+
+function defaultName() {
+  return new Intl.DateTimeFormat("pl-PL").format(new Date());
+}
 </script>
 
 <template>
   <div class="card flex justify-center max-w-xl m-auto">
     <ul class="card-body list bg-base-100 rounded-box shadow-md w-full">
+      <li class="p-4 grid grid-cols-[80px_1fr]">
+        <Icon v-if="loading" class="animate-spin text-info" name="streamline-freehand:loading-star-1" />
+        <span class="col-2 justify-self-end">List: {{ shoppingLists.length }}</span>
+      </li>
       <li>
-        <form class="list-row" @submit.prevent="addShoppingList">
+        <form class="list-row" @submit.prevent="handleAddShoppingList">
           <label class="list-col-grow">
             <input
                 v-model="nameRef"
                 :aria-invalid="!!formNameError"
                 class="input input-ghost validator"
-                placeholder="Nazwa listy"
-                required
+                :placeholder="defaultName()"
                 type="text"
             />
             <span v-if="!!formNameError.trim()" class="validator-hint hidden">{{ formNameError }}</span>
@@ -81,15 +74,16 @@ function resetShoppingListForm() {
           </button>
         </form>
       </li>
-      <li v-for="datum in data" v-if="data?.length" :key="datum.id" class="list-row">
-        <NuxtLink :to="{ name: 'lists-id', params: { id: datum.id } }" class="list-col-grow">
-          <span>{{ datum.name }}</span>
+      <li v-for="shoppingList in shoppingLists" v-if="shoppingLists?.length" :key="shoppingList.id" class="list-row">
+        <NuxtLink :to="{ name: 'lists-id', params: { id: shoppingList.id } }" class="list-col-grow">
+          <span>{{ shoppingList.name }}</span>
         </NuxtLink>
-        <span>{{ datum.productAmount }} <Icon name="streamline-freehand:shopping-cart-trolley" /></span>
+        <span>{{ shoppingList.productAmount }} <Icon name="streamline-freehand:shopping-cart-trolley" /></span>
+        <button @click="handleDelete(shoppingList.id)"><Icon name="streamline-freehand:remove-delete-sign-bold" /></button>
       </li>
       <li v-else class="list-row">Brak list</li>
     </ul>
-    <div v-if="error">{{ error }}</div>
+    <div v-if="shoppingListsError">{{ shoppingListsError }}</div>
   </div>
 </template>
 

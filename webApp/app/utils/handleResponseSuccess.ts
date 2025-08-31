@@ -7,5 +7,5 @@ export function handleResponseSuccess<R>(response: Result<R, NetworkError>) {
     throw new Error("Unsupported response type: " + response.constructor.name + "");
   }
 
-  return ktToJs(response.result);
+  return ktToJs(response.result as R);
 }

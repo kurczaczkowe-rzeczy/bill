@@ -1,23 +1,25 @@
 import {
   type Category,
+  type EntityId,
   getShoppingListChannelName,
   groupProductsByCategoryJs,
   type JsPostgresAction,
   type NetworkError,
   type Result,
+  type ShoppingListDetail,
   type ShoppingListDetails,
   type Subscription,
   UnitEnum,
 } from "@bill/Bill-shoppingList";
 
 import { type AsyncDataOptions, useNuxtData } from "#app";
+import type { Channels } from "~/composables/types";
 import { shoppingListClient } from "~/constants";
 import { isNil } from "~/utils/isNil";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 import { readResponse } from "~/utils/readResponse";
 
-type Channels = Map<string, Subscription>;
 type ListenerType = "shoppingListChanges";
 
 type Options = AsyncDataOptions<ShoppingListDetails[]> & {
@@ -109,11 +111,16 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     shoppingListDetails.value.filter((product) => product.id !== id);
   }
 
-  function listenForShoppingListChanges(): Subscription {
-    if (channel.value.has(channelName.value)) {
-      channel.value.get(channelName.value)?.unsubscribe();
+  async function listenForShoppingListChanges(): Promise<Subscription> {
+    if (channel.value.has(channelName.value) && channel.value.get(channelName.value)) {
+      shoppingListClient.unsubscribe(channel.value.get(channelName.value)!);
     }
-    async function handleChanges(payload: JsPostgresAction) {
+    async function handleChanges(
+      payload:
+        | JsPostgresAction<ShoppingListDetail, null>
+        | JsPostgresAction<null, EntityId>
+        | JsPostgresAction<ShoppingListDetail, EntityId>,
+    ) {
       const jsPayload = ktToJs(payload);
 
       const productId = __getProductIndex(jsPayload.record?.id);
@@ -220,9 +227,13 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
   });
 
   onUnmounted(() => {
-    channel.value.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+    try {
+      channel.value.forEach((subscription) => {
+        shoppingListClient.unsubscribe(subscription);
+      });
+    } catch (e) {
+      console.error(e);
+    }
   });
 
   return {

@@ -1,15 +1,15 @@
+@file:JsExport
 package pl.kurczaczkowe.bill.shoppingList.dto
 
 import io.github.jan.supabase.realtime.Column
 
-@JsExport
-data class JsPostgresAction(
+data class JsPostgresAction<Record, OldRecord>(
     @JsName("columns")
     val columns: Array<Column>,
     @JsName("commitTimestamp")
     val commitTimestamp: String,
     @JsName("record")
-    val record: ShoppingListDetail? = null,
+    val record: Record? = null,
     @JsName("oldRecord")
-    val oldRecord: ShoppingListDetail? = null,
+    val oldRecord: OldRecord? = null,
 )

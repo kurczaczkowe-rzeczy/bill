@@ -8,15 +8,18 @@ import io.github.jan.supabase.realtime.PostgresAction
 import io.github.jan.supabase.realtime.channel
 import io.github.jan.supabase.realtime.postgresChangeFlow
 import io.github.jan.supabase.realtime.realtime
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
 import love.forte.plugin.suspendtrans.annotation.JsPromise
-import pl.kurczaczkowe.bill.core.util.Result
 import pl.kurczaczkowe.bill.core.util.NetworkError
+import pl.kurczaczkowe.bill.core.util.Result
 import kotlin.js.JsExport
 import kotlin.js.JsName
 
@@ -25,6 +28,9 @@ class RemoteClient(
     @JsName("client")
     val client: SupabaseClient
 ) {
+    private val clientScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private val activeSubscriptions = mutableMapOf<String, Subscription>()
+
     @JsPromise
     @JsExport.Ignore
     suspend fun close() = client.close()
@@ -81,21 +87,73 @@ class RemoteClient(
         }
     }
 
-    @JsPromise
-    @JsExport.Ignore
-    suspend fun listenFor(
+    fun subscribe(
         channelName: String,
-        action: suspend (PostgresAction) -> Unit,
-        scope: CoroutineScope
-    ) {
-        val myChannel = client.realtime.channel(channelName)
+        action: (PostgresAction) -> Unit,
+        table: String
+    ): Subscription {
+        unsubscribe(channelName)
 
-        val changes = myChannel.postgresChangeFlow<PostgresAction>(schema = "public")
+        val channel = client.realtime.channel(channelName)
 
-        changes
-            .onEach( action = action )
-            .launchIn( scope = scope )
+        val changes = channel.postgresChangeFlow<PostgresAction>(schema = "public") {
+            this.table = table
+        }
 
-        myChannel.subscribe()
+        val job = clientScope.launch(CoroutineName("channel-$channelName")) {
+            changes.collect { change ->
+                try {
+                    action(change)
+                } catch (e: Exception) {
+                    println("Error in channel $channelName: ${e.message}")
+                }
+            }
+        }
+
+        try {
+            clientScope.launch {
+                channel.subscribe()
+            }
+
+            val subscription = Subscription(
+                job = job,
+                channel = channel,
+                channelName = channelName,
+                scope = clientScope,
+                onUnsubscribe = { unsubscribe(channelName) }
+            )
+
+            activeSubscriptions[channelName] = subscription
+
+            return subscription
+        } catch (e: Exception) {
+            job.cancel()
+            println("Failed to subscribe to channel $channelName: ${e.message}")
+            throw e
+        }
+    }
+
+    fun unsubscribe(channelName: String) {
+        activeSubscriptions[channelName]?.let { subscription ->
+            subscription.cleanup()
+            activeSubscriptions.remove(channelName)
+        }
+    }
+
+    fun unsubscribeAll() {
+        activeSubscriptions.keys.toList().forEach { unsubscribe(it) }
+    }
+
+    @JsName("getActiveChannels")
+    fun getActiveChannels(): Array<String> {
+        return activeSubscriptions
+            .filter { it.value.isActive() }
+            .keys
+            .toTypedArray()
+    }
+
+    fun dispose() {
+        unsubscribeAll()
+        clientScope.cancel()
     }
 }
