@@ -8,9 +8,9 @@ declare module "@bill/Bill-shoppingList" {
   }
   export type ListenForShoppingListChangesAction = (
     payload:
-      | JsPostgresAction<ShoppingListDetail, null>
-      | JsPostgresAction<ShoppingListDetail, EntityId>
-      | JsPostgresAction<null, ShoppingListDetail>,
+      | JsPostgresAction<ShoppingListRow, null>
+      | JsPostgresAction<ShoppingListRow, EntityId>
+      | JsPostgresAction<null, ShoppingListRow>,
   ) => Promise<void>;
   export type ListenForShoppingListsChangesAction = (
     payload:

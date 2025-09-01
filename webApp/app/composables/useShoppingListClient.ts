@@ -6,14 +6,15 @@ import {
   type JsPostgresAction,
   type NetworkError,
   type Result,
-  type ShoppingListDetail,
   type ShoppingListDetails,
+  type ShoppingListRow,
   type Subscription,
   UnitEnum,
 } from "@bill/Bill-shoppingList";
 
 import { type AsyncDataOptions, useNuxtData } from "#app";
 import type { Channels } from "~/composables/types";
+import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
 import { shoppingListClient } from "~/constants";
 import { isNil } from "~/utils/isNil";
 import type { KtList } from "~/utils/ktListToArray";
@@ -30,7 +31,6 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
   const listIdRef = toRef(listId);
   const parsedListId = computed(() => routeListIdToNumber(toValue(listIdRef)));
   const channelName = computed(() => getShoppingListChannelName(toValue(parsedListId)));
-  const shoppingListDetails = ref<ShoppingListDetails[]>([]);
   const loading = ref(false);
   const error = ref<Error | null>(null);
   const channel = ref<Channels>(new Map() as Channels);
@@ -43,7 +43,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     error: fetchError,
     refresh,
   } = useAsyncData(
-    `shoppingListDetails:${parsedListId}`,
+    `shoppingListDetails:${parsedListId.value}`,
     async () => {
       const response: Result<
         KtList<ShoppingListDetails>,
@@ -56,6 +56,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
       getCachedData(key) {
         const nuxtApp = useNuxtApp();
         const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key];
+
         if (!data) return;
 
         const expirationDate = new Date(data.fetchedAt);
@@ -69,20 +70,16 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     },
   );
 
-  watch(data, (newData) => {
-    if (newData) {
-      shoppingListDetails.value = newData;
-    }
-  });
-
-  // shoppingListDetails ref manipulations
-  function __getProduct(id?: number | null): ShoppingListDetails | undefined {
-    return shoppingListDetails.value?.find((p) => p.id === id);
-  }
-
-  function __getProductIndex(id?: number | null): number {
-    return shoppingListDetails.value?.findIndex((p) => p.id === id) ?? -1;
-  }
+  const {
+    listToSync: shoppingListDetails,
+    getItem: __getProduct,
+    upsertItem: __upsertProduct,
+    deleteItem: __deleteProduct,
+    getItemIndex: __getProductIndex,
+    releaseAction,
+    isActionBlocked,
+    blockAction,
+  } = useOptimisticUpdatedList(data);
 
   function __toggleInCart(id?: number | null, inCart?: boolean | null) {
     if (isNil(id)) {
@@ -93,33 +90,15 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     shoppingListDetails.value[id].inCart = inCart ?? shoppingListDetails.value[id]?.inCart;
   }
 
-  function __upsertProduct(product?: ShoppingListDetails | null) {
-    if (isNil(product)) {
-      throw new Error("Invalid product");
-    }
-
-    const productId = __getProductIndex(product.id);
-    if (productId === -1) {
-      shoppingListDetails.value.push(product);
-      return;
-    }
-
-    shoppingListDetails.value[productId] = product;
-  }
-
-  function __deleteProduct(id?: number | null) {
-    shoppingListDetails.value.filter((product) => product.id !== id);
-  }
-
   async function listenForShoppingListChanges(): Promise<Subscription> {
     if (channel.value.has(channelName.value) && channel.value.get(channelName.value)) {
       shoppingListClient.unsubscribe(channel.value.get(channelName.value)!);
     }
     async function handleChanges(
       payload:
-        | JsPostgresAction<ShoppingListDetail, null>
+        | JsPostgresAction<ShoppingListRow, null>
         | JsPostgresAction<null, EntityId>
-        | JsPostgresAction<ShoppingListDetail, EntityId>,
+        | JsPostgresAction<ShoppingListRow, EntityId>,
     ) {
       const jsPayload = ktToJs(payload);
 
@@ -187,19 +166,34 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
       throw new Error("Shopping list not found");
     }
 
-    const productId = __getProductIndex(id);
-    if (productId === -1 || isNil(shoppingListDetails.value[productId])) {
+    const oldProduct = __getProduct(id);
+    if (!oldProduct.item) {
       throw new Error("Product not found");
     }
 
-    const prev = { ...shoppingListDetails.value[productId] };
-    __toggleInCart(productId, shoppingListDetails.value[productId].inCart);
+    loading.value = true;
+    blockAction(id, "update");
+
+    __upsertProduct(
+      {
+        id: oldProduct.item.id,
+        inCart: oldProduct.item.inCart,
+      },
+      oldProduct.index,
+      true,
+    );
 
     shoppingListClient
       .toggleProductInCartAsync(id)
-      .then(readResponse)
+      .then((response) => {
+        const result = readResponse(response) as ShoppingListDetails;
+        __upsertProduct(result, oldProduct.index, true);
+      })
       .catch((error) => {
-        __upsertProduct(prev);
+        __upsertProduct(oldProduct.item, oldProduct.index, true);
+        loading.value = false;
+        releaseAction(id, "update");
+
         console.error(error);
       });
   }

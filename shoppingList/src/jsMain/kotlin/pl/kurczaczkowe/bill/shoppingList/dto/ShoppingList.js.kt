@@ -1,6 +1,7 @@
 package pl.kurczaczkowe.bill.shoppingList.dto
 
 @JsExport
+@JsName("shoppingListToJs")
 fun ShoppingList.toJs(): dynamic {
     val id = this.id
     val createdAt = this.createdAt

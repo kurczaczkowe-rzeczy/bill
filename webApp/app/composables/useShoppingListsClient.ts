@@ -44,9 +44,11 @@ export async function useShoppingLists(options?: Options) {
       getCachedData(key) {
         const nuxtApp = useNuxtApp();
         const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key];
+
         if (!data) return;
 
         const expirationDate = new Date(data.fetchedAt);
+
         expirationDate.setTime(expirationDate.getTime() + 5 * 60 * 1000);
         if (new Date() < expirationDate) {
           return data;
@@ -59,9 +61,9 @@ export async function useShoppingLists(options?: Options) {
 
   const {
     listToSync: shoppingLists,
-    getList: __getList,
-    upsertProduct: __upsertProduct,
-    deleteList: __deleteList,
+    getItem: __getList,
+    upsertItem: __upsertList,
+    deleteItem: __deleteList,
     releaseAction,
     isActionBlocked,
     blockAction,
@@ -92,7 +94,7 @@ export async function useShoppingLists(options?: Options) {
 
         switch (channelAction) {
           case "insert": {
-            __upsertProduct(
+            __upsertList(
               {
                 id: jsPayload.record!.id,
                 createdAt: new Date().toISOString(),
@@ -106,7 +108,7 @@ export async function useShoppingLists(options?: Options) {
             break;
           }
           case "update":
-            __upsertProduct({
+            __upsertList({
               id: jsPayload.record!.id,
               createdAt: new Date().toISOString(),
               name: jsPayload.record!.name,
@@ -146,7 +148,7 @@ export async function useShoppingLists(options?: Options) {
     const preparedId = now.valueOf() * 2;
     blockAction(preparedId, "insert");
 
-    __upsertProduct(
+    __upsertList(
       {
         id: preparedId,
         createdAt: now.toISOString(),
@@ -162,7 +164,7 @@ export async function useShoppingLists(options?: Options) {
       .then((response) => {
         const parsedRes = readResponse(response);
 
-        __upsertProduct(parsedRes, 0, true);
+        __upsertList(parsedRes, 0, true);
         return response;
       })
       .catch((err) => {
@@ -184,22 +186,25 @@ export async function useShoppingLists(options?: Options) {
     }
     const listToUpdate = __getList(params.id);
 
-    __upsertProduct({ ...params } as ShoppingList, listToUpdate.index);
+    loading.value = true;
+    blockAction(params.id, "update");
+    __upsertList({ ...params } as ShoppingList, listToUpdate.index);
 
     return shoppingListClient
       .updateShoppingListAsync(params.id, params.name, params.date)
       .then((response) => {
         const parsedRes = readResponse(response);
-        __upsertProduct(parsedRes, listToUpdate.index);
+        __upsertList(parsedRes, listToUpdate.index);
         return response;
       })
       .catch((err) => {
         console.error(err);
-        __upsertProduct(listToUpdate.list, listToUpdate.index);
+        __upsertList(listToUpdate.item, listToUpdate.index);
         return err;
       })
       .finally(() => {
         loading.value = false;
+        releaseAction(params.id, "update");
       });
   }
 
@@ -209,17 +214,20 @@ export async function useShoppingLists(options?: Options) {
     const listToDelete = __getList(params.id);
 
     loading.value = true;
+    blockAction(params.id, "delete");
+
     __deleteList(params.id);
 
     return shoppingListClient
       .deleteShoppingListAsync(params.id)
       .catch((err) => {
         console.error(err);
-        __upsertProduct(listToDelete.list, listToDelete.index);
+        __upsertList(listToDelete.item, listToDelete.index);
         return err;
       })
       .finally(() => {
         loading.value = false;
+        releaseAction(params.id, "delete");
       });
   }
 

@@ -1,7 +1,12 @@
 import type { ChannelAction } from "~/utils/channelAction";
 import { isNil } from "~/utils/isNil";
 
-export function useOptimisticUpdatedList<ListItem extends { id: number }>(
+interface Item {
+  id: number;
+}
+type WithOnlyRequiredId<T> = T extends Item ? Partial<Omit<T, "id">> & Item : never;
+
+export function useOptimisticUpdatedList<ListItem extends Item>(
   data: MaybeRefOrGetter<ListItem[] | undefined>,
 ) {
   const listToSync = ref<ListItem[]>([]);
@@ -66,43 +71,47 @@ export function useOptimisticUpdatedList<ListItem extends { id: number }>(
    * function handleManageAction(id: number, action: ChannelAction, promise: Promise<any>) {}
    * */
 
-  function getList(id?: number | null): { list?: ListItem; index: number } {
-    const index = getListIndex(id);
+  function getItem(id?: number | null): { item?: ListItem; index: number } {
+    const index = getItemIndex(id);
 
     return {
-      list: listToSync.value?.[index] as ListItem,
+      item: listToSync.value?.[index] as ListItem,
       index,
     };
   }
 
-  function getListIndex(id?: number | null): number {
+  function getItemIndex(id?: number | null): number {
     return listToSync.value?.findIndex((p) => p.id === id) ?? -1;
   }
 
-  function upsertProduct(list?: ListItem | null, index?: number, overwrite?: boolean) {
-    if (isNil(list)) {
+  function upsertItem(
+    item?: WithOnlyRequiredId<ListItem> | null,
+    index?: number,
+    overwrite?: boolean,
+  ) {
+    if (isNil(item)) {
       throw new Error("Invalid product");
     }
 
-    const foundListIndex = getListIndex(list.id);
-    const listIndex = !isNil(index) && index > -1 ? index : foundListIndex;
+    const foundItemIndex = getItemIndex(item.id);
+    const itemIndex = !isNil(index) && index > -1 ? index : foundItemIndex;
 
-    if (listIndex === -1) {
-      return listToSync.value.push(list as any) - 1;
+    if (itemIndex === -1) {
+      return listToSync.value.push(item as any) - 1;
     }
 
-    const deletedCount = foundListIndex > -1 || overwrite ? 1 : 0;
-    const item = deletedCount > 0 ? { ...listToSync.value[foundListIndex], ...list } : list;
+    const deletedCount = foundItemIndex > -1 || overwrite ? 1 : 0;
+    const itemToInsert = deletedCount > 0 ? { ...listToSync.value[foundItemIndex], ...item } : item;
 
-    listToSync.value.splice(listIndex, deletedCount, item as any);
+    listToSync.value.splice(itemIndex, deletedCount, itemToInsert as any);
 
-    return listIndex;
+    return itemIndex;
   }
 
-  function deleteList(id?: number | null) {
-    const listId = getListIndex(id);
-    if (listId !== -1) {
-      listToSync.value.splice(listId, 1);
+  function deleteItem(id?: number | null) {
+    const itemId = getItemIndex(id);
+    if (itemId !== -1) {
+      listToSync.value.splice(itemId, 1);
     }
   }
 
@@ -115,10 +124,10 @@ export function useOptimisticUpdatedList<ListItem extends { id: number }>(
 
   return {
     listToSync,
-    getList,
-    getListIndex,
-    upsertProduct,
-    deleteList,
+    getItem,
+    getItemIndex,
+    upsertItem,
+    deleteItem,
     blockAction,
     releaseAction,
     isActionBlocked,

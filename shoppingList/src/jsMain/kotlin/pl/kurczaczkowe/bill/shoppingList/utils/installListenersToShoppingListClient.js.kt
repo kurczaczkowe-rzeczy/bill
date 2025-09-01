@@ -8,7 +8,7 @@ import pl.kurczaczkowe.bill.shoppingList.ShoppingListClient
 import pl.kurczaczkowe.bill.shoppingList.dto.EntityId
 import pl.kurczaczkowe.bill.shoppingList.dto.JsPostgresAction
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingList
-import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDetail
+import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListRow
 import kotlin.time.ExperimentalTime
 
 private typealias ShoppingListChangeListener = (listId: Number, action: (payload: dynamic) -> dynamic) -> Subscription
@@ -31,7 +31,7 @@ fun installListenersToShoppingListClient() {
     ensureMethod<ShoppingListChangeListener>(shoppingListClientCtor, "listenForShoppingListChanges") { listId: Number, action: (payload: dynamic) -> dynamic ->
         js("this").unsafeCast<ShoppingListClient>().listenForShoppingListChanges(action = { payload ->
             try {
-                val jsPayload = preparePayload<ShoppingListDetail>(payload)
+                val jsPayload = preparePayload<ShoppingListRow>(payload)
                 action(jsPayload)
             } catch (e: Exception) {
                 println(e)

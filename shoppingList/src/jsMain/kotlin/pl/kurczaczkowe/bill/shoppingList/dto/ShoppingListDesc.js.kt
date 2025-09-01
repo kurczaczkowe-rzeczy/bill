@@ -1,10 +1,18 @@
 package pl.kurczaczkowe.bill.shoppingList.dto
 
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.encodeToDynamic
-import pl.kurczaczkowe.bill.shoppingList.utils.json
+@JsExport
+@JsName("shoppingListDescToJs")
+fun ShoppingListDesc.toJs(): dynamic {
+    val id = this.id
+    val createdAt = this.createdAt
+    val name = this.name
+    val date = this.date
 
-@JsExport.Ignore
-@OptIn(ExperimentalSerializationApi::class)
-fun ShoppingListDesc.toJs(): dynamic = json.encodeToDynamic(this)
+    return js("""{
+        "id": id,
+        "createdAt": createdAt,
+        "name": name,
+        "date": date,
+    }""")
+}
 
