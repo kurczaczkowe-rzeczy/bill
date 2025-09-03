@@ -6,7 +6,7 @@ fun Product.toJs(): dynamic {
     val id = this.id
     val createdAt = this.createdAt
     val name = this.name
-    val unit = this.unit
+    val unit = this.unit.toJs()
 
     return js("""{
         "id": id,

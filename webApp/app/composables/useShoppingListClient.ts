@@ -16,6 +16,7 @@ import { type AsyncDataOptions, useNuxtData } from "#app";
 import type { Channels } from "~/composables/types";
 import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
 import { shoppingListClient } from "~/constants";
+import { getChannelActionFrom } from "~/utils/channelAction";
 import { isNil } from "~/utils/isNil";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
@@ -100,57 +101,89 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
         | JsPostgresAction<null, EntityId>
         | JsPostgresAction<ShoppingListRow, EntityId>,
     ) {
-      const jsPayload = ktToJs(payload);
+      try {
+        const jsPayload = ktToJs(payload);
 
-      const productId = __getProductIndex(jsPayload.record?.id);
+        const channelAction = getChannelActionFrom(jsPayload);
+        const isBlocked = isActionBlocked(
+          jsPayload.record?.id ?? jsPayload.oldRecord?.id,
+          channelAction,
+        );
 
-      if (productId === -1 || isNil(productId)) {
-        if (isNil(jsPayload.oldRecord) && !isNil(jsPayload.record)) {
-          const shoppingListProductPromise = shoppingListClient.getShoppingListProductAsync(
-            jsPayload.record.id,
-          );
-
-          if (!categories.value) {
-            throw new Error("Categories not found");
-          }
-
-          const category =
-            categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
-            categories.value?.[0];
-
-          if (!category) {
-            throw new Error("Category not found");
-          }
-
-          __upsertProduct({
-            id: jsPayload.record.id,
-            createdAt: new Date().toISOString(),
-            quantity: jsPayload.record.quantity,
-            unit: UnitEnum.GRAM.name,
-            name: `Produkt`, //ToDo: Add shrimmerlike thing
-            inCart: jsPayload.record.inCart,
-            category,
-          } as unknown as ShoppingListDetails);
-
-          try {
-            const response = await shoppingListProductPromise;
-            const result = readResponse(response) as ShoppingListDetails;
-            const newProductId = __getProductIndex(result.id);
-
-            if (newProductId === -1 || newProductId === undefined) {
-              throw new Error("Product not found");
-            }
-
-            shoppingListDetails.value[newProductId] = result;
-          } catch (error) {
-            console.error(error);
-          }
+        if (isBlocked) {
+          return;
         }
 
-        return;
-      }
+        switch (
+          channelAction // ToDo: Maybe this handler should be only source of truth?
+        ) {
+          case "insert": {
+            const shoppingListProductPromise = shoppingListClient.getShoppingListProductAsync(
+              jsPayload.record!.id,
+            );
+            if (!categories.value) {
+              throw new Error("Categories not found");
+            }
 
-      __toggleInCart(productId, jsPayload.record?.inCart);
+            const category =
+              categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
+              categories.value?.[0];
+
+            if (!category) {
+              throw new Error("Category not found");
+            }
+
+            __upsertProduct({
+              id: jsPayload.record!.id,
+              createdAt: new Date().toISOString(),
+              quantity: jsPayload.record!.quantity,
+              unit: UnitEnum.GRAM.name,
+              name: `Ładowanie...`, //ToDo: Add shrimmerlike thing
+              inCart: jsPayload.record!.inCart,
+              category,
+            } as unknown as ShoppingListDetails);
+
+            const response = await shoppingListProductPromise;
+            const result = readResponse(response) as ShoppingListDetails;
+
+            __upsertProduct(result);
+            break;
+          }
+          case "update": {
+            const shoppingListProductPromise = shoppingListClient.getShoppingListProductAsync(
+              jsPayload.record!.id,
+            );
+            if (!categories.value) {
+              throw new Error("Categories not found");
+            }
+
+            const category =
+              categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
+              categories.value?.[0];
+
+            if (!category) {
+              throw new Error("Category not found");
+            }
+
+            __upsertProduct(jsPayload.record! as unknown as ShoppingListDetails);
+
+            const response = await shoppingListProductPromise;
+            const result = readResponse(response) as ShoppingListDetails;
+
+            __upsertProduct(result);
+
+            break;
+          }
+          case "delete":
+            __deleteProduct(jsPayload.oldRecord!.id);
+
+            break;
+          default:
+            throw new Error("Invalid payload");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     channel.value.set(
@@ -191,10 +224,11 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
       })
       .catch((error) => {
         __upsertProduct(oldProduct.item, oldProduct.index, true);
+        console.error(error);
+      })
+      .finally(() => {
         loading.value = false;
         releaseAction(id, "update");
-
-        console.error(error);
       });
   }
 

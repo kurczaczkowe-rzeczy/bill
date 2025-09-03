@@ -58,9 +58,13 @@ function closeSuggestions() {
 }
 
 function selectSuggestion(s: ProductSuggestion) {
-  addToShoppingListParameters.name = s.name;
-  addToShoppingListParameters.unit = UnitEnum.valueOf(s.unit);
-  closeSuggestions();
+  try {
+    addToShoppingListParameters.name = s.name;
+    addToShoppingListParameters.unit = UnitEnum.valueOf(s.unit);
+    closeSuggestions();
+  } catch (e) {
+    console.error("selectSuggestion->", e);
+  }
 }
 
 async function fetchSuggestions(query: string) {
@@ -212,6 +216,7 @@ function resetAddToShoppingListParameters() {
           <Icon name="streamline-freehand:keyboard-arrow-return" />
         </NuxtLink>
         <Icon v-if="shoppingListDetailsLoading" class="animate-spin text-info" name="streamline-freehand:loading-star-1" />
+        <DevOnly>Ilość porduktów które zostały do kupienia i dodaj zwijanie tej wstążki z dodawaniem i by lista była przewijalna a nie cały ekran</DevOnly>
       </li>
       <li class="list-row-separator">
         <form class="grid grid-cols-[80px_minmax(0,_auto)_45px]" @submit.prevent="handleAddToShoppingList">

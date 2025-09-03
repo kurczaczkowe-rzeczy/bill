@@ -1,3 +1,5 @@
+import type { JsPostgresAction } from "@bill/Bill-shoppingList";
+
 import { isNil } from "~/utils/isNil";
 
 export const CHANNEL_ACTION = {
