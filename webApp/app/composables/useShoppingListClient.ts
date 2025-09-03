@@ -17,7 +17,6 @@ import type { Channels } from "~/composables/types";
 import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
 import { shoppingListClient } from "~/constants";
 import { getChannelActionFrom } from "~/utils/channelAction";
-import { isNil } from "~/utils/isNil";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 import { readResponse } from "~/utils/readResponse";
@@ -81,15 +80,6 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     isActionBlocked,
     blockAction,
   } = useOptimisticUpdatedList(data);
-
-  function __toggleInCart(id?: number | null, inCart?: boolean | null) {
-    if (isNil(id)) {
-      throw new Error("Invalid product id");
-    }
-
-    // @ts-expect-error ToDo: przez złe typy myśli, że jest readonly
-    shoppingListDetails.value[id].inCart = inCart ?? shoppingListDetails.value[id]?.inCart;
-  }
 
   async function listenForShoppingListChanges(): Promise<Subscription> {
     if (channel.value.has(channelName.value) && channel.value.get(channelName.value)) {
@@ -234,18 +224,40 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
 
   async function addToShoppingList(
     params: AddToShoppingListParameters & { listId: unknown },
-  ): Promise<Result<void, NetworkError>> {
+    onSuccess?: (result: ShoppingListDetails) => void,
+    onError?: (error: Error) => void,
+    onFinally?: () => void,
+  ): Promise<void> {
     if (params.name.trim() === "") {
       throw new Error("Nazwa powinna być wypełniona");
     }
 
-    return shoppingListClient.addToShoppingListAsync(
-      routeListIdToNumber(params.listId),
-      UnitEnum.valueOf(params.unit.name),
-      params.quantity,
-      params.name,
-      params.categoryId,
-    );
+    loading.value = true;
+    const now = new Date();
+    const preparedId = now.valueOf() * 2;
+    blockAction(preparedId, "insert");
+
+    shoppingListClient
+      .addToShoppingListAsync(
+        routeListIdToNumber(params.listId),
+        UnitEnum.valueOf(params.unit.name),
+        params.quantity,
+        params.name,
+        params.categoryId,
+      )
+      .then((response) => {
+        const result = readResponse(response) as ShoppingListDetails;
+        onSuccess?.(result);
+      })
+      .catch((error) => {
+        console.error(error);
+        onError?.(error);
+      })
+      .finally(() => {
+        loading.value = false;
+        releaseAction(preparedId, "insert");
+        onFinally?.();
+      });
   }
 
   onMounted(() => {

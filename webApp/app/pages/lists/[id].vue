@@ -188,17 +188,19 @@ const selectCategory = (category: Category) => {
 };
 
 async function handleAddToShoppingList(e: SubmitEvent) {
-  addToShoppingList({
-    listId: route.params.id,
-    ...addToShoppingListParameters,
-  })
-    .then(() => {
+  addToShoppingList(
+    {
+      listId: route.params.id,
+      ...addToShoppingListParameters,
+    },
+    () => {
       (e.currentTarget as HTMLFormElement)?.reset();
       resetAddToShoppingListParameters();
-    })
-    .catch((err) => {
+    },
+    (err) => {
       formErrors.name = err.message;
-    });
+    },
+  );
 }
 
 function resetAddToShoppingListParameters() {
