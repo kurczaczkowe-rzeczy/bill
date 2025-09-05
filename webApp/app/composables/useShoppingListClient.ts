@@ -81,6 +81,12 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     blockAction,
   } = useOptimisticUpdatedList(data);
 
+  const categoriesWithProducts = computed(() =>
+    shoppingListDetails.value && categories.value
+      ? ktToJs(groupProductsByCategoryJs(shoppingListDetails.value, categories.value))
+      : [],
+  );
+
   async function listenForShoppingListChanges(): Promise<Subscription> {
     if (channel.value.has(channelName.value) && channel.value.get(channelName.value)) {
       shoppingListClient.unsubscribe(channel.value.get(channelName.value)!);
@@ -260,6 +266,29 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
       });
   }
 
+  async function switchProductCategory(id: number, category: Category) {
+    loading.value = true;
+    blockAction(id, "update");
+
+    __upsertProduct({
+      id,
+      category,
+    });
+
+    shoppingListClient
+      .updateInShoppingListAsync(id, parsedListId.value, null, null, null, category.id)
+      .then((response) => {
+        readResponse(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        loading.value = false;
+        releaseAction(id, "update");
+      });
+  }
+
   onMounted(() => {
     if (toValue(options?.useAutoListenFor)?.includes("shoppingListChanges")) {
       listenForShoppingListChanges();
@@ -287,13 +316,10 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     listenForShoppingListChanges,
     toggleInCart,
     addToShoppingList,
+    switchProductCategory,
 
     // Utils
-    categoriesWithProducts: computed(() =>
-      shoppingListDetails.value && categories.value
-        ? ktToJs(groupProductsByCategoryJs(shoppingListDetails.value, categories.value))
-        : [],
-    ),
+    categoriesWithProducts,
   };
 }
 

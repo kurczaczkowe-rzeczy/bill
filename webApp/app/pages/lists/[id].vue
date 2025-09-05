@@ -1,11 +1,18 @@
 <script lang="ts" setup>
-import { type Category, type Product, UnitEnum } from "@bill/Bill-shoppingList";
+import {
+  type Category,
+  type Product,
+  type ShoppingListDetails,
+  UnitEnum,
+} from "@bill/Bill-shoppingList";
+import { type DraggableEvent, type UseDraggableOptions, VueDraggable } from "vue-draggable-plus";
 
 import {
   type AddToShoppingListParameters,
   useShoppingList,
 } from "~/composables/useShoppingListClient";
 import { categoryClient, productClient } from "~/constants";
+import { isNil } from "~/utils/isNil";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 
@@ -19,9 +26,33 @@ const {
   loading: shoppingListDetailsLoading,
   toggleInCart,
   addToShoppingList,
+  deleteProductFromShoppingList,
+  switchProductCategory,
 } = await useShoppingList(route.params.id, {
   useAutoListenFor: ["shoppingListChanges"],
 });
+
+const itemChooseTimeStamp = ref<number | null>(null);
+
+const draggableOptions = {
+  group: "shopping-list",
+  animation: 200,
+  onEnd: (evt: DraggableEvent<ShoppingListDetails>) => {
+    if (isNil(evt.data)) {
+      return;
+    }
+
+    const category = categories.value?.find((c) => c.id === Number(evt.to.dataset.categoryId));
+
+    if (!category) return;
+    switchProductCategory(evt.data.id, category);
+  },
+  forceFallback: true,
+  fallbackClass: "hidden",
+  onChoose: (evt: DraggableEvent<ShoppingListDetails>) => {
+    itemChooseTimeStamp.value = Date.now();
+  },
+};
 
 const formErrors = reactive({
   name: "",
@@ -208,6 +239,14 @@ function resetAddToShoppingListParameters() {
   addToShoppingListParameters.quantity = 1;
   formErrors.name = "";
 }
+
+function handleToggleInCart(productId: number) {
+  if (itemChooseTimeStamp.value && Date.now() - itemChooseTimeStamp.value > 150) {
+    return;
+  }
+
+  toggleInCart(productId);
+}
 </script>
 
 <template>
@@ -338,7 +377,12 @@ function resetAddToShoppingListParameters() {
           </div>
         </form>
       </li>
-      <li v-if="categoriesWithProducts.length" v-for="categoryWithProducts in categoriesWithProducts" :key="categoryWithProducts.category.id" class="category-list">
+      <li
+          v-if="categoriesWithProducts.length"
+          v-for="categoryWithProducts in categoriesWithProducts"
+          :key="categoryWithProducts.category.id"
+          class="category-list"
+      >
         <span class="inline-flex items-center gap-2">
           <span
               class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
@@ -348,20 +392,31 @@ function resetAddToShoppingListParameters() {
             </span>
           <span>{{ categoryWithProducts.category.name }}</span>
         </span>
-        <ul class="list">
+        <VueDraggable
+            @end="draggableOptions.onEnd"
+            @choose="draggableOptions.onChoose"
+            v-model="categoryWithProducts.products"
+            :animation="draggableOptions.animation"
+            :group="draggableOptions.group"
+            :force-fallback="draggableOptions.forceFallback"
+            :fallback-class="draggableOptions.fallbackClass"
+            :data-category-id="categoryWithProducts.category.id"
+            tag="ul"
+            class="list"
+        >
           <li
               v-for="product in categoryWithProducts.products"
               v-if="categoryWithProducts.products?.length"
               :key="product.id"
               :class="{ 'line-through': product.inCart}"
               class="list-row"
-              @click="toggleInCart( product.id )"
+              @click="handleToggleInCart( product.id )"
           >
-            <span class="list-col-grow">{{ product.name }}</span>
+            <span class="list-col-grow">{{ product.name }} </span>
             <span>{{ product.quantity }} {{ product.unit }}</span>
           </li>
           <li v-else class="list-row">Brak produktów w kategorii</li>
-        </ul>
+        </VueDraggable>
       </li>
       <li v-else class="list-row">Brak produktów na liście</li>
     </ul>

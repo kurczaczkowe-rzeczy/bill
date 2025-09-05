@@ -20,6 +20,7 @@ import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListProductParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ToggleProductInCartParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.UnitEnum
+import pl.kurczaczkowe.bill.shoppingList.dto.UpdateInShoppingListParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.UpdateShoppingListParameters
 import kotlin.js.JsExport
 import kotlin.js.JsName
@@ -139,22 +140,23 @@ class ShoppingListClient(private val client: RemoteClient = supabaseRemoteClient
     suspend fun updateInShoppingList(
         id: Long,
         shoppingListId: Long,
-        productUnit: UnitEnum,
-        productQuantity: Float,
-        productName: String,
-        categoryId: Long,
-        productId: Long,
-    ): Result<Unit, NetworkError> {
+        productUnit: UnitEnum?,
+        productQuantity: Float?,
+        productName: String?,
+        categoryId: Long?,
+    ): Result<ShoppingListDetails, NetworkError> {
         return try {
-            println("NOT IMPLEMENTED");
-            return Result.Success(Unit)
-//            client.post<UpdateInShoppingListParameters, Unit>(
-//                rpcFunction = "edit_product_in_shopping_list",
-//                parameters = UpdateInShoppingListParameters(
-//                    shopping_list_id = shoppingListId,
-//                    product_id = productUnit,
-//                )
-//            )
+            client.post<UpdateInShoppingListParameters, ShoppingListDetails>(
+                rpcFunction = "edit_product_in_shopping_list",
+                parameters = UpdateInShoppingListParameters(
+                    shopping_list_id = shoppingListId,
+                    unit = productUnit,
+                    quantity = productQuantity,
+                    name = productName,
+                    category_id = categoryId?.toString(),
+                    id = id,
+                )
+            )
         } catch (e: Exception) {
             println(e)
             Result.Error(NetworkError.UNKNOWN)
