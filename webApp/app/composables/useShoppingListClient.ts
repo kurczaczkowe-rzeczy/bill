@@ -266,6 +266,22 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
       });
   }
 
+  async function deleteProductFromShoppingList(id: number) {
+    loading.value = true;
+    blockAction(id, "delete");
+
+    shoppingListClient
+      .deleteFromShoppingListAsync(id)
+      .then(readResponse)
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        loading.value = false;
+        releaseAction(id, "delete");
+      });
+  }
+
   async function switchProductCategory(id: number, category: Category) {
     loading.value = true;
     blockAction(id, "update");
@@ -317,6 +333,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     toggleInCart,
     addToShoppingList,
     switchProductCategory,
+    deleteProductFromShoppingList,
 
     // Utils
     categoriesWithProducts,

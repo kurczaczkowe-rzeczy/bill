@@ -414,6 +414,9 @@ function handleToggleInCart(productId: number) {
           >
             <span class="list-col-grow">{{ product.name }} </span>
             <span>{{ product.quantity }} {{ product.unit }}</span>
+            <button @click.stop="deleteProductFromShoppingList(product.id)">
+              <Icon name="streamline-freehand:remove-delete-sign-bold" />
+            </button>
           </li>
           <li v-else class="list-row">Brak produktów w kategorii</li>
         </VueDraggable>
