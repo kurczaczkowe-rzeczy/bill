@@ -263,8 +263,8 @@ function handleToggleInCart(productId: number) {
 
 <template>
   <div class="card flex justify-center flex-col max-w-xl m-auto">
-    <transition-group name="fade" tag="ul" class="card-body list bg-base-100 rounded-box shadow-md w-full">
-      <li class="inline-grid items-center gap-2 grid-cols-[45px_1rem_auto_45px] text-base">
+    <ul class="card-body list bg-base-100 rounded-box shadow-md w-full">
+      <li class="inline-grid items-center gap-2 grid-cols-[45px_1rem_auto_45px] text-base sticky top-0 bg-base-100">
         <NuxtLink to="/" class="btn btn-ghost btn-circle relative">
           <Icon name="streamline-freehand:keyboard-arrow-return" />
         </NuxtLink>
@@ -283,7 +283,11 @@ function handleToggleInCart(productId: number) {
         </button>
       </li>
       <li class="list-row-separator transition-[max-height] overflow-hidden" :class="hidden ? 'max-h-0' : 'max-h-96'">
-        <form class="grid grid-cols-[80px_minmax(0,_auto)_45px]" @submit.prevent="handleAddToShoppingList">
+        <form
+          class="grid grid-cols-[80px_minmax(0,_auto)_45px]"
+          :class="hidden ? '-z-1' : 'max-h-96'"
+          @submit.prevent="handleAddToShoppingList"
+        >
           <button class="btn btn-ghost btn-circle">
             <Icon name="streamline-freehand:add-sign-bold" />
           </button>
@@ -440,7 +444,7 @@ function handleToggleInCart(productId: number) {
         </DraggableList>
       </li>
       <li v-else class="list-row">Brak produktów na liście</li>
-    </transition-group>
+    </ul>
     <div v-if="errors.length" class="flex flex-col gap-1"><span class="text-error" v-for="error in errors">{{ error }}</span></div>
   </div>
 </template>
