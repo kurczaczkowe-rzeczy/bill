@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: value is properly checked */
 import {
   type EntityId,
   getShoppingListsChannelName,
@@ -82,7 +83,8 @@ export async function useShoppingLists(options?: Options) {
     ) {
       try {
         const jsPayload = ktToJs(payload);
-        const channelAction = getChannelActionFrom(jsPayload);
+        // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
+        const channelAction = getChannelActionFrom(jsPayload as any);
         const isBlocked = isActionBlocked(
           jsPayload.record?.id ?? jsPayload.oldRecord?.id,
           channelAction,
@@ -164,7 +166,7 @@ export async function useShoppingLists(options?: Options) {
       .then((response) => {
         const parsedRes = readResponse(response);
 
-        __upsertList(parsedRes, 0, true);
+        __upsertList(parsedRes as ShoppingList, 0, true);
         return response;
       })
       .catch((err) => {
@@ -194,7 +196,7 @@ export async function useShoppingLists(options?: Options) {
       .updateShoppingListAsync(params.id, params.name, params.date)
       .then((response) => {
         const parsedRes = readResponse(response);
-        __upsertList(parsedRes, listToUpdate.index);
+        __upsertList(parsedRes as ShoppingList, listToUpdate.index);
         return response;
       })
       .catch((err) => {

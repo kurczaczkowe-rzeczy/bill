@@ -13,7 +13,8 @@
       "!.nuxt",
       "!.output",
       "!dist",
-      "!node_modules"
+      "!node_modules",
+      "!layers"
     ]
   },
   "formatter": {
@@ -106,5 +107,18 @@
     "assist": {
       "enabled": true
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["*.vue", "**/*.vue"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
+          }
+        }
+      }
+    }
+  ]
 }

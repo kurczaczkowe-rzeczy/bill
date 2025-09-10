@@ -1,6 +1,6 @@
 import { assertValueIsDefined } from "~/utils/assertValueIsDefined";
 
-export function ktLongToNumber(long: any) {
+export function ktLongToNumber(long: unknown) {
   assertValueIsDefined(long);
 
   if (isKtLong(long)) {
@@ -10,8 +10,8 @@ export function ktLongToNumber(long: any) {
   throw new Error("value is not a Long type");
 }
 
-export function isKtLong(value: any): boolean {
-  return value && typeof value === "object" && "low_1" in value && "high_1" in value;
+export function isKtLong(value: unknown): value is KtLong {
+  return !!value && typeof value === "object" && "low_1" in value && "high_1" in value;
 }
 
 export interface KtLong {

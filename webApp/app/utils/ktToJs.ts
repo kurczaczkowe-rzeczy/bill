@@ -1,7 +1,8 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: until I find a better way */
 import { isKtList, type KtList, ktListToArray } from "./ktListToArray";
 import { isKtLong, type KtLong, ktLongToNumber } from "./ktLongToNumber";
 
-export type KtToJs<T> = T extends (...args: any) => any
+export type KtToJs<T> = T extends (...args: unknown[]) => unknown
   ? T
   : T extends { toJs: () => infer U }
     ? KtToJs<U>
@@ -14,8 +15,8 @@ export type KtToJs<T> = T extends (...args: any) => any
           : T extends
                 | Date
                 | RegExp
-                | Map<any, any>
-                | Set<any>
+                | Map<unknown, unknown>
+                | Set<unknown>
                 | ArrayBuffer
                 | DataView
                 | Int8Array

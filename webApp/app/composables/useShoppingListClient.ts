@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: values is properly checked */
 import {
   type Category,
   type EntityId,
@@ -75,7 +76,6 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     getItem: __getProduct,
     upsertItem: __upsertProduct,
     deleteItem: __deleteProduct,
-    getItemIndex: __getProductIndex,
     releaseAction,
     isActionBlocked,
     blockAction,
@@ -100,7 +100,12 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
       try {
         const jsPayload = ktToJs(payload);
 
-        const channelAction = getChannelActionFrom(jsPayload);
+        if (jsPayload.record?.shoppingListId !== parsedListId.value) {
+          return;
+        }
+
+        // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
+        const channelAction = getChannelActionFrom(jsPayload as any);
         const isBlocked = isActionBlocked(
           jsPayload.record?.id ?? jsPayload.oldRecord?.id,
           channelAction,
@@ -340,7 +345,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
   };
 }
 
-function routeListIdToNumber(id: any): number {
+function routeListIdToNumber(id: unknown): number {
   const preparedId = Array.isArray(id) ? id[0] : id;
 
   if (preparedId === undefined || preparedId === null) {

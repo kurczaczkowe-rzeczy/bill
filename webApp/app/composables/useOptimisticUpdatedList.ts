@@ -97,12 +97,14 @@ export function useOptimisticUpdatedList<ListItem extends Item>(
     const itemIndex = !isNil(index) && index > -1 ? index : foundItemIndex;
 
     if (itemIndex === -1) {
+      // biome-ignore lint/suspicious/noExplicitAny: In this case it's ok'
       return listToSync.value.push(item as any) - 1;
     }
 
     const deletedCount = foundItemIndex > -1 || overwrite ? 1 : 0;
     const itemToInsert = deletedCount > 0 ? { ...listToSync.value[foundItemIndex], ...item } : item;
 
+    // biome-ignore lint/suspicious/noExplicitAny: In this case it's ok'
     listToSync.value.splice(itemIndex, deletedCount, itemToInsert as any);
 
     return itemIndex;
@@ -115,6 +117,7 @@ export function useOptimisticUpdatedList<ListItem extends Item>(
     }
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: In this case it's ok'
   watch(data as any, (newData) => {
     const evaluatedData = toValue(newData);
     if (evaluatedData) {

@@ -37,6 +37,7 @@ const itemChooseTimeStamp = ref<number | null>(null);
 const draggableOptions = {
   group: "shopping-list",
   animation: 200,
+  handle: ".handle",
   onEnd: (evt: DraggableEvent<ShoppingListDetails>) => {
     if (isNil(evt.data)) {
       return;
@@ -45,11 +46,11 @@ const draggableOptions = {
     const category = categories.value?.find((c) => c.id === Number(evt.to.dataset.categoryId));
 
     if (!category) return;
-    switchProductCategory(evt.data.id, category);
+    switchProductCategory(evt.data.id, category as Category);
   },
   forceFallback: true,
   fallbackClass: "hidden",
-  onChoose: (evt: DraggableEvent<ShoppingListDetails>) => {
+  onChoose: (_evt: DraggableEvent<ShoppingListDetails>) => {
     itemChooseTimeStamp.value = Date.now();
   },
 };
@@ -161,7 +162,7 @@ function onInputKeydown(e: KeyboardEvent) {
   } else if (e.key === "Enter") {
     if (highlightedIndex.value >= 0 && highlightedIndex.value < suggestions.value.length) {
       e.preventDefault();
-      selectSuggestion(suggestions.value[highlightedIndex.value] as any);
+      selectSuggestion(suggestions.value[highlightedIndex.value] as ProductSuggestion);
     }
   } else if (e.key === "Escape") {
     closeSuggestions();
@@ -182,11 +183,11 @@ const {
     const response = await categoryClient.getCategoriesAsync();
 
     if ("error" in response) {
-      throw new Error(response as any);
+      throw new Error(response as unknown as string);
     }
 
     if (!("result" in response)) {
-      throw new Error("Unsupported response type: " + response.constructor.name + "");
+      throw new Error(`Unsupported response type: ${response.constructor.name}`);
     }
 
     return ktToJs(response.result as KtList<Category>);
@@ -218,7 +219,7 @@ const selectCategory = (category: Category) => {
   addToShoppingListParameters.categoryId = category.id;
 };
 
-async function handleAddToShoppingList(e: SubmitEvent) {
+async function handleAddToShoppingList(e: Event) {
   addToShoppingList(
     {
       listId: route.params.id,
@@ -392,34 +393,29 @@ function handleToggleInCart(productId: number) {
             </span>
           <span>{{ categoryWithProducts.category.name }}</span>
         </span>
-        <VueDraggable
-            @end="draggableOptions.onEnd"
-            @choose="draggableOptions.onChoose"
-            v-model="categoryWithProducts.products"
-            :animation="draggableOptions.animation"
-            :group="draggableOptions.group"
-            :force-fallback="draggableOptions.forceFallback"
-            :fallback-class="draggableOptions.fallbackClass"
-            :data-category-id="categoryWithProducts.category.id"
-            tag="ul"
-            class="list"
+        <DraggableList
+          :draggableOptions="draggableOptions as any"
+          :items="categoryWithProducts.products"
+          :itemProps="(product) => ({
+            class: { 'line-through': product.inCart },
+            onClick: () => handleToggleInCart( product.id )
+          })"
+          :data-category-id="categoryWithProducts.category.id"
         >
-          <li
-              v-for="product in categoryWithProducts.products"
-              v-if="categoryWithProducts.products?.length"
-              :key="product.id"
-              :class="{ 'line-through': product.inCart}"
-              class="list-row"
-              @click="handleToggleInCart( product.id )"
-          >
+          <template #item="{ item: product }">
             <span class="list-col-grow">{{ product.name }} </span>
+            <Icon
+              name="streamline-freehand:data-transfer-vertical"
+              class="handle absolute -left-1"
+              @click.stop
+            />
             <span>{{ product.quantity }} {{ product.unit }}</span>
             <button @click.stop="deleteProductFromShoppingList(product.id)">
               <Icon name="streamline-freehand:remove-delete-sign-bold" />
             </button>
-          </li>
-          <li v-else class="list-row">Brak produktów w kategorii</li>
-        </VueDraggable>
+          </template>
+          <template #empty>Brak produktów w kategorii</template>
+        </DraggableList>
       </li>
       <li v-else class="list-row">Brak produktów na liście</li>
     </ul>
