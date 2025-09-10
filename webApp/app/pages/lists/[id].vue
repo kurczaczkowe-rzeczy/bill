@@ -28,9 +28,14 @@ const {
   addToShoppingList,
   deleteProductFromShoppingList,
   switchProductCategory,
+  shoppingListDetails,
 } = await useShoppingList(route.params.id, {
   useAutoListenFor: ["shoppingListChanges"],
 });
+
+const leftToBuy = computed(() =>
+  shoppingListDetails.value.reduce((prev, curr) => prev + Number(!curr.inCart), 0),
+);
 
 const itemChooseTimeStamp = ref<number | null>(null);
 
@@ -259,6 +264,7 @@ function handleToggleInCart(productId: number) {
         </NuxtLink>
         <Icon v-if="shoppingListDetailsLoading" class="animate-spin text-info" name="streamline-freehand:loading-star-1" />
         <DevOnly>Ilość porduktów które zostały do kupienia i dodaj zwijanie tej wstążki z dodawaniem i by lista była przewijalna a nie cały ekran</DevOnly>
+        <span class="justify-self-end">Pozostało: {{ leftToBuy }}</span>
       </li>
       <li class="list-row-separator">
         <form class="grid grid-cols-[80px_minmax(0,_auto)_45px]" @submit.prevent="handleAddToShoppingList">
