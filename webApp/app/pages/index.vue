@@ -74,7 +74,7 @@ function defaultName() {
               />
               <span v-if="!!formNameError.trim()" class="validator-hint hidden">{{ formNameError }}</span>
             </label>
-            <button class="btn btn-ghost btn-square">
+            <button class="btn btn-ghost btn-circle">
               <Icon name="streamline-freehand:add-sign-bold" />
             </button>
           </form>
