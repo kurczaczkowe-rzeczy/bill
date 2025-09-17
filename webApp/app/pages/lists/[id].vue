@@ -5,7 +5,7 @@ import {
   type ShoppingListDetails,
   UnitEnum,
 } from "@bill/Bill-shoppingList";
-import { type DraggableEvent, type UseDraggableOptions, VueDraggable } from "vue-draggable-plus";
+import type { DraggableEvent } from "vue-draggable-plus";
 
 import {
   type AddToShoppingListParameters,
@@ -56,7 +56,9 @@ const draggableOptions = {
 
     const category = categories.value?.find((c) => c.id === Number(evt.to.dataset.categoryId));
 
-    if (!category) return;
+    if (!category) {
+      return;
+    }
     switchProductCategory(evt.data.id, category as Category);
   },
   forceFallback: true,
@@ -146,7 +148,9 @@ async function fetchSuggestions(query: string) {
 watch(
   () => addToShoppingListParameters.name,
   (val) => {
-    if (debounceTimer) clearTimeout(debounceTimer);
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
     debounceTimer = setTimeout(() => {
       fetchSuggestions(val);
     }, 250);
@@ -158,7 +162,9 @@ function onInputKeydown(e: KeyboardEvent) {
     openSuggestions();
     return;
   }
-  if (!suggestionsOpen.value) return;
+  if (!suggestionsOpen.value) {
+    return;
+  }
 
   if (e.key === "ArrowDown") {
     e.preventDefault();
@@ -210,7 +216,9 @@ const selectedCategory = ref<Category | null>(null);
 const categoriesOpen = ref(false);
 
 const getCategoryInitial = (name: string) => {
-  if (!name) return "";
+  if (!name) {
+    return "";
+  }
 
   const words = name.split(" ");
   if (words.length > 1) {
@@ -262,10 +270,10 @@ function handleToggleInCart(productId: number) {
 </script>
 
 <template>
-  <div class="card flex justify-center flex-col max-w-xl m-auto">
-    <ul class="card-body list bg-base-100 rounded-box shadow-md w-full">
-      <li class="inline-grid items-center gap-2 grid-cols-[45px_1rem_auto_45px] text-base sticky top-0 bg-base-100">
-        <NuxtLink to="/" class="btn btn-ghost btn-circle relative">
+  <div class="card flex flex-col max-w-xl m-auto max-h-screen">
+    <div class="card-body bg-base-100 rounded-box shadow-md w-full overflow-y-auto">
+      <div class="grid items-center gap-2 grid-cols-[45px_1rem_auto_45px] text-base">
+        <NuxtLink class="btn btn-ghost btn-circle relative" to="/">
           <Icon name="streamline-freehand:keyboard-arrow-return" />
         </NuxtLink>
         <Icon
@@ -276,16 +284,16 @@ function handleToggleInCart(productId: number) {
         <span class="justify-self-end">Pozostało: {{ leftToBuy }}</span>
         <button class="btn btn-ghost btn-circle" @click="toggleAddForm">
           <Icon
-            class="transition-transform"
             :class="hidden ? 'rotate-270' : 'rotate-90'"
+            class="transition-transform"
             name="streamline-freehand:move-rectangle-left"
           />
         </button>
-      </li>
-      <li class="list-row-separator transition-[max-height] overflow-hidden" :class="hidden ? 'max-h-0' : 'max-h-96'">
+      </div>
+      <transition name="collapse">
         <form
-          class="grid grid-cols-[80px_minmax(0,_auto)_45px]"
-          :class="hidden ? '-z-1' : 'max-h-96'"
+          v-show="!hidden"
+          class="list-row-separator grid grid-cols-[80px_minmax(0,_auto)_45px]"
           @submit.prevent="handleAddToShoppingList"
         >
           <button class="btn btn-ghost btn-circle">
@@ -293,27 +301,27 @@ function handleToggleInCart(productId: number) {
           </button>
           <div class="relative col-span-2">
             <input
-                v-model="addToShoppingListParameters.name"
-                class="input input-ghost w-full"
-                placeholder="Nazwa produktu"
-                required
-                type="text"
-                autocomplete="off"
-                role="combobox"
-                aria-autocomplete="list"
-                :aria-expanded="suggestionsOpen"
-                aria-controls="suggestions-list"
-                :aria-activedescendant="highlightedIndex >= 0 ? `suggestion-${highlightedIndex}` : undefined"
-                @focus="openSuggestions()"
-                @blur="onBlur"
-                @keydown="onInputKeydown"
+              v-model="addToShoppingListParameters.name"
+              :aria-activedescendant="highlightedIndex >= 0 ? `suggestion-${highlightedIndex}` : undefined"
+              :aria-expanded="suggestionsOpen"
+              aria-autocomplete="list"
+              aria-controls="suggestions-list"
+              autocomplete="off"
+              class="input input-ghost w-full"
+              placeholder="Nazwa produktu"
+              required
+              role="combobox"
+              type="text"
+              @blur="onBlur"
+              @focus="openSuggestions()"
+              @keydown="onInputKeydown"
             />
 
             <ul
-                v-if="suggestionsOpen"
-                id="suggestions-list"
-                class="border-1 w-full absolute top-full left-0 right-0 mt-1 z-20 menu bg-base-100 rounded-box shadow-lg max-h-64 overflow-auto p-2"
-                role="listbox"
+              v-if="suggestionsOpen"
+              id="suggestions-list"
+              class="border-1 w-full absolute top-full left-0 right-0 mt-1 z-20 menu bg-base-100 rounded-box shadow-lg max-h-64 overflow-auto p-2"
+              role="listbox"
             >
               <li v-if="suggestionsLoading" class="disabled" role="presentation">
                 <span class="loading loading-spinner loading-sm"></span>
@@ -321,17 +329,17 @@ function handleToggleInCart(productId: number) {
               </li>
 
               <li
-                  v-for="(suggestion, idx) in suggestions"
-                  v-else-if="suggestions.length > 0"
-                  :id="`suggestion-${idx}`"
-                  :key="suggestion.id || suggestion.name + idx"
-                  role="option"
-                  class="inline-flex flex-row justify-between items-center"
-                  :class="{ 'active': idx === highlightedIndex }"
-                  :aria-selected="idx === highlightedIndex"
-                  @click="selectSuggestion(suggestion)"
-                  @mouseenter="highlightedIndex = idx"
-                  @mousedown.prevent
+                v-for="(suggestion, idx) in suggestions"
+                v-else-if="suggestions.length > 0"
+                :id="`suggestion-${idx}`"
+                :key="suggestion.id || suggestion.name + idx"
+                :aria-selected="idx === highlightedIndex"
+                :class="{ 'active': idx === highlightedIndex }"
+                class="inline-flex flex-row justify-between items-center"
+                role="option"
+                @click="selectSuggestion(suggestion)"
+                @mouseenter="highlightedIndex = idx"
+                @mousedown.prevent
               >
                 <span>{{ suggestion.name }}</span>
                 <span class="badge badge-ghost badge-sm">{{ suggestion.unit || 'szt.' }}</span>
@@ -343,11 +351,11 @@ function handleToggleInCart(productId: number) {
             </ul>
           </div>
           <input
-              v-model="addToShoppingListParameters.quantity"
-              class="input input-ghost"
-              min="1"
-              required
-              type="number"
+            v-model="addToShoppingListParameters.quantity"
+            class="input input-ghost"
+            min="1"
+            required
+            type="number"
           />
           <select v-model="addToShoppingListParameters.unit" class="select select-ghost col-span-2 w-full">
             <option disabled selected>Wybierz jednostkę</option>
@@ -355,97 +363,104 @@ function handleToggleInCart(productId: number) {
           </select>
           <div class="relative col-span-3">
             <button
-                type="button"
-                class="btn btn-ghost w-full justify-between"
-                @click="categoriesOpen = !categoriesOpen"
-                @blur="categoriesOpen = false"
+              class="btn btn-ghost w-full justify-between"
+              type="button"
+              @blur="categoriesOpen = false"
+              @click="categoriesOpen = !categoriesOpen"
             >
               <div v-if="selectedCategory" class="flex items-center gap-2">
                 <span
-                    class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
-                    :style="{ backgroundColor: `#${selectedCategory.color}` }"
+                  :style="{ backgroundColor: `#${selectedCategory.color}` }"
+                  class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
                 >
-                    {{ getCategoryInitial(selectedCategory.name) }}
-                  </span>
+                  {{ getCategoryInitial( selectedCategory.name ) }}
+                </span>
                 <span>{{ selectedCategory.name }}</span>
               </div>
               <span v-else class="opacity-60">Wybierz kategorię</span>
-              <Icon name="mdi:chevron-down" class="ml-auto" />
+              <Icon class="ml-auto" name="mdi:chevron-down" />
             </button>
 
             <ul
-                v-if="categoriesOpen"
-                class="border-1 w-full absolute top-full left-0 right-0 mt-1 z-20 bg-base-100 rounded-box shadow-lg max-h-64 overflow-auto p-2"
-                role="listbox"
+              v-if="categoriesOpen"
+              class="border-1 w-full absolute top-full left-0 right-0 mt-1 z-20 bg-base-100 rounded-box shadow-lg max-h-64 overflow-auto p-2"
+              role="listbox"
             >
               <li v-if="categoriesStatus === 'pending'" class="disabled" role="presentation">
-                <span class="loading loading-spinner loading-sm"></span>
+                <span class="loading loading-spinner loading-sm" />
                 Ładowanie…
               </li>
               <li
-                  v-for="category in categories"
-                  :key="category.id"
-                  role="option"
-                  :class="{ 'active': addToShoppingListParameters.categoryId === category.id }"
-                  :aria-selected="addToShoppingListParameters.categoryId === category.id"
-                  @mousedown.prevent
-                  class="inline-flex flex-row w-full items-center gap-3 px-3 py-2 rounded-lg cursor-pointer hover:bg-base-200"
-                  @click="selectCategory(category as Category)"
+                v-for="category in categories"
+                :key="category.id"
+                :aria-selected="addToShoppingListParameters.categoryId === category.id"
+                :class="{ 'active': addToShoppingListParameters.categoryId === category.id }"
+                class="inline-flex flex-row w-full items-center gap-3 px-3 py-2 rounded-lg cursor-pointer hover:bg-base-200"
+                role="option"
+                @click="selectCategory(category as Category)"
+                @mousedown.prevent
               >
-                  <span
-                      class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
-                      :style="{ backgroundColor: `#${category.color}` }"
-                  >
-                    {{ getCategoryInitial(category.name) }}
-                  </span>
-                  <span>{{ category.name }}</span>
+                <span
+                  :style="{ backgroundColor: `#${category.color}` }"
+                  class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
+                >
+                  {{ getCategoryInitial( category.name ) }}
+                </span>
+                <span>{{ category.name }}</span>
               </li>
             </ul>
           </div>
         </form>
-      </li>
-      <li
-          v-if="categoriesWithProducts.length"
+      </transition>
+      <ul class="list category-lists">
+        <li
           v-for="categoryWithProducts in categoriesWithProducts"
+          v-if="categoriesWithProducts.length"
           :key="categoryWithProducts.category.id"
           class="category-list"
-      >
-        <span class="inline-flex items-center gap-2">
-          <span
-              class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
-              :style="{ backgroundColor: `#${categoryWithProducts.category.color}` }"
-          >
-              {{ getCategoryInitial(categoryWithProducts.category.name) }}
-            </span>
-          <span>{{ categoryWithProducts.category.name }}</span>
-        </span>
-        <DraggableList
-          :draggableOptions="draggableOptions as any"
-          :items="categoryWithProducts.products"
-          :itemProps="(product) => ({
-            class: { 'line-through': product.inCart },
-            onClick: () => handleToggleInCart( product.id )
-          })"
-          :data-category-id="categoryWithProducts.category.id"
         >
-          <template #item="{ item: product }">
-            <span class="list-col-grow">{{ product.name }} </span>
-            <Icon
-              name="streamline-freehand:data-transfer-vertical"
-              class="handle absolute -left-1"
-              @click.stop
-            />
-            <span>{{ product.quantity }} {{ product.unit }}</span>
-            <button @click.stop="deleteProductFromShoppingList(product.id)">
-              <Icon name="streamline-freehand:remove-delete-sign-bold" />
-            </button>
-          </template>
-          <template #empty>Brak produktów w kategorii</template>
-        </DraggableList>
-      </li>
-      <li v-else class="list-row">Brak produktów na liście</li>
-    </ul>
-    <div v-if="errors.length" class="flex flex-col gap-1"><span class="text-error" v-for="error in errors">{{ error }}</span></div>
+          <span class="inline-flex items-center gap-2">
+            <span
+              :style="{ backgroundColor: `#${categoryWithProducts.category.color}` }"
+              class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
+            >
+              {{ getCategoryInitial( categoryWithProducts.category.name ) }}
+            </span>
+            <span>{{ categoryWithProducts.category.name }}</span>
+          </span>
+          <DraggableList
+            :data-category-id="categoryWithProducts.category.id"
+            :draggableOptions="draggableOptions as any"
+            :itemProps="(product) => ({
+              class: { 'line-through': product.inCart },
+              onClick: () => handleToggleInCart( product.id )
+            })"
+            :items="categoryWithProducts.products"
+          >
+            <template #item="{ item: product }">
+              <span class="list-col-grow">{{ product.name }} </span>
+              <button
+                class="btn btn-ghost btn-sm handle absolute px-2 py-4 mx-1 -my-4"
+                @click.stop
+              >
+                <Icon name="streamline-freehand:data-transfer-vertical" />
+              </button>
+              <span>{{ product.quantity }} {{ product.unit }}</span>
+              <button @click.stop="deleteProductFromShoppingList(product.id)">
+                <Icon name="streamline-freehand:remove-delete-sign-bold" />
+              </button>
+            </template>
+            <template #empty>Brak produktów w kategorii</template>
+          </DraggableList>
+        </li>
+        <li v-else class="list-row">Brak produktów na liście</li>
+      </ul>
+      <div v-if="errors.length" class="flex flex-col gap-1">
+        <span v-for="error in errors" class="text-error">
+          {{ error }}\
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -457,11 +472,40 @@ function handleToggleInCart(productId: number) {
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in oklab, var(--color-base-content) 5%, transparent);
   }
+
   & > * {
     margin-bottom: var(--radius-box);
   }
 }
+
+.handle {
+  left: calc(var(--card-p, 1.5rem) * -1);
+  height: fit-content;
+}
+
+.category-lists {
+  margin-inline: calc(var(--card-p, 1.5rem) * -1);
+  padding-inline: var(--card-p, 1.5rem);
+  overflow: auto;
+  justify-items: flex-start;
+}
+
 .category-list:not(:last-of-type) {
   margin-bottom: var(--radius-box);
+}
+
+.collapse-enter-active,
+.collapse-leave-active {
+  transition: all 0.3s ease;
+  max-height: 500px;
+  overflow-y: hidden;
+}
+
+.collapse-enter-from,
+.collapse-leave-to {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 </style>
