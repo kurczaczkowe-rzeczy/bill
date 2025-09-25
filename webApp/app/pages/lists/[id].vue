@@ -12,6 +12,7 @@ import {
   useShoppingList,
 } from "~/composables/useShoppingListClient";
 import { categoryClient, productClient } from "~/constants";
+import CategoryListItem from "~/pages/lists/CategoryListItem.vue";
 import { isNil } from "~/utils/isNil";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
@@ -89,7 +90,6 @@ const suggestions = ref<ProductSuggestion[]>([]);
 const suggestionsOpen = ref(false);
 const suggestionsLoading = ref(false);
 const highlightedIndex = ref(-1);
-let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
 function openSuggestions() {
   if (suggestions.value.length > 0) {
@@ -145,51 +145,6 @@ async function fetchSuggestions(query: string) {
   }
 }
 
-watch(
-  () => addToShoppingListParameters.name,
-  (val) => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
-    debounceTimer = setTimeout(() => {
-      fetchSuggestions(val);
-    }, 250);
-  },
-);
-
-function onInputKeydown(e: KeyboardEvent) {
-  if (!suggestionsOpen.value && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
-    openSuggestions();
-    return;
-  }
-  if (!suggestionsOpen.value) {
-    return;
-  }
-
-  if (e.key === "ArrowDown") {
-    e.preventDefault();
-    highlightedIndex.value =
-      suggestions.value.length === 0 ? -1 : (highlightedIndex.value + 1) % suggestions.value.length;
-  } else if (e.key === "ArrowUp") {
-    e.preventDefault();
-    highlightedIndex.value =
-      suggestions.value.length === 0
-        ? -1
-        : (highlightedIndex.value - 1 + suggestions.value.length) % suggestions.value.length;
-  } else if (e.key === "Enter") {
-    if (highlightedIndex.value >= 0 && highlightedIndex.value < suggestions.value.length) {
-      e.preventDefault();
-      selectSuggestion(suggestions.value[highlightedIndex.value] as ProductSuggestion);
-    }
-  } else if (e.key === "Escape") {
-    closeSuggestions();
-  }
-}
-
-function onBlur() {
-  setTimeout(() => closeSuggestions(), 100);
-}
-
 const {
   data: categories,
   error: categoriesError,
@@ -213,29 +168,21 @@ const {
 );
 
 const selectedCategory = ref<Category | null>(null);
-const categoriesOpen = ref(false);
-
-const getCategoryInitial = (name: string) => {
-  if (!name) {
-    return "";
+const categoryNameQuery = ref("");
+const categoriesFilterDownByQuery = computed(() => {
+  if (!categoryNameQuery.value || categoryNameQuery.value === selectedCategory.value?.name) {
+    return categories.value;
   }
 
-  const words = name.split(" ");
-  if (words.length > 1) {
-    return words
-      .slice(0, 2)
-      .map((w) => w[0])
-      .join("")
-      .toUpperCase();
-  }
-
-  return name.slice(0, 2).toUpperCase();
-};
+  return categories.value?.filter(({ name }) =>
+    new RegExp(categoryNameQuery.value, "i").test(name),
+  );
+});
 
 const selectCategory = (category: Category) => {
   selectedCategory.value = category;
-  categoriesOpen.value = false;
   addToShoppingListParameters.categoryId = category.id;
+  categoryNameQuery.value = category.name;
 };
 
 async function handleAddToShoppingList(e: Event) {
@@ -299,57 +246,22 @@ function handleToggleInCart(productId: number) {
           <button class="btn btn-ghost btn-circle">
             <Icon name="streamline-freehand:add-sign-bold" />
           </button>
-          <div class="relative col-span-2">
-            <input
-              v-model="addToShoppingListParameters.name"
-              :aria-activedescendant="highlightedIndex >= 0 ? `suggestion-${highlightedIndex}` : undefined"
-              :aria-expanded="suggestionsOpen"
-              aria-autocomplete="list"
-              aria-controls="suggestions-list"
-              autocomplete="off"
-              class="input input-ghost w-full"
-              placeholder="Nazwa produktu"
-              required
-              role="combobox"
-              type="text"
-              @blur="onBlur"
-              @focus="openSuggestions()"
-              @keydown="onInputKeydown"
-            />
-
-            <ul
-              v-if="suggestionsOpen"
-              id="suggestions-list"
-              class="border-1 w-full absolute top-full left-0 right-0 mt-1 z-20 menu bg-base-100 rounded-box shadow-lg max-h-64 overflow-auto p-2"
-              role="listbox"
-            >
-              <li v-if="suggestionsLoading" class="disabled" role="presentation">
-                <span class="loading loading-spinner loading-sm"></span>
-                Ładowanie…
-              </li>
-
-              <li
-                v-for="(suggestion, idx) in suggestions"
-                v-else-if="suggestions.length > 0"
-                :id="`suggestion-${idx}`"
-                :key="suggestion.id || suggestion.name + idx"
-                :aria-selected="idx === highlightedIndex"
-                :class="{ 'active': idx === highlightedIndex }"
-                class="inline-flex flex-row justify-between items-center"
-                role="option"
-                @click="selectSuggestion(suggestion)"
-                @mouseenter="highlightedIndex = idx"
-                @mousedown.prevent
-              >
-                <span>{{ suggestion.name }}</span>
-                <span class="badge badge-ghost badge-sm">{{ suggestion.unit || 'szt.' }}</span>
-              </li>
-
-              <li v-else-if="!suggestionsLoading && suggestions.length === 0" class="disabled" role="presentation">
-                <span class="opacity-60">Brak sugestii</span>
-              </li>
-            </ul>
-          </div>
+          <BaseAutocomplete
+            v-model="addToShoppingListParameters.name"
+            :is-loading="suggestionsLoading"
+            :suggestions="suggestions"
+            label-key="name"
+            list-id="suggestions"
+            placeholder="Nazwa produktu"
+            wrapperClass="col-span-2"
+            @search="fetchSuggestions"
+            @select="selectSuggestion"
+          >
+            <template #item="{ item: suggestion }">
+              <span class="list-col-grow">{{ suggestion.name }}</span>
+              <span class="badge badge-ghost badge-sm">{{ suggestion.unit || 'szt.' }}</span>
+            </template>
+          </BaseAutocomplete>
           <input
             v-model="addToShoppingListParameters.quantity"
             class="input input-ghost"
@@ -361,55 +273,44 @@ function handleToggleInCart(productId: number) {
             <option disabled selected>Wybierz jednostkę</option>
             <option v-for="unit in units" :key="unit.name" :value="unit">{{ unit.name }}</option>
           </select>
-          <div class="relative col-span-3">
-            <button
-              class="btn btn-ghost w-full justify-between"
-              type="button"
-              @blur="categoriesOpen = false"
-              @click="categoriesOpen = !categoriesOpen"
-            >
-              <div v-if="selectedCategory" class="flex items-center gap-2">
-                <span
-                  :style="{ backgroundColor: `#${selectedCategory.color}` }"
-                  class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
-                >
-                  {{ getCategoryInitial( selectedCategory.name ) }}
-                </span>
-                <span>{{ selectedCategory.name }}</span>
-              </div>
-              <span v-else class="opacity-60">Wybierz kategorię</span>
-              <Icon class="ml-auto" name="mdi:chevron-down" />
-            </button>
 
-            <ul
-              v-if="categoriesOpen"
-              class="border-1 w-full absolute top-full left-0 right-0 mt-1 z-20 bg-base-100 rounded-box shadow-lg max-h-64 overflow-auto p-2"
-              role="listbox"
-            >
-              <li v-if="categoriesStatus === 'pending'" class="disabled" role="presentation">
-                <span class="loading loading-spinner loading-sm" />
-                Ładowanie…
-              </li>
-              <li
-                v-for="category in categories"
-                :key="category.id"
-                :aria-selected="addToShoppingListParameters.categoryId === category.id"
-                :class="{ 'active': addToShoppingListParameters.categoryId === category.id }"
-                class="inline-flex flex-row w-full items-center gap-3 px-3 py-2 rounded-lg cursor-pointer hover:bg-base-200"
-                role="option"
-                @click="selectCategory(category as Category)"
-                @mousedown.prevent
-              >
-                <span
-                  :style="{ backgroundColor: `#${category.color}` }"
-                  class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
+          <BaseAutocomplete
+            v-model="categoryNameQuery"
+            :is-loading="categoriesStatus === 'pending'"
+            :suggestions="categoriesFilterDownByQuery ?? []"
+            label-key="name"
+            list-id="categories"
+            wrapperClass="col-span-3"
+            @select="selectCategory as any"
+          >
+            <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef }">
+              <div :ref="bindFieldRef" class="flex items-center gap-2 input input-ghost w-full">
+                <CategoryListItem
+                  :color="selectedCategory?.color ?? '323232'"
+                  :name="selectedCategory?.name ?? query"
                 >
-                  {{ getCategoryInitial( category.name ) }}
-                </span>
-                <span>{{ category.name }}</span>
-              </li>
-            </ul>
-          </div>
+                  <template #label>
+                    <input
+                      :aria-controls="listId"
+                      :value="query"
+                      aria-autocomplete="list"
+                      autocomplete="off"
+                      placeholder="Wybierz kategorię"
+                      role="combobox"
+                      type="text"
+                      @click="handleClick"
+                      @input="handleInput"
+                      @keydown="handleKeydown"
+                    />
+                  </template>
+                </CategoryListItem>
+                <Icon class="autocomplete-arrow" name="mdi:chevron-down" />
+              </div>
+            </template>
+            <template #item="{ item: selectedCategory }">
+              <CategoryListItem :="selectedCategory" />
+            </template>
+          </BaseAutocomplete>
         </form>
       </transition>
       <ul class="list category-lists">
@@ -419,15 +320,7 @@ function handleToggleInCart(productId: number) {
           :key="categoryWithProducts.category.id"
           class="category-list"
         >
-          <span class="inline-flex items-center gap-2">
-            <span
-              :style="{ backgroundColor: `#${categoryWithProducts.category.color}` }"
-              class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm"
-            >
-              {{ getCategoryInitial( categoryWithProducts.category.name ) }}
-            </span>
-            <span>{{ categoryWithProducts.category.name }}</span>
-          </span>
+          <CategoryListItem :="categoryWithProducts.category" />
           <DraggableList
             :data-category-id="categoryWithProducts.category.id"
             :draggableOptions="draggableOptions as any"

@@ -1,12 +1,7 @@
 <script lang="ts" setup>
-import { definePageMeta } from "#imports";
 import BaseList from "~/components/BaseList.vue";
 import { useShoppingLists } from "~/composables/useShoppingListsClient";
 import { handleResponseError } from "~/utils/handleResponseError";
-
-definePageMeta({
-  layout: "list",
-});
 
 const {
   shoppingLists,
@@ -63,7 +58,7 @@ function defaultName() {
           <span class="col-2 justify-self-end">List: {{ shoppingLists.length }}</span>
         </li>
         <li>
-          <form class="list-row" @submit="handleAddShoppingList">
+          <form class="list-row" @submit.prevent="handleAddShoppingList">
             <label class="list-col-grow">
               <input
                 v-model="nameRef"
