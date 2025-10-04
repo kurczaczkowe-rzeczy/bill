@@ -1,12 +1,16 @@
-<script generic="T extends Item" lang="ts" setup>
+<script generic="Suggestion extends Item" lang="ts" setup>
 import { autoUpdate, flip, offset, shift, size, useFloating } from "@floating-ui/vue";
 import { onClickOutside, useDebounceFn } from "@vueuse/core";
 
 import type { Item } from "~/types/item";
 
+type Query = string;
+type Properties = keyof Suggestion;
+type Suggestions = Suggestion[];
+
 interface Props {
-  modelValue?: string;
-  suggestions: T[];
+  modelValue?: Query;
+  suggestions: Suggestions;
   isLoading?: boolean;
   placeholder?: string;
   wrapperClass?: string;
@@ -14,6 +18,7 @@ interface Props {
   labelKey?: string;
   minLengthQuery?: number;
   listId: string;
+  matchBy?: (suggestion: Suggestion, query: Query) => boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -28,12 +33,12 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  "update:modelValue": [value: string];
-  search: [query: string];
-  select: [item: T];
+  "update:modelValue": [value: Query];
+  search: [query: Query];
+  select: [item: Suggestion];
 }>();
 
-const query = ref(props.modelValue);
+const query = ref<Query>(props.modelValue);
 const isOpen = ref(false);
 const highlightedIndex = ref(-1);
 const containerRef = ref<HTMLElement>();
@@ -113,13 +118,15 @@ function handleKeydown(event: KeyboardEvent) {
     }
 
     case "tab": {
+      if (isOpen.value) {
+        event.preventDefault();
+        selectItem(props.suggestions[highlightedIndex.value]);
+      }
       isOpen.value = false;
 
       // This is for cases when the suggestion list is changing by computable for ex. value bound to modelValue
       // is used in computable to filter a static list. It protects against switching to other suggestions
-      highlightedIndex.value = props.suggestions.findIndex(
-        (suggestion) => suggestion[props.labelKey as keyof T] === query.value,
-      );
+      highlightedIndex.value = getSuggestionIndexBaseOn(props.suggestions, query.value);
       if (highlightedIndex.value >= 0) {
         selectItem(props.suggestions[highlightedIndex.value]);
       }
@@ -128,13 +135,13 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
-function selectItem(item?: T) {
+function selectItem(item?: Suggestion) {
   if (!item) {
     return;
   }
   emit("select", item);
 
-  query.value = `${item[props.labelKey as keyof T]}` || item.toString();
+  query.value = `${item[props.labelKey as Properties]}` || item.toString();
   emit("update:modelValue", query.value);
 
   if (isOpen.value) {
@@ -148,9 +155,7 @@ function handleClick() {
     return;
   }
 
-  highlightedIndex.value = props.suggestions.findIndex(
-    (suggestion) => suggestion[props.labelKey as keyof T] === query.value,
-  );
+  highlightedIndex.value = getSuggestionIndexBaseOn(props.suggestions, query.value);
   isOpen.value = true;
 }
 
@@ -160,6 +165,16 @@ onClickOutside(containerRef, () => {
 
 function bindFieldRef(el: HTMLElement) {
   reference.value = el;
+}
+
+function getSuggestionIndexBaseOn(suggestions: Suggestions, query: Query): number {
+  return suggestions.findIndex((suggestion) => {
+    if (props.matchBy) {
+      return props.matchBy?.(suggestion, query);
+    }
+
+    return suggestion[props.labelKey as Properties] === query;
+  });
 }
 
 watch(
@@ -238,7 +253,7 @@ watch(
             @mouseenter="highlightedIndex = index"
           >
             <slot :highlighted="highlightedIndex === index" :index="index" :item="item" name="item">
-              {{ item[ labelKey as keyof Item ] }}
+              {{ item[ labelKey as Properties ] }}
             </slot>
           </li>
         </ul>

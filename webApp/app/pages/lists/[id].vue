@@ -19,10 +19,13 @@ import { ktToJs } from "~/utils/ktToJs";
 
 const route = useRoute();
 
-const hidden = ref(false);
+const isAddProductFormHidden = ref(false);
 
 function toggleAddForm(): void {
-  hidden.value = !hidden.value;
+  isAddProductFormHidden.value = !isAddProductFormHidden.value;
+  if (import.meta.client) {
+    localStorage.setItem("isAddProductFormHidden", String(isAddProductFormHidden.value));
+  }
 }
 
 const units = UnitEnum.values();
@@ -38,6 +41,17 @@ const {
   shoppingListDetails,
 } = await useShoppingList(route.params.id, {
   useAutoListenFor: ["shoppingListChanges"],
+});
+
+watchEffect(() => {
+  const hasAnyInCart = shoppingListDetails.value.some((product) => product.inCart);
+
+  if (hasAnyInCart && import.meta.client) {
+    const saved = localStorage.getItem("isAddProductFormHidden");
+    if (saved !== null) {
+      isAddProductFormHidden.value = saved === "true";
+    }
+  }
 });
 
 const leftToBuy = computed(() =>
@@ -192,7 +206,9 @@ async function handleAddToShoppingList(e: Event) {
       ...addToShoppingListParameters,
     },
     () => {
-      (e.currentTarget as HTMLFormElement)?.reset();
+      const target = (e.currentTarget as HTMLFormElement) || (e.target as HTMLFormElement | null);
+      target?.reset();
+      (target?.elements.namedItem("product") as HTMLInputElement)?.focus();
       resetAddToShoppingListParameters();
     },
     (err) => {
@@ -212,7 +228,15 @@ function handleToggleInCart(productId: number) {
     return;
   }
 
+  if (!isAddProductFormHidden.value) {
+    toggleAddForm();
+  }
+
   toggleInCart(productId);
+}
+
+function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string): boolean {
+  return suggestion.name === query && suggestion.unit === addToShoppingListParameters.unit.name;
 }
 </script>
 
@@ -231,7 +255,7 @@ function handleToggleInCart(productId: number) {
         <span class="justify-self-end">Pozostało: {{ leftToBuy }}</span>
         <button class="btn btn-ghost btn-circle" @click="toggleAddForm">
           <Icon
-            :class="hidden ? 'rotate-270' : 'rotate-90'"
+            :class="isAddProductFormHidden ? 'rotate-270' : 'rotate-90'"
             class="transition-transform"
             name="streamline-freehand:move-rectangle-left"
           />
@@ -239,7 +263,7 @@ function handleToggleInCart(productId: number) {
       </div>
       <transition name="collapse">
         <form
-          v-show="!hidden"
+          v-show="!isAddProductFormHidden"
           class="list-row-separator grid grid-cols-[80px_minmax(0,_auto)_45px]"
           @submit.prevent="handleAddToShoppingList"
         >
@@ -249,9 +273,11 @@ function handleToggleInCart(productId: number) {
           <BaseAutocomplete
             v-model="addToShoppingListParameters.name"
             :is-loading="suggestionsLoading"
+            :match-by="matchProductSuggestionBy"
             :suggestions="suggestions"
             label-key="name"
             list-id="suggestions"
+            name="product"
             placeholder="Nazwa produktu"
             wrapperClass="col-span-2"
             @search="fetchSuggestions"
@@ -266,10 +292,11 @@ function handleToggleInCart(productId: number) {
             v-model="addToShoppingListParameters.quantity"
             class="input input-ghost"
             min="1"
+            name="quantity"
             required
             type="number"
           />
-          <select v-model="addToShoppingListParameters.unit" class="select select-ghost col-span-2 w-full">
+          <select v-model="addToShoppingListParameters.unit" class="select select-ghost col-span-2 w-full" name="unit">
             <option disabled selected>Wybierz jednostkę</option>
             <option v-for="unit in units" :key="unit.name" :value="unit">{{ unit.name }}</option>
           </select>
@@ -280,10 +307,11 @@ function handleToggleInCart(productId: number) {
             :suggestions="categoriesFilterDownByQuery ?? []"
             label-key="name"
             list-id="categories"
+            name="category"
             wrapperClass="col-span-3"
             @select="selectCategory as any"
           >
-            <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef }">
+            <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef, attrs }">
               <div :ref="bindFieldRef" class="flex items-center gap-2 input input-ghost w-full">
                 <CategoryListItem
                   :color="selectedCategory?.color ?? '323232'"
@@ -298,6 +326,7 @@ function handleToggleInCart(productId: number) {
                       placeholder="Wybierz kategorię"
                       role="combobox"
                       type="text"
+                      v-bind="attrs"
                       @click="handleClick"
                       @input="handleInput"
                       @keydown="handleKeydown"
