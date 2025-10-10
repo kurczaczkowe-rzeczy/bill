@@ -26,6 +26,7 @@
     "@biomejs/biome": "^2.2.0",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/streamline-freehand": "^1.2.1",
+    "@types/sortablejs": "^1.15.8",
     "@vite-pwa/nuxt": "^1.0.4",
     "gh-pages": "^6.3.0"
   }

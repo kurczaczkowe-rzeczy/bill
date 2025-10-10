@@ -214,7 +214,9 @@ async function handleAddToShoppingList(e: Event) {
     (err) => {
       formErrors.name = err.message;
     },
-  );
+  ).catch((err) => {
+    formErrors.name = err && "message" in err ? e.message : "Unknown error";
+  });
 }
 
 function resetAddToShoppingListParameters() {

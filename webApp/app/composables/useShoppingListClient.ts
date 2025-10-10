@@ -175,10 +175,11 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
 
             break;
           }
-          case "delete":
+          case "delete": {
             __deleteProduct(jsPayload.oldRecord!.id);
 
             break;
+          }
           default:
             throw new Error("Invalid payload");
         }
@@ -239,6 +240,11 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     onError?: (error: Error) => void,
     onFinally?: () => void,
   ): Promise<void> {
+    // Prevent multiple requests on the same product
+    if (loading.value) {
+      return;
+    }
+
     if (params.name.trim() === "") {
       throw new Error("Nazwa powinna być wypełniona");
     }
@@ -277,7 +283,10 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
 
     shoppingListClient
       .deleteFromShoppingListAsync(id)
-      .then(readResponse)
+      .then((response) => {
+        const data = readResponse(response);
+        __deleteProduct(data.id);
+      })
       .catch((error) => {
         console.error(error);
       })
