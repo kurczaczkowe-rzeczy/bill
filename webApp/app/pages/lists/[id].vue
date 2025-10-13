@@ -69,7 +69,9 @@ const draggableOptions = {
       return;
     }
 
-    const category = categories.value?.find((c) => c.id === Number(evt.to.dataset.categoryId));
+    const category = categories.value?.find(
+      (c) => c.id === Number(evt.to.parentElement?.dataset.categoryId ?? -1),
+    );
 
     if (!category) {
       return;
@@ -215,7 +217,7 @@ async function handleAddToShoppingList(e: Event) {
       formErrors.name = err.message;
     },
   ).catch((err) => {
-    formErrors.name = err && "message" in err ? e.message : "Unknown error";
+    formErrors.name = err && "message" in err ? err.message : "Unknown error";
   });
 }
 
@@ -354,12 +356,12 @@ function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string):
           <CategoryListItem :="categoryWithProducts.category" />
           <DraggableList
             :data-category-id="categoryWithProducts.category.id"
-            :draggableOptions="draggableOptions as any"
             :itemProps="(product) => ({
               class: { 'line-through': product.inCart },
               onClick: () => handleToggleInCart( product.id )
             })"
-            :items="categoryWithProducts.products"
+            :items="categoryWithProducts.products as ShoppingListDetails[]"
+            :="draggableOptions"
           >
             <template #item="{ item: product }">
               <span class="list-col-grow">{{ product.name }} </span>
@@ -381,7 +383,7 @@ function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string):
       </ul>
       <div v-if="errors.length" class="flex flex-col gap-1">
         <span v-for="error in errors" class="text-error">
-          {{ error }}\
+          {{ error }}
         </span>
       </div>
     </div>
