@@ -18,6 +18,7 @@ import type { Channels } from "~/composables/types";
 import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
 import { shoppingListClient } from "~/constants";
 import { getChannelActionFrom } from "~/utils/channelAction";
+import { getStringParam } from "~/utils/getStringParam";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 import { readResponse } from "~/utils/readResponse";
@@ -355,13 +356,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
 }
 
 function routeListIdToNumber(id: unknown): number {
-  const preparedId = Array.isArray(id) ? id[0] : id;
-
-  if (preparedId === undefined || preparedId === null) {
-    throw new Error(
-      `Invalid list ID. It should be a string or number. Actual value: ${preparedId}`,
-    );
-  }
+  const preparedId = getStringParam(id);
 
   const parsedId = parseInt(preparedId, 10);
   if (Number.isNaN(parsedId)) {

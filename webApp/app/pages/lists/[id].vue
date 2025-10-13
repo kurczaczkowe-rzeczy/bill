@@ -5,6 +5,7 @@ import {
   type ShoppingListDetails,
   UnitEnum,
 } from "@bill/Bill-shoppingList";
+import { useLocalStorage } from "@vueuse/core";
 import type { DraggableEvent } from "vue-draggable-plus";
 
 import {
@@ -13,20 +14,21 @@ import {
 } from "~/composables/useShoppingListClient";
 import { categoryClient, productClient } from "~/constants";
 import CategoryListItem from "~/pages/lists/CategoryListItem.vue";
+import { getStringParam } from "~/utils/getStringParam";
 import { isNil } from "~/utils/isNil";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 
+const ITEM_CHOOSE_TIMESTAMP_TIMEOUT = 150;
+const COLLAPSED_ADD_FORM_LIST_IDS = "collapsedAddFormListIds";
+
 const route = useRoute();
 
-const isAddProductFormHidden = ref(false);
-
-function toggleAddForm(): void {
-  isAddProductFormHidden.value = !isAddProductFormHidden.value;
-  if (import.meta.client) {
-    localStorage.setItem("isAddProductFormHidden", String(isAddProductFormHidden.value));
-  }
-}
+const {
+  isCollapsed: isAddProductFormHidden,
+  toggle: toggleAddForm,
+  hasEverToggled: hasEverToggledAddForm,
+} = useCollapsedAddForm(getStringParam(route.params.id));
 
 const units = UnitEnum.values();
 
@@ -41,17 +43,6 @@ const {
   shoppingListDetails,
 } = await useShoppingList(route.params.id, {
   useAutoListenFor: ["shoppingListChanges"],
-});
-
-watchEffect(() => {
-  const hasAnyInCart = shoppingListDetails.value.some((product) => product.inCart);
-
-  if (hasAnyInCart && import.meta.client) {
-    const saved = localStorage.getItem("isAddProductFormHidden");
-    if (saved !== null) {
-      isAddProductFormHidden.value = saved === "true";
-    }
-  }
 });
 
 const leftToBuy = computed(() =>
@@ -76,7 +67,13 @@ const draggableOptions = {
     if (!category) {
       return;
     }
+
     switchProductCategory(evt.data.id, category as Category);
+    // Timestamp is set to prevent calling whole click event when user chooses an element to reorder.
+    // So I need to reset it here to make it possible to call click event.
+    setTimeout(() => {
+      itemChooseTimeStamp.value = null;
+    }, ITEM_CHOOSE_TIMESTAMP_TIMEOUT);
   },
   forceFallback: true,
   fallbackClass: "hidden",
@@ -228,19 +225,58 @@ function resetAddToShoppingListParameters() {
 }
 
 function handleToggleInCart(productId: number) {
-  if (itemChooseTimeStamp.value && Date.now() - itemChooseTimeStamp.value > 150) {
+  if (
+    itemChooseTimeStamp.value &&
+    Date.now() - itemChooseTimeStamp.value > ITEM_CHOOSE_TIMESTAMP_TIMEOUT
+  ) {
     return;
   }
 
-  if (!isAddProductFormHidden.value) {
+  if (!hasEverToggledAddForm.value && !isAddProductFormHidden.value) {
     toggleAddForm();
   }
 
   toggleInCart(productId);
 }
 
+onMounted(() => {
+  // ToDo: If ls is empty and shopping list has product in cart but they isn't already fetched, form stays open.
+  //  Probably using cookies solves it.
+  const hasAnyInCart = shoppingListDetails.value.some((product) => product.inCart);
+
+  if (hasAnyInCart && import.meta.client && !isAddProductFormHidden.value) {
+    toggleAddForm();
+  }
+});
+
 function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string): boolean {
   return suggestion.name === query && suggestion.unit === addToShoppingListParameters.unit.name;
+}
+
+function useCollapsedAddForm(listId: string) {
+  const collapsedAddFormListIds = useLocalStorage(COLLAPSED_ADD_FORM_LIST_IDS, new Set<string>());
+  const isCollapsed = ref(false);
+  const hasEverToggled = ref(false);
+
+  onMounted(() => {
+    isCollapsed.value = collapsedAddFormListIds.value.has(listId);
+  });
+
+  function toggle() {
+    if (collapsedAddFormListIds.value.has(listId)) {
+      collapsedAddFormListIds.value.delete(listId);
+    } else {
+      collapsedAddFormListIds.value.add(listId);
+    }
+    isCollapsed.value = collapsedAddFormListIds.value.has(listId);
+    hasEverToggled.value = true;
+  }
+
+  return {
+    isCollapsed: readonly(isCollapsed),
+    hasEverToggled: readonly(hasEverToggled),
+    toggle,
+  };
 }
 </script>
 
