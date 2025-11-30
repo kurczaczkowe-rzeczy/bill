@@ -21,7 +21,7 @@ fun groupProductsByCategoryJs(
                 color = (p.category.color as String),
             ),
             quantity = (p.quantity as Number).toInt(),
-            unit = UnitEnum.valueOf(p.unit as String),
+            unit = UnitEnum.valueOf((p.unit as UnitEnum).name),
             inCart = p.inCart as Boolean,
             createdAt = p.createdAt as String,
         )
