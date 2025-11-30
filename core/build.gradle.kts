@@ -1,18 +1,20 @@
+import love.forte.plugin.suspendtrans.configuration.SuspendTransformConfigurations.kotlinJsExportIgnoreClassInfo
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JsModuleKind
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import love.forte.plugin.suspendtrans.configuration.SuspendTransformConfigurations.kotlinJsExportIgnoreClassInfo
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.suspend.transform)
     alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xes-long-as-bigint")
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -35,6 +37,7 @@ kotlin {
         useEsModules()
         browser {
             compilerOptions {
+                target = "es2015"
                 moduleKind.set(JsModuleKind.MODULE_ES)
             }
         }
@@ -42,7 +45,7 @@ kotlin {
         generateTypeScriptDefinitions()
         compilations.all {
             packageJson {
-                customField("types", "kotlin/$name.d.ts")
+                customField("types", "kotlin/$name.d.mts")
                 customField("type", "module")
             }
         }
@@ -51,20 +54,12 @@ kotlin {
     sourceSets {
         androidMain {
             dependencies {
-                api(compose.preview)
-                api(libs.androidx.activity.compose)
 
                 api(libs.ktor.client.okhttp)
             }
         }
         commonMain {
             dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material)
-                api(compose.ui)
-                api(compose.components.resources)
-                api(compose.components.uiToolingPreview)
 
                 implementation(libs.kotlin.stdlib)
 

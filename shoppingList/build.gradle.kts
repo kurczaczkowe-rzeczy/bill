@@ -1,7 +1,7 @@
+import love.forte.plugin.suspendtrans.configuration.SuspendTransformConfigurations.kotlinJsExportIgnoreClassInfo
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JsModuleKind
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import love.forte.plugin.suspendtrans.configuration.SuspendTransformConfigurations.kotlinJsExportIgnoreClassInfo
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -11,6 +11,10 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xes-long-as-bigint")
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -33,6 +37,7 @@ kotlin {
         useEsModules()
         browser {
             compilerOptions {
+                target = "es2015"
                 moduleKind.set(JsModuleKind.MODULE_ES)
             }
         }
@@ -40,7 +45,7 @@ kotlin {
         generateTypeScriptDefinitions()
         compilations.all {
             packageJson {
-                customField("types", "kotlin/$name.d.ts")
+                customField("types", "kotlin/$name.d.mts")
                 customField("type", "module")
             }
         }
