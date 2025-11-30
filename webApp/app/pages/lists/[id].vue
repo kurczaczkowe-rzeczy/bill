@@ -61,7 +61,7 @@ const draggableOptions = {
     }
 
     const category = categories.value?.find(
-      (c) => c.id === Number(evt.to.parentElement?.dataset.categoryId ?? -1),
+      (c) => c.id === BigInt(evt.to.parentElement?.dataset.categoryId ?? -1),
     );
 
     if (!category) {
@@ -90,14 +90,14 @@ const addToShoppingListParameters = reactive<AddToShoppingListParameters>({
   name: "",
   quantity: 1,
   unit: UnitEnum.GRAM,
-  categoryId: 1,
+  categoryId: 1n,
 });
 
 const errors = computed(() =>
   [shoppingListDetailsError.value, categoriesError.value].filter(Boolean),
 );
 
-type ProductSuggestion = Pick<Product, "id" | "createdAt" | "name"> & { unit: string };
+type ProductSuggestion = Product;
 
 const suggestions = ref<ProductSuggestion[]>([]);
 const suggestionsOpen = ref(false);
@@ -118,7 +118,7 @@ function closeSuggestions() {
 function selectSuggestion(s: ProductSuggestion) {
   try {
     addToShoppingListParameters.name = s.name;
-    addToShoppingListParameters.unit = UnitEnum.valueOf(s.unit);
+    addToShoppingListParameters.unit = UnitEnum.valueOf(s.unit.name);
     closeSuggestions();
   } catch (e) {
     console.error("selectSuggestion->", e);
@@ -148,7 +148,7 @@ async function fetchSuggestions(query: string) {
       return;
     }
 
-    const result = ktToJs(response.result as KtList<ProductSuggestion>);
+    const result = ktToJs(response.result as KtList<Product>) as Product[];
 
     suggestions.value = result || [];
 
@@ -175,7 +175,7 @@ const {
       throw new Error(`Unsupported response type: ${response.constructor.name}`);
     }
 
-    return ktToJs(response.result as KtList<Category>);
+    return ktToJs(response.result as KtList<Category>) as Category[];
   },
   { server: false },
 );
@@ -194,7 +194,7 @@ const categoriesFilterDownByQuery = computed(() => {
 
 const selectCategory = (category: Category) => {
   selectedCategory.value = category;
-  addToShoppingListParameters.categoryId = category.id;
+  addToShoppingListParameters.categoryId = BigInt(category.id);
   categoryNameQuery.value = category.name;
 };
 

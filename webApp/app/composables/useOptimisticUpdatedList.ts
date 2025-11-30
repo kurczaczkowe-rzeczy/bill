@@ -1,8 +1,10 @@
 import type { ChannelAction } from "~/utils/channelAction";
 import { isNil } from "~/utils/isNil";
 
+type Id = number | bigint;
+
 interface Item {
-  id: number;
+  id: Id;
 }
 type WithOnlyRequiredId<T> = T extends Item ? Partial<Omit<T, "id">> & Item : never;
 
@@ -10,9 +12,9 @@ export function useOptimisticUpdatedList<ListItem extends Item>(
   data: MaybeRefOrGetter<ListItem[] | undefined>,
 ) {
   const listToSync = ref<ListItem[]>([]);
-  const disableAction = ref(new Map<number, ChannelAction[]>());
+  const disableAction = ref(new Map<Id, ChannelAction[]>());
 
-  function blockAction(id: number, action: ChannelAction) {
+  function blockAction(id: Id, action: ChannelAction) {
     if (disableAction.value.has(id)) {
       const actions = disableAction.value.get(id) as ChannelAction[];
       actions.push(action);
@@ -22,7 +24,7 @@ export function useOptimisticUpdatedList<ListItem extends Item>(
     disableAction.value.set(id, [action]);
   }
 
-  function releaseAction(id: number, action: ChannelAction) {
+  function releaseAction(id: Id, action: ChannelAction) {
     if (!disableAction.value.has(id)) {
       return;
     }
@@ -53,7 +55,7 @@ export function useOptimisticUpdatedList<ListItem extends Item>(
     return false;
   }
 
-  function isActionBlocked(id: number, action: ChannelAction): boolean {
+  function isActionBlocked(id: Id, action: ChannelAction): boolean {
     // ToDo: Workaround for insert action. If I don't block it, it will be inserted twice'
     if (!disableAction.value.has(id) && hasAction("insert")) {
       return true;
@@ -71,7 +73,7 @@ export function useOptimisticUpdatedList<ListItem extends Item>(
    * function handleManageAction(id: number, action: ChannelAction, promise: Promise<any>) {}
    * */
 
-  function getItem(id?: number | null): { item?: ListItem; index: number } {
+  function getItem(id?: Id | null): { item?: ListItem; index: number } {
     const index = getItemIndex(id);
 
     return {
@@ -80,7 +82,7 @@ export function useOptimisticUpdatedList<ListItem extends Item>(
     };
   }
 
-  function getItemIndex(id?: number | null): number {
+  function getItemIndex(id?: Id | null): number {
     return listToSync.value?.findIndex((p) => p.id === id) ?? -1;
   }
 
@@ -110,7 +112,7 @@ export function useOptimisticUpdatedList<ListItem extends Item>(
     return itemIndex;
   }
 
-  function deleteItem(id?: number | null) {
+  function deleteItem(id?: Id | null) {
     const itemId = getItemIndex(id);
     if (itemId !== -1) {
       listToSync.value.splice(itemId, 1);

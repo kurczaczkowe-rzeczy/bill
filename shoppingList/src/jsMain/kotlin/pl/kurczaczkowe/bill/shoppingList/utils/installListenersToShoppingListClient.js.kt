@@ -11,7 +11,7 @@ import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingList
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListRow
 import kotlin.time.ExperimentalTime
 
-private typealias ShoppingListChangeListener = (listId: Number, action: (payload: dynamic) -> dynamic) -> Subscription
+private typealias ShoppingListChangeListener = (listId: Long, action: (payload: dynamic) -> dynamic) -> Subscription
 private typealias ShoppingListsChangeListener = (action: (payload: dynamic) -> dynamic) -> Subscription
 
 
@@ -28,7 +28,7 @@ private fun  <T : Function<*>> ensureMethod(ctor: dynamic, funcName: String, f: 
 fun installListenersToShoppingListClient() {
     val shoppingListClientCtor: dynamic = ShoppingListClient::class.js
 
-    ensureMethod<ShoppingListChangeListener>(shoppingListClientCtor, "listenForShoppingListChanges") { listId: Number, action: (payload: dynamic) -> dynamic ->
+    ensureMethod<ShoppingListChangeListener>(shoppingListClientCtor, "listenForShoppingListChanges") { listId: Long, action: (payload: dynamic) -> dynamic ->
         js("this").unsafeCast<ShoppingListClient>().listenForShoppingListChanges(action = { payload ->
             try {
                 val jsPayload = preparePayload<ShoppingListRow>(payload)
@@ -37,7 +37,7 @@ fun installListenersToShoppingListClient() {
                 println(e)
             }
         },
-            listId = listId.toLong(),
+            listId = listId,
         )
     }
     ensureMethod<ShoppingListsChangeListener>(shoppingListClientCtor, "listenForShoppingListsChanges") { action: (payload: dynamic) -> dynamic ->

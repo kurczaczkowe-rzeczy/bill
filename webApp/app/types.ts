@@ -1,7 +1,7 @@
 declare module "@bill/Bill-shoppingList" {
   interface ShoppingListClient {
     listenForShoppingListChanges(
-      listId: number,
+      listId: bigint,
       action: ListenForShoppingListChangesAction,
     ): Subscription;
     listenForShoppingListsChanges(action: ListenForShoppingListsChangesAction): Subscription;

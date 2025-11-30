@@ -11,8 +11,11 @@
     "deploy": "nuxi generate && gh-pages --dotfiles -d .output/public"
   },
   "dependencies": {
+    "@bill": "file:../build/js/packages/",
+    "@floating-ui/vue": "^1.1.9",
     "@nuxt/icon": "2.0.0",
     "@tailwindcss/vite": "^4.1.12",
+    "@vueuse/core": "^13.9.0",
     "daisyui": "^5.0.50",
     "nuxt": "^4.0.1",
     "tailwind-merge": "^3.3.1",

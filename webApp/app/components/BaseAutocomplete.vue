@@ -235,9 +235,10 @@ watch(
           </li>
 
           <!-- Slot: Empty state -->
-          <li v-else-if="!isLoading && suggestions.length === 0 && query" class="list-row">
+          <li v-else-if="!isLoading && suggestions.length === 0" class="list-row">
             <slot :query="query" name="no-results">
-              <span class="opacity-60">Brak wyników dla "{{ query }}"</span>
+              <span class="opacity-60" v-if="query">Brak wyników dla "{{ query }}"</span>
+              <span class="opacity-60" v-else>Wprowadź min. {{ minLengthQuery }} znaki</span>
             </slot>
           </li>
 

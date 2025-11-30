@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/style/noNonNullAssertion: values is properly checked */
+/** biome-ignore-all lint/style/noNonNullAssertion: values are properly checked */
 import {
   type Category,
   type EntityId,
@@ -84,109 +84,110 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
 
   const categoriesWithProducts = computed(() =>
     shoppingListDetails.value && categories.value
-      ? ktToJs(groupProductsByCategoryJs(shoppingListDetails.value, categories.value))
+      ? ktToJs( groupProductsByCategoryJs( shoppingListDetails.value, categories.value ) )
       : [],
   );
+
+  async function handleChanges(
+    payload:
+      | JsPostgresAction<ShoppingListRow, null>
+      | JsPostgresAction<null, EntityId>
+      | JsPostgresAction<ShoppingListRow, EntityId>,
+  ) {
+    try {
+      const jsPayload = ktToJs(payload);
+
+      if (jsPayload.record && jsPayload.record.shoppingListId !== parsedListId.value) {
+        return;
+      }
+
+      // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
+      const channelAction = getChannelActionFrom(jsPayload as any);
+      const isBlocked = isActionBlocked(
+        jsPayload.record?.id ?? jsPayload.oldRecord?.id,
+        channelAction,
+      );
+
+      if (isBlocked) {
+        return;
+      }
+
+      switch (
+        channelAction // ToDo: Maybe this handler should be only source of truth?
+      ) {
+        case "insert": {
+          const shoppingListProductPromise = shoppingListClient.getShoppingListProductAsync(
+            jsPayload.record!.id,
+          );
+          if (!categories.value) {
+            throw new Error("Categories not found");
+          }
+
+          const category =
+            categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
+            categories.value?.[0];
+
+          if (!category) {
+            throw new Error("Category not found");
+          }
+
+          __upsertProduct({
+            id: jsPayload.record!.id,
+            createdAt: new Date().toISOString(),
+            quantity: jsPayload.record!.quantity,
+            unit: UnitEnum.GRAM.name,
+            name: `Ładowanie...`, //ToDo: Add shrimmerlike thing
+            inCart: jsPayload.record!.inCart,
+            category,
+          } as unknown as ShoppingListDetails);
+
+          const response = await shoppingListProductPromise;
+          const result = readResponse(response) as ShoppingListDetails;
+
+          __upsertProduct(result);
+          break;
+        }
+        case "update": {
+          const shoppingListProductPromise = shoppingListClient.getShoppingListProductAsync(
+            jsPayload.record!.id,
+          );
+          if (!categories.value) {
+            throw new Error("Categories not found");
+          }
+
+          const category =
+            categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
+            categories.value?.[0];
+
+          if (!category) {
+            throw new Error("Category not found");
+          }
+
+          __upsertProduct(jsPayload.record! as unknown as ShoppingListDetails);
+
+          const response = await shoppingListProductPromise;
+          const result = readResponse(response) as ShoppingListDetails;
+
+          __upsertProduct(result);
+
+          break;
+        }
+        case "delete": {
+          __deleteProduct(jsPayload.oldRecord!.id);
+
+          break;
+        }
+        default:
+          throw new Error("Invalid payload");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async function listenForShoppingListChanges(): Promise<Subscription> {
     if (channel.value.has(channelName.value) && channel.value.get(channelName.value)) {
       shoppingListClient.unsubscribe(channel.value.get(channelName.value)!);
-    }
-    async function handleChanges(
-      payload:
-        | JsPostgresAction<ShoppingListRow, null>
-        | JsPostgresAction<null, EntityId>
-        | JsPostgresAction<ShoppingListRow, EntityId>,
-    ) {
-      try {
-        const jsPayload = ktToJs(payload);
-
-        if (jsPayload.record?.shoppingListId !== parsedListId.value) {
-          return;
-        }
-
-        // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
-        const channelAction = getChannelActionFrom(jsPayload as any);
-        const isBlocked = isActionBlocked(
-          jsPayload.record?.id ?? jsPayload.oldRecord?.id,
-          channelAction,
-        );
-
-        if (isBlocked) {
-          return;
-        }
-
-        switch (
-          channelAction // ToDo: Maybe this handler should be only source of truth?
-        ) {
-          case "insert": {
-            const shoppingListProductPromise = shoppingListClient.getShoppingListProductAsync(
-              jsPayload.record!.id,
-            );
-            if (!categories.value) {
-              throw new Error("Categories not found");
-            }
-
-            const category =
-              categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
-              categories.value?.[0];
-
-            if (!category) {
-              throw new Error("Category not found");
-            }
-
-            __upsertProduct({
-              id: jsPayload.record!.id,
-              createdAt: new Date().toISOString(),
-              quantity: jsPayload.record!.quantity,
-              unit: UnitEnum.GRAM.name,
-              name: `Ładowanie...`, //ToDo: Add shrimmerlike thing
-              inCart: jsPayload.record!.inCart,
-              category,
-            } as unknown as ShoppingListDetails);
-
-            const response = await shoppingListProductPromise;
-            const result = readResponse(response) as ShoppingListDetails;
-
-            __upsertProduct(result);
-            break;
-          }
-          case "update": {
-            const shoppingListProductPromise = shoppingListClient.getShoppingListProductAsync(
-              jsPayload.record!.id,
-            );
-            if (!categories.value) {
-              throw new Error("Categories not found");
-            }
-
-            const category =
-              categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
-              categories.value?.[0];
-
-            if (!category) {
-              throw new Error("Category not found");
-            }
-
-            __upsertProduct(jsPayload.record! as unknown as ShoppingListDetails);
-
-            const response = await shoppingListProductPromise;
-            const result = readResponse(response) as ShoppingListDetails;
-
-            __upsertProduct(result);
-
-            break;
-          }
-          case "delete": {
-            __deleteProduct(jsPayload.oldRecord!.id);
-
-            break;
-          }
-          default:
-            throw new Error("Invalid payload");
-        }
-      } catch (error) {
-        console.error(error);
-      }
     }
 
     channel.value.set(
@@ -220,7 +221,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     );
 
     shoppingListClient
-      .toggleProductInCartAsync(id)
+      .toggleProductInCartAsync(BigInt(id))
       .then((response) => {
         const result = readResponse(response) as ShoppingListDetails;
         __upsertProduct(result, oldProduct.index, true);
@@ -283,7 +284,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     blockAction(id, "delete");
 
     shoppingListClient
-      .deleteFromShoppingListAsync(id)
+      .deleteFromShoppingListAsync(BigInt(id))
       .then((response) => {
         const data = readResponse(response);
         __deleteProduct(data.id);
@@ -307,7 +308,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     });
 
     shoppingListClient
-      .updateInShoppingListAsync(id, parsedListId.value, null, null, null, category.id)
+      .updateInShoppingListAsync(BigInt(id), parsedListId.value, null, null, null, category.id)
       .then((response) => {
         readResponse(response);
       })
@@ -355,19 +356,19 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
   };
 }
 
-function routeListIdToNumber(id: unknown): number {
+function routeListIdToNumber(id: unknown): bigint {
   const preparedId = getStringParam(id);
 
   const parsedId = parseInt(preparedId, 10);
   if (Number.isNaN(parsedId)) {
     throw new Error(`Invalid list ID. Is not a number. Actual value: ${preparedId}`);
   }
-  return parsedId;
+  return BigInt(parsedId);
 }
 
 export interface AddToShoppingListParameters {
   name: string;
   quantity: number;
   unit: UnitEnum;
-  categoryId: number;
+  categoryId: bigint;
 }

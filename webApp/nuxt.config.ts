@@ -1,4 +1,3 @@
-import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -11,9 +10,6 @@ export default defineNuxtConfig({
 
   extends: ["./layers/ui"],
 
-  alias: {
-    "@bill": fileURLToPath(new URL("../build/js/packages/", import.meta.url)),
-  },
   nitro: {
     preset: "github_pages",
   },
