@@ -33,7 +33,15 @@ class RemoteClient(
 
     @JsPromise
     @JsExport.Ignore
-    suspend fun close() = client.close()
+    suspend fun close() = try {
+        unsubscribeAll()
+        kotlinx.coroutines.delay(100)
+
+        client.close()
+    } catch (e: Exception) {
+        println("Failed to close client: ${e.message}")
+        throw e
+    }
 
     fun get(url: String) {
         println("GET is not supported yet")
@@ -92,8 +100,6 @@ class RemoteClient(
         action: (PostgresAction) -> Unit,
         table: String
     ): Subscription {
-        unsubscribe(channelName)
-
         val channel = client.realtime.channel(channelName)
 
         val changes = channel.postgresChangeFlow<PostgresAction>(schema = "public") {
@@ -101,18 +107,32 @@ class RemoteClient(
         }
 
         val job = clientScope.launch(CoroutineName("channel-$channelName")) {
-            changes.collect { change ->
-                try {
-                    action(change)
-                } catch (e: Exception) {
-                    println("Error in channel $channelName: ${e.message}")
+            try {
+                changes.collect { change ->
+                    try {
+                        action(change)
+                    } catch (e: Exception) {
+                        println("Error in channel $channelName action: ${e.message}")
+                    }
+                }
+            } catch (e: Exception) {
+                if (e.message?.contains("WebsocketDeserializeException") == true) {
+                    println("WebSocket connection closed, stopping collection")
                 }
             }
+
         }
 
         try {
             clientScope.launch {
-                channel.subscribe()
+                try {
+                    channel.subscribe()
+                } catch (e: Exception) {
+                    println("Failed to subscribe to channel $channelName: ${e.message}")
+                    job.cancel()
+                    throw e
+                }
+
             }
 
             val subscription = Subscription(
@@ -153,7 +173,19 @@ class RemoteClient(
     }
 
     fun dispose() {
-        unsubscribeAll()
-        clientScope.cancel()
+        try {
+            unsubscribeAll()
+            clientScope.cancel()
+            clientScope.launch {
+                try {
+                    client.close()
+                } catch (e: Exception) {
+                    println("Error closing client in dispose: ${e.message}")
+                }
+            }
+        } catch (e: Exception) {
+            println("Error during dispose: ${e.message}")
+        }
+
     }
 }

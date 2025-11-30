@@ -34,6 +34,10 @@ class ShoppingListClient(private val client: RemoteClient = supabaseRemoteClient
 
     fun unsubscribeAll() = client.unsubscribeAll()
 
+    @JsPromise
+    @JsExport.Ignore
+    suspend fun close() = client.close()
+
     // SHOPPING LIST
     @JsPromise
     @JsExport.Ignore

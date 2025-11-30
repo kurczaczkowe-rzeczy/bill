@@ -23,13 +23,24 @@ class Subscription internal constructor(
     fun getChannelName(): String = channelName
 
     internal fun cleanup() {
+        if (!job.isActive && job.isCancelled) {
+            return
+        }
+        
         job.cancel()
-
-        scope.launch {
+        
+        kotlinx.coroutines.GlobalScope.launch {
             try {
-                job.join()
-
-                channel.unsubscribe()
+                kotlinx.coroutines.withTimeoutOrNull(1000) {
+                    job.join()
+                }
+                
+                try {
+                    channel.unsubscribe()
+                } catch (e: Exception) {
+                    println("Error unsubscribing channel $channelName: ${e.message}")
+                }
+                
             } catch (e: Exception) {
                 println("Error during cleanup of channel $channelName: ${e.message}")
             }
