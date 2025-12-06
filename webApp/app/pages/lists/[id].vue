@@ -68,7 +68,7 @@ const draggableOptions = {
       return;
     }
 
-    switchProductCategory(evt.data.id, category as Category);
+    switchProductCategory(evt.data.id, category);
     // Timestamp is set to prevent calling whole click event when user chooses an element to reorder.
     // So I need to reset it here to make it possible to call click event.
     setTimeout(() => {
@@ -250,7 +250,7 @@ onMounted(() => {
 });
 
 function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string): boolean {
-  return suggestion.name === query && suggestion.unit === addToShoppingListParameters.unit.name;
+  return suggestion.name === query && suggestion.unit.name === addToShoppingListParameters.unit.name;
 }
 
 function useCollapsedAddForm(listId: string) {

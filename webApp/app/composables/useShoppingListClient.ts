@@ -135,7 +135,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
             id: jsPayload.record!.id,
             createdAt: new Date().toISOString(),
             quantity: jsPayload.record!.quantity,
-            unit: UnitEnum.GRAM.name,
+            unit: UnitEnum.GRAM,
             name: `Ładowanie...`, //ToDo: Add shrimmerlike thing
             inCart: jsPayload.record!.inCart,
             category,
@@ -298,7 +298,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
       });
   }
 
-  async function switchProductCategory(id: number, category: Category) {
+  async function switchProductCategory(id: bigint, category: Category) {
     loading.value = true;
     blockAction(id, "update");
 
@@ -308,7 +308,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     });
 
     shoppingListClient
-      .updateInShoppingListAsync(BigInt(id), parsedListId.value, null, null, null, category.id)
+      .updateInShoppingListAsync(id, parsedListId.value, null, null, null, category.id)
       .then((response) => {
         readResponse(response);
       })

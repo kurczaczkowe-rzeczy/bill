@@ -83,6 +83,7 @@ export async function useShoppingLists(options?: Options) {
     ) {
       try {
         const jsPayload = ktToJs(payload);
+
         // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
         const channelAction = getChannelActionFrom(jsPayload as any);
         const isBlocked = isActionBlocked(

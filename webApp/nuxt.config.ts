@@ -8,6 +8,10 @@ export default defineNuxtConfig({
     vueDevTools: true,
   },
 
+  sourcemap: {
+    server: true,
+    client: true,
+  },
   extends: ["./layers/ui"],
 
   nitro: {
