@@ -8,10 +8,7 @@ import {
 import { useLocalStorage } from "@vueuse/core";
 import type { DraggableEvent } from "vue-draggable-plus";
 
-import {
-  type AddToShoppingListParameters,
-  useShoppingList,
-} from "~/composables/useShoppingListClient";
+import { type AddToShoppingListParameters, useShoppingList } from "~/composables/useShoppingList";
 import { categoryClient, productClient } from "~/constants";
 import CategoryListItem from "~/pages/lists/CategoryListItem.vue";
 import { getStringParam } from "~/utils/getStringParam";
@@ -250,7 +247,9 @@ onMounted(() => {
 });
 
 function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string): boolean {
-  return suggestion.name === query && suggestion.unit.name === addToShoppingListParameters.unit.name;
+  return (
+    suggestion.name === query && suggestion.unit.name === addToShoppingListParameters.unit.name
+  );
 }
 
 function useCollapsedAddForm(listId: string) {

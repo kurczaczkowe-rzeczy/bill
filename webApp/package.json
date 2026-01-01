@@ -11,27 +11,32 @@
     "deploy": "nuxi generate && gh-pages --dotfiles -d .output/public"
   },
   "dependencies": {
-    "@bill": "file:../build/js/packages/",
+    "@bill": "file:../build/js/packages",
     "@floating-ui/vue": "^1.1.9",
-    "@nuxt/icon": "2.0.0",
-    "@tailwindcss/vite": "^4.1.12",
-    "@vueuse/core": "^13.9.0",
-    "daisyui": "^5.0.50",
-    "nuxt": "^4.0.1",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.12",
-    "vue": "^3.5.17",
+    "@nuxt/icon": "2.1.1",
+    "@tailwindcss/vite": "^4.1.18",
+    "@vueuse/core": "^14.1.0",
+    "daisyui": "^5.5.14",
+    "nuxt": "^4.2.2",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18",
+    "vue": "^3.5.26",
     "vue-draggable-plus": "^0.6.0",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.6.4"
   },
   "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac",
   "devDependencies": {
-    "@biomejs/biome": "^2.2.0",
+    "@biomejs/biome": "^2.3.10",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/streamline-freehand": "^1.2.1",
-    "@types/sortablejs": "^1.15.8",
-    "@vite-pwa/nuxt": "^1.0.4",
-    "gh-pages": "^6.3.0"
+    "@nuxt/test-utils": "^3.21.0",
+    "@types/sortablejs": "^1.15.9",
+    "@vite-pwa/nuxt": "^1.1.0",
+    "@vue/test-utils": "^2.4.6",
     "eruda": "^3.4.3",
+    "gh-pages": "^6.3.0",
+    "happy-dom": "^20.0.11",
+    "playwright-core": "^1.57.0",
+    "vitest": "^4.0.16"
   }
 }

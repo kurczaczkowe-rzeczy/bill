@@ -1,0 +1,377 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: values are properly checked */
+import {
+  type Category,
+  type EntityId,
+  getShoppingListChannelName,
+  groupProductsByCategoryJs,
+  type JsPostgresAction,
+  type NetworkError,
+  type Result,
+  type ShoppingListClient,
+  type ShoppingListDetails,
+  type ShoppingListRow,
+  type Subscription,
+  UnitEnum,
+} from "@bill/Bill-shoppingList";
+
+import { useNuxtData } from "#app";
+import type { Channels, ClientOptions } from "~/composables/types";
+import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
+import { useShoppingListClient } from "~/composables/useShoppingListClient";
+import { getChannelActionFrom } from "~/utils/channelAction";
+import { getStringParam } from "~/utils/getStringParam";
+import type { KtList } from "~/utils/ktListToArray";
+import { ktToJs } from "~/utils/ktToJs";
+import { readResponse } from "~/utils/readResponse";
+
+type ListenerType = "shoppingListChanges";
+
+type Options = ClientOptions<ShoppingListDetails[], ListenerType[], ShoppingListClient>;
+
+export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Options) {
+  const { client, useAutoListenFor, ...asyncDataOptions } = options ?? {};
+
+  const listIdRef = toRef(listId);
+  const parsedListId = computed(() => routeListIdToNumber(toValue(listIdRef)));
+  const channelName = computed(() => getShoppingListChannelName(toValue(parsedListId)));
+  const loading = ref(false);
+  const error = ref<Error | null>(null);
+  const channel = ref<Channels>(new Map() as Channels);
+
+  const { data: categories } = useNuxtData<Category[]>("categories");
+
+  const shoppingListClient = client ?? useShoppingListClient();
+
+  const {
+    data,
+    pending,
+    error: fetchError,
+    refresh,
+  } = useAsyncData(
+    `shoppingListDetails:${parsedListId.value}`,
+    async () => {
+      const response: Result<
+        KtList<ShoppingListDetails>,
+        NetworkError
+      > = await shoppingListClient.getShoppingListAsync(parsedListId.value);
+
+      return readResponse(response) as ShoppingListDetails[];
+    },
+    {
+      getCachedData(key) {
+        const nuxtApp = useNuxtApp();
+        const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key];
+
+        if (!data) return;
+
+        const expirationDate = new Date(data.fetchedAt);
+        expirationDate.setTime(expirationDate.getTime() + 5 * 60 * 1000);
+        if (new Date() < expirationDate) {
+          return data;
+        }
+      },
+      server: false,
+      ...asyncDataOptions,
+    },
+  );
+
+  const {
+    listToSync: shoppingListDetails,
+    getItem: __getProduct,
+    upsertItem: __upsertProduct,
+    deleteItem: __deleteProduct,
+    releaseAction,
+    isActionBlocked,
+    blockAction,
+  } = useOptimisticUpdatedList(data);
+
+  const categoriesWithProducts = computed(() =>
+    shoppingListDetails.value && categories.value
+      ? ktToJs(groupProductsByCategoryJs(shoppingListDetails.value, categories.value))
+      : [],
+  );
+
+  async function handleChanges(
+    payload:
+      | JsPostgresAction<ShoppingListRow, null>
+      | JsPostgresAction<null, EntityId>
+      | JsPostgresAction<ShoppingListRow, EntityId>,
+  ) {
+    try {
+      const jsPayload = ktToJs(payload);
+
+      if (jsPayload.record && jsPayload.record.shoppingListId !== parsedListId.value) {
+        return;
+      }
+
+      // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
+      const channelAction = getChannelActionFrom(jsPayload as any);
+      const isBlocked = isActionBlocked(
+        jsPayload.record?.id ?? jsPayload.oldRecord?.id ?? -1,
+        channelAction,
+      );
+
+      if (isBlocked) {
+        return;
+      }
+
+      switch (
+        channelAction // ToDo: Maybe this handler should be only source of truth?
+      ) {
+        case "insert": {
+          const shoppingListProductPromise = shoppingListClient.getShoppingListProductAsync(
+            jsPayload.record!.id,
+          );
+          if (!categories.value) {
+            throw new Error("Categories not found");
+          }
+
+          const category =
+            categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
+            categories.value?.[0];
+
+          if (!category) {
+            throw new Error("Category not found");
+          }
+
+          __upsertProduct({
+            id: jsPayload.record!.id,
+            createdAt: new Date().toISOString(),
+            quantity: jsPayload.record!.quantity,
+            unit: UnitEnum.GRAM,
+            name: `Ładowanie...`, //ToDo: Add shrimmerlike thing
+            inCart: jsPayload.record!.inCart,
+            category,
+          } as unknown as ShoppingListDetails);
+
+          const response = await shoppingListProductPromise;
+          const result = readResponse(response) as ShoppingListDetails;
+
+          __upsertProduct(result);
+          break;
+        }
+        case "update": {
+          const shoppingListProductPromise = shoppingListClient.getShoppingListProductAsync(
+            jsPayload.record!.id,
+          );
+          if (!categories.value) {
+            throw new Error("Categories not found");
+          }
+
+          const category =
+            categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
+            categories.value?.[0];
+
+          if (!category) {
+            throw new Error("Category not found");
+          }
+
+          __upsertProduct(jsPayload.record! as unknown as ShoppingListDetails);
+
+          const response = await shoppingListProductPromise;
+          const result = readResponse(response) as ShoppingListDetails;
+
+          __upsertProduct(result);
+
+          break;
+        }
+        case "delete": {
+          __deleteProduct(jsPayload.oldRecord!.id);
+
+          break;
+        }
+        default:
+          throw new Error("Invalid payload");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function listenForShoppingListChanges(): Promise<Subscription> {
+    if (channel.value.has(channelName.value) && channel.value.get(channelName.value)) {
+      shoppingListClient.unsubscribe(channel.value.get(channelName.value)!);
+    }
+
+    channel.value.set(
+      channelName.value,
+      shoppingListClient.listenForShoppingListChanges(parsedListId.value, handleChanges),
+    );
+
+    return channel.value.get(channelName.value) as Subscription;
+  }
+
+  async function toggleInCart(id: number) {
+    if (!shoppingListDetails.value) {
+      throw new Error("Shopping list not found");
+    }
+
+    const oldProduct = __getProduct(id);
+    if (!oldProduct.item) {
+      throw new Error("Product not found");
+    }
+
+    loading.value = true;
+    blockAction(id, "update");
+
+    __upsertProduct(
+      {
+        id: oldProduct.item.id,
+        inCart: oldProduct.item.inCart,
+      },
+      oldProduct.index,
+      true,
+    );
+
+    shoppingListClient
+      .toggleProductInCartAsync(BigInt(id))
+      .then((response) => {
+        const result = readResponse(response) as ShoppingListDetails;
+        __upsertProduct(result, oldProduct.index, true);
+      })
+      .catch((error) => {
+        __upsertProduct(oldProduct.item, oldProduct.index, true);
+        console.error(error);
+      })
+      .finally(() => {
+        loading.value = false;
+        releaseAction(id, "update");
+      });
+  }
+
+  async function addToShoppingList(
+    params: AddToShoppingListParameters & { listId: unknown },
+    onSuccess?: (result: ShoppingListDetails) => void,
+    onError?: (error: Error) => void,
+    onFinally?: () => void,
+  ): Promise<void> {
+    // Prevent multiple requests on the same product
+    if (loading.value) {
+      return;
+    }
+
+    if (params.name.trim() === "") {
+      throw new Error("Nazwa powinna być wypełniona");
+    }
+
+    loading.value = true;
+    const now = new Date();
+    const preparedId = now.valueOf() * 2;
+    blockAction(preparedId, "insert");
+
+    shoppingListClient
+      .addToShoppingListAsync(
+        routeListIdToNumber(params.listId),
+        UnitEnum.valueOf(params.unit.name),
+        params.quantity,
+        params.name,
+        params.categoryId,
+      )
+      .then((response) => {
+        const result = readResponse(response) as ShoppingListDetails;
+        onSuccess?.(result);
+      })
+      .catch((error) => {
+        console.error(error);
+        onError?.(error);
+      })
+      .finally(() => {
+        loading.value = false;
+        releaseAction(preparedId, "insert");
+        onFinally?.();
+      });
+  }
+
+  async function deleteProductFromShoppingList(id: number) {
+    loading.value = true;
+    blockAction(id, "delete");
+
+    shoppingListClient
+      .deleteFromShoppingListAsync(BigInt(id))
+      .then((response) => {
+        const data = readResponse(response);
+        __deleteProduct(data.id);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        loading.value = false;
+        releaseAction(id, "delete");
+      });
+  }
+
+  async function switchProductCategory(id: bigint, category: Category) {
+    loading.value = true;
+    blockAction(id, "update");
+
+    __upsertProduct({
+      id,
+      category,
+    });
+
+    shoppingListClient
+      .updateInShoppingListAsync(id, parsedListId.value, null, null, null, category.id)
+      .then((response) => {
+        readResponse(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        loading.value = false;
+        releaseAction(id, "update");
+      });
+  }
+
+  onMounted(() => {
+    if (toValue(useAutoListenFor)?.includes("shoppingListChanges")) {
+      listenForShoppingListChanges();
+    }
+  });
+
+  onUnmounted(() => {
+    try {
+      channel.value.forEach((subscription) => {
+        shoppingListClient.unsubscribe(subscription);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
+  return {
+    // State
+    shoppingListDetails: readonly(shoppingListDetails),
+    loading: readonly(computed(() => pending.value || loading.value)),
+    error: readonly(computed(() => fetchError.value || error.value)),
+
+    // Actions
+    refresh,
+    listenForShoppingListChanges,
+    toggleInCart,
+    addToShoppingList,
+    switchProductCategory,
+    deleteProductFromShoppingList,
+
+    // Utils
+    categoriesWithProducts,
+  };
+}
+
+function routeListIdToNumber(id: unknown): bigint {
+  const preparedId = getStringParam(id);
+
+  const parsedId = parseInt(preparedId, 10);
+  if (Number.isNaN(parsedId)) {
+    throw new Error(`Invalid list ID. Is not a number. Actual value: ${preparedId}`);
+  }
+  return BigInt(parsedId);
+}
+
+export interface AddToShoppingListParameters {
+  name: string;
+  quantity: number;
+  unit: UnitEnum;
+  categoryId: bigint;
+}

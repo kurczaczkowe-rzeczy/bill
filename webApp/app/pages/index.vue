@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import BaseList from "~/components/BaseList.vue";
-import { useShoppingLists } from "~/composables/useShoppingListsClient";
+import { useShoppingLists } from "~/composables/useShoppingLists";
 import { handleResponseError } from "~/utils/handleResponseError";
 
 const {

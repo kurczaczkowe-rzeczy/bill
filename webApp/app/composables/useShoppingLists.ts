@@ -6,28 +6,30 @@ import {
   type NetworkError,
   type Result,
   type ShoppingList,
+  type ShoppingListClient,
   type Subscription,
 } from "@bill/Bill-shoppingList";
 
-import type { AsyncDataOptions } from "#app";
-import type { Channels } from "~/composables/types";
+import type { Channels, ClientOptions } from "~/composables/types";
 import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
-import { shoppingListClient } from "~/constants";
+import { useShoppingListClient } from "~/composables/useShoppingListClient";
 import { getChannelActionFrom } from "~/utils/channelAction";
 import { ktToJs } from "~/utils/ktToJs";
 import { readResponse } from "~/utils/readResponse";
 
 type ListenerType = "shoppingListsChanges";
 
-type Options = AsyncDataOptions<ShoppingList[]> & {
-  useAutoListenFor?: MaybeRefOrGetter<ListenerType[]>;
-};
+type Options = ClientOptions<ShoppingList[], ListenerType[], ShoppingListClient>;
 
 export async function useShoppingLists(options?: Options) {
+  const { client, useAutoListenFor, ...asyncDataOptions } = options ?? {};
+
   const channelName = computed(() => getShoppingListsChannelName());
   const loading = ref(false);
   const error = ref<Error | null>(null);
   const channel = ref<Channels>(new Map() as Channels);
+
+  const shoppingListClient = client ?? useShoppingListClient();
 
   const {
     data,
@@ -56,7 +58,7 @@ export async function useShoppingLists(options?: Options) {
         }
       },
       server: false,
-      ...options,
+      ...asyncDataOptions,
     },
   );
 
@@ -87,7 +89,7 @@ export async function useShoppingLists(options?: Options) {
         // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
         const channelAction = getChannelActionFrom(jsPayload as any);
         const isBlocked = isActionBlocked(
-          jsPayload.record?.id ?? jsPayload.oldRecord?.id,
+          jsPayload.record?.id ?? jsPayload.oldRecord?.id ?? -1,
           channelAction,
         );
 
@@ -158,7 +160,7 @@ export async function useShoppingLists(options?: Options) {
         name: params.name,
         date: new Intl.DateTimeFormat("pl-PL").format(now),
         productAmount: 0,
-      } as ShoppingList,
+      } as unknown as ShoppingList,
       0,
     );
 
@@ -191,10 +193,10 @@ export async function useShoppingLists(options?: Options) {
 
     loading.value = true;
     blockAction(params.id, "update");
-    __upsertList({ ...params } as ShoppingList, listToUpdate.index);
+    __upsertList({ ...params }, listToUpdate.index);
 
     return shoppingListClient
-      .updateShoppingListAsync(params.id, params.name, params.date)
+      .updateShoppingListAsync(BigInt(params.id), params.name, params.date)
       .then((response) => {
         const parsedRes = readResponse(response);
         __upsertList(parsedRes as ShoppingList, listToUpdate.index);
@@ -222,7 +224,7 @@ export async function useShoppingLists(options?: Options) {
     __deleteList(params.id);
 
     return shoppingListClient
-      .deleteShoppingListAsync(params.id)
+      .deleteShoppingListAsync(BigInt(params.id))
       .catch((err) => {
         console.error(err);
         __upsertList(listToDelete.item, listToDelete.index);
@@ -235,7 +237,7 @@ export async function useShoppingLists(options?: Options) {
   }
 
   onMounted(() => {
-    if (toValue(options?.useAutoListenFor)?.includes("shoppingListsChanges")) {
+    if (toValue(useAutoListenFor)?.includes("shoppingListsChanges")) {
       listenForShoppingListsChanges();
     }
   });
