@@ -201,7 +201,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     return channel.value.get(channelName.value) as Subscription;
   }
 
-  async function toggleInCart(id: number) {
+  async function toggleInCart(id: bigint) {
     if (!shoppingListDetails.value) {
       throw new Error("Shopping list not found");
     }
@@ -217,14 +217,14 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     __upsertProduct(
       {
         id: oldProduct.item.id,
-        inCart: oldProduct.item.inCart,
+        inCart: !oldProduct.item.inCart,
       },
       oldProduct.index,
       true,
     );
 
     shoppingListClient
-      .toggleProductInCartAsync(BigInt(id))
+      .toggleProductInCartAsync(id)
       .then((response) => {
         const result = readResponse(response) as ShoppingListDetails;
         __upsertProduct(result, oldProduct.index, true);

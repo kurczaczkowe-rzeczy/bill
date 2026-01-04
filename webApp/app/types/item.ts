@@ -1,3 +1,3 @@
 export interface Item {
-  id: number | string;
+  id: number | string | bigint;
 }

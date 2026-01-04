@@ -245,7 +245,7 @@ watch(
           <li
             v-for="(item, index) in suggestions"
             v-else
-            :key="item.id || index"
+            :key="item.id.toString() || index"
             :class="[
           'list-row cursor-pointer transition-colors',
           highlightedIndex === index ? 'bg-base-200' : 'hover:bg-base-200'

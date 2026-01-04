@@ -221,7 +221,7 @@ function resetAddToShoppingListParameters() {
   formErrors.name = "";
 }
 
-function handleToggleInCart(productId: number) {
+function handleToggleInCart(productId: bigint) {
   if (
     itemChooseTimeStamp.value &&
     Date.now() - itemChooseTimeStamp.value > ITEM_CHOOSE_TIMESTAMP_TIMEOUT
@@ -351,7 +351,7 @@ function useCollapsedAddForm(listId: string) {
             @select="selectCategory as any"
           >
             <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef, attrs }">
-              <div :ref="bindFieldRef" class="flex items-center gap-2 input input-ghost w-full">
+              <div :ref="bindFieldRef as any" class="flex items-center gap-2 input input-ghost w-full">
                 <CategoryListItem
                   :color="selectedCategory?.color ?? '323232'"
                   :name="selectedCategory?.name ?? query"
@@ -385,7 +385,7 @@ function useCollapsedAddForm(listId: string) {
         <li
           v-for="categoryWithProducts in categoriesWithProducts"
           v-if="categoriesWithProducts.length"
-          :key="categoryWithProducts.category.id"
+          :key="categoryWithProducts.category.id.toString()"
           class="category-list"
         >
           <CategoryListItem :="categoryWithProducts.category" />
