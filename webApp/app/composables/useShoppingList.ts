@@ -282,18 +282,20 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
       });
   }
 
-  async function deleteProductFromShoppingList(id: number) {
+  async function deleteProductFromShoppingList(id: bigint) {
+    const productToDelete = __getProduct(id);
+
     loading.value = true;
     blockAction(id, "delete");
 
+    __deleteProduct(id);
+
     shoppingListClient
-      .deleteFromShoppingListAsync(BigInt(id))
-      .then((response) => {
-        const data = readResponse(response);
-        __deleteProduct(data.id);
-      })
+      .deleteFromShoppingListAsync(id)
       .catch((error) => {
         console.error(error);
+        __upsertProduct(productToDelete.item, productToDelete.index);
+        return error;
       })
       .finally(() => {
         loading.value = false;
