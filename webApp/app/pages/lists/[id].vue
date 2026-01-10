@@ -5,7 +5,6 @@ import {
   type ShoppingListDetails,
   UnitEnum,
 } from "@bill/Bill-shoppingList";
-import { useLocalStorage } from "@vueuse/core";
 import type { DraggableEvent } from "vue-draggable-plus";
 
 import { type AddToShoppingListParameters, useShoppingList } from "~/composables/useShoppingList";
@@ -253,21 +252,32 @@ function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string):
 }
 
 function useCollapsedAddForm(listId: string) {
-  const collapsedAddFormListIds = useLocalStorage(COLLAPSED_ADD_FORM_LIST_IDS, new Set<string>());
-  const isCollapsed = ref(false);
-  const hasEverToggled = ref(false);
-
-  onMounted(() => {
-    isCollapsed.value = collapsedAddFormListIds.value.has(listId);
+  const collapsedAddFormListIds = useCookie<Set<string>>(COLLAPSED_ADD_FORM_LIST_IDS, {
+    default: () => new Set(),
+    watch: true,
+    encode: (set) => JSON.stringify([...set]),
+    decode: (str) => {
+      try {
+        return new Set(JSON.parse(str));
+      } catch {
+        return new Set();
+      }
+    },
   });
 
+  const isCollapsed = computed(() => collapsedAddFormListIds.value.has(listId));
+  const hasEverToggled = ref(false);
+
   function toggle() {
-    if (collapsedAddFormListIds.value.has(listId)) {
-      collapsedAddFormListIds.value.delete(listId);
+    const newSet = new Set(collapsedAddFormListIds.value);
+
+    if (newSet.has(listId)) {
+      newSet.delete(listId);
     } else {
-      collapsedAddFormListIds.value.add(listId);
+      newSet.add(listId);
     }
-    isCollapsed.value = collapsedAddFormListIds.value.has(listId);
+
+    collapsedAddFormListIds.value = newSet;
     hasEverToggled.value = true;
   }
 
