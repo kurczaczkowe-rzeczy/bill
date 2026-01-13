@@ -11,7 +11,7 @@ type WithOnlyRequiredId<T> = T extends Item ? Partial<Omit<T, "id">> & Item : ne
 export function useOptimisticUpdatedList<ListItem extends Item>(
   data: MaybeRefOrGetter<ListItem[] | undefined>,
 ) {
-  const listToSync = ref<ListItem[]>([]);
+  const listToSync = ref<ListItem[]>(toValue(data) ?? []);
   const disableAction = ref(new Map<Id, ChannelAction[]>());
 
   function blockAction(id: Id, action: ChannelAction) {
