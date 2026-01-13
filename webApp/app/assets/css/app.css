@@ -1,9 +1,6 @@
-/** biome-ignore-all lint/correctness/noUnknownProperty: tailwindcss */
 @import "tailwindcss";
-/* biome-ignore lint/suspicious/noUnknownAtRules: biome doesn't recognize @plugin */
 @plugin "daisyui";
 
-/* biome-ignore lint/suspicious/noUnknownAtRules: biome doesn't recognize @plugin */
 @plugin "daisyui/theme" {
   name: tinymist;
   default: true;

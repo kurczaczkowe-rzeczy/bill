@@ -97,7 +97,7 @@ function onFilter(e: DraggableEvent<TItem>) {
 function onClone(e: DraggableEvent<TItem>) {
   emit("clone", e);
 }
-function onMove(evt: MoveEvent, originalEvent: Event): boolean | void | 1 | -1 {
+function onMove(evt: MoveEvent, originalEvent: Event) {
   emit("move", evt, originalEvent);
 }
 function onChange(e: DraggableEvent<TItem>) {
@@ -133,7 +133,7 @@ function onChange(e: DraggableEvent<TItem>) {
         class="list-row"
         v-for="item in localItems"
         v-bind="props.itemProps?.(item as TItem)"
-        :key="item.id"
+        :key="item.id.toString()"
         v-if="localItems?.length"
       >
         <slot name="item" :item="item"></slot>

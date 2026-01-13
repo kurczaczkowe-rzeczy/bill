@@ -1,7 +1,5 @@
-import type { ShoppingListClient } from "@bill/Bill-shoppingList";
-
 export default defineNuxtPlugin(async () => {
-  const clientLoader = createKmpClientLoader<ShoppingListClient>(
+  const clientLoader = createKmpClientLoader(
     () => import("@bill/Bill-shoppingList"),
     (module) => new module.ShoppingListClient(),
   );

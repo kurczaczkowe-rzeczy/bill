@@ -5,9 +5,9 @@ interface KmpClientConfig {
 
 type ClientLoader<T> = (config?: KmpClientConfig) => Promise<T>;
 
-export function createKmpClientLoader<T = unknown>(
-  importFn: () => Promise<any>,
-  factoryFn: (module: any, config?: KmpClientConfig) => T,
+export function createKmpClientLoader<TModule, T = unknown>(
+  importFn: () => Promise<TModule>,
+  factoryFn: (module: TModule, config?: KmpClientConfig) => T,
 ): ClientLoader<T> {
   let instance: T | null = null;
   let loading: Promise<T> | null = null;
