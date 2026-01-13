@@ -10,7 +10,8 @@ import {
   type Subscription,
 } from "@bill/Bill-shoppingList";
 
-import type { Channels, ClientOptions } from "~/composables/types";
+import type { Channels, ClientOptionsWithAutoListener } from "~/composables/types";
+import { useKtClientData } from "~/composables/useKtClientData";
 import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
 import { useShoppingListClient } from "~/composables/useShoppingListClient";
 import { getChannelActionFrom } from "~/utils/channelAction";
@@ -19,9 +20,13 @@ import { readResponse } from "~/utils/readResponse";
 
 type ListenerType = "shoppingListsChanges";
 
-type Options = ClientOptions<ShoppingList[], ListenerType[], ShoppingListClient>;
+type ShoppingListsOptions = ClientOptionsWithAutoListener<
+  ShoppingList[],
+  ShoppingListClient,
+  ListenerType[]
+>;
 
-export async function useShoppingLists(options?: Options) {
+export function useShoppingLists(options?: ShoppingListsOptions) {
   const { client, useAutoListenFor, ...asyncDataOptions } = options ?? {};
 
   const channelName = computed(() => getShoppingListsChannelName());
@@ -36,30 +41,10 @@ export async function useShoppingLists(options?: Options) {
     pending,
     error: fetchError,
     refresh,
-  } = useAsyncData(
+  } = useKtClientData(
     "shoppingLists",
-    async () => {
-      const response = await shoppingListClient.getShoppingListsAsync();
-
-      return readResponse(response) as ShoppingList[];
-    },
-    {
-      getCachedData(key) {
-        const nuxtApp = useNuxtApp();
-        const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key];
-
-        if (!data) return;
-
-        const expirationDate = new Date(data.fetchedAt);
-
-        expirationDate.setTime(expirationDate.getTime() + 5 * 60 * 1000);
-        if (new Date() < expirationDate) {
-          return data;
-        }
-      },
-      server: false,
-      ...asyncDataOptions,
-    },
+    () => shoppingListClient.getShoppingListsAsync(),
+    asyncDataOptions,
   );
 
   const {
@@ -167,9 +152,9 @@ export async function useShoppingLists(options?: Options) {
     return shoppingListClient
       .createShoppingListAsync(params.name)
       .then((response) => {
-        const parsedRes = readResponse(response);
+        const parsedRes = readResponse<ShoppingList>(response);
 
-        __upsertList(parsedRes as ShoppingList, 0, true);
+        __upsertList(parsedRes, 0, true);
         return response;
       })
       .catch((err) => {
@@ -198,8 +183,8 @@ export async function useShoppingLists(options?: Options) {
     return shoppingListClient
       .updateShoppingListAsync(BigInt(params.id), params.name, params.date)
       .then((response) => {
-        const parsedRes = readResponse(response);
-        __upsertList(parsedRes as ShoppingList, listToUpdate.index);
+        const parsedRes = readResponse<ShoppingList>(response);
+        __upsertList(parsedRes, listToUpdate.index);
         return response;
       })
       .catch((err) => {

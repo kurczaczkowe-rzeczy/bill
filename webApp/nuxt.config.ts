@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     server: true,
     client: true,
   },
-  extends: ["./layers/ui"],
 
   nitro: {
     preset: "github_pages",

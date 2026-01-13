@@ -37,7 +37,7 @@ const {
   deleteProductFromShoppingList,
   switchProductCategory,
   shoppingListDetails,
-} = await useShoppingList(route.params.id, {
+} = useShoppingList(route.params.id, {
   useAutoListenFor: ["shoppingListChanges"],
 });
 

@@ -1,12 +1,11 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: values are properly checked */
+
 import {
   type Category,
   type EntityId,
   getShoppingListChannelName,
   groupProductsByCategoryJs,
   type JsPostgresAction,
-  type NetworkError,
-  type Result,
   type ShoppingListClient,
   type ShoppingListDetails,
   type ShoppingListRow,
@@ -15,20 +14,24 @@ import {
 } from "@bill/Bill-shoppingList";
 
 import { useNuxtData } from "#app";
-import type { Channels, ClientOptions } from "~/composables/types";
+import type { Channels, ClientOptionsWithAutoListener } from "~/composables/types";
+import { useKtClientData } from "~/composables/useKtClientData";
 import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
 import { useShoppingListClient } from "~/composables/useShoppingListClient";
 import { getChannelActionFrom } from "~/utils/channelAction";
 import { getStringParam } from "~/utils/getStringParam";
-import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 import { readResponse } from "~/utils/readResponse";
 
 type ListenerType = "shoppingListChanges";
 
-type Options = ClientOptions<ShoppingListDetails[], ListenerType[], ShoppingListClient>;
+type Options = ClientOptionsWithAutoListener<
+  ShoppingListDetails[],
+  ShoppingListClient,
+  ListenerType[]
+>;
 
-export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Options) {
+export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Options) {
   const { client, useAutoListenFor, ...asyncDataOptions } = options ?? {};
 
   const listIdRef = toRef(listId);
@@ -47,32 +50,10 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     pending,
     error: fetchError,
     refresh,
-  } = useAsyncData(
+  } = useKtClientData(
     `shoppingListDetails:${parsedListId.value}`,
-    async () => {
-      const response: Result<
-        KtList<ShoppingListDetails>,
-        NetworkError
-      > = await shoppingListClient.getShoppingListAsync(parsedListId.value);
-
-      return readResponse(response) as ShoppingListDetails[];
-    },
-    {
-      getCachedData(key) {
-        const nuxtApp = useNuxtApp();
-        const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key];
-
-        if (!data) return;
-
-        const expirationDate = new Date(data.fetchedAt);
-        expirationDate.setTime(expirationDate.getTime() + 5 * 60 * 1000);
-        if (new Date() < expirationDate) {
-          return data;
-        }
-      },
-      server: false,
-      ...asyncDataOptions,
-    },
+    () => shoppingListClient.getShoppingListAsync(parsedListId.value),
+    asyncDataOptions,
   );
 
   const {
@@ -145,7 +126,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
           } as unknown as ShoppingListDetails);
 
           const response = await shoppingListProductPromise;
-          const result = readResponse(response) as ShoppingListDetails;
+          const result = readResponse<ShoppingListDetails>(response);
 
           __upsertProduct(result);
           break;
@@ -169,7 +150,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
           __upsertProduct(jsPayload.record! as unknown as ShoppingListDetails);
 
           const response = await shoppingListProductPromise;
-          const result = readResponse(response) as ShoppingListDetails;
+          const result = readResponse<ShoppingListDetails>(response);
 
           __upsertProduct(result);
 
@@ -226,7 +207,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
     shoppingListClient
       .toggleProductInCartAsync(id)
       .then((response) => {
-        const result = readResponse(response) as ShoppingListDetails;
+        const result = readResponse<ShoppingListDetails>(response);
         __upsertProduct(result, oldProduct.index, true);
       })
       .catch((error) => {
@@ -268,7 +249,7 @@ export async function useShoppingList(listId?: MaybeRefOrGetter<unknown>, option
         params.categoryId,
       )
       .then((response) => {
-        const result = readResponse(response) as ShoppingListDetails;
+        const result = readResponse<ShoppingListDetails>(response);
         onSuccess?.(result);
       })
       .catch((error) => {

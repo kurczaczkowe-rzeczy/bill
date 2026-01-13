@@ -10,7 +10,7 @@ const {
   addShoppingList,
   deleteShoppingList,
   updateShoppingList,
-} = await useShoppingLists({ useAutoListenFor: ["shoppingListsChanges"] });
+} = useShoppingLists({ useAutoListenFor: ["shoppingListsChanges"] });
 
 const formNameError = ref("");
 
