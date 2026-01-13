@@ -13,7 +13,6 @@ import {
   UnitEnum,
 } from "@bill/Bill-shoppingList";
 
-import { useNuxtData } from "#app";
 import type { Channels, ClientOptionsWithAutoListener } from "~/composables/types";
 import { useKtClientData } from "~/composables/useKtClientData";
 import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
@@ -22,6 +21,7 @@ import { getChannelActionFrom } from "~/utils/channelAction";
 import { getStringParam } from "~/utils/getStringParam";
 import { ktToJs } from "~/utils/ktToJs";
 import { readResponse } from "~/utils/readResponse";
+import { useGetCategories } from "~~/layers/category/composables/useGetCategories";
 
 type ListenerType = "shoppingListChanges";
 
@@ -41,7 +41,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
   const error = ref<Error | null>(null);
   const channel = ref<Channels>(new Map() as Channels);
 
-  const { data: categories } = useNuxtData<Category[]>("categories");
+  const { data: categories } = useGetCategories();
 
   const shoppingListClient = client ?? useShoppingListClient();
 

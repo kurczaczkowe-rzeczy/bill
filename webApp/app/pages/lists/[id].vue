@@ -8,12 +8,13 @@ import {
 import type { DraggableEvent } from "vue-draggable-plus";
 
 import { type AddToShoppingListParameters, useShoppingList } from "~/composables/useShoppingList";
-import { categoryClient, productClient } from "~/constants";
+import { productClient } from "~/constants";
 import CategoryListItem from "~/pages/lists/CategoryListItem.vue";
 import { getStringParam } from "~/utils/getStringParam";
 import { isNil } from "~/utils/isNil";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
+import { useGetCategories } from "~~/layers/category/composables/useGetCategories";
 
 const ITEM_CHOOSE_TIMESTAMP_TIMEOUT = 150;
 const COLLAPSED_ADD_FORM_LIST_IDS = "collapsedAddFormListIds";
@@ -154,27 +155,7 @@ async function fetchSuggestions(query: string) {
   }
 }
 
-const {
-  data: categories,
-  error: categoriesError,
-  status: categoriesStatus,
-} = await useAsyncData(
-  `categories`,
-  async () => {
-    const response = await categoryClient.getCategoriesAsync();
-
-    if ("error" in response) {
-      throw new Error(response as unknown as string);
-    }
-
-    if (!("result" in response)) {
-      throw new Error(`Unsupported response type: ${response.constructor.name}`);
-    }
-
-    return ktToJs(response.result as KtList<Category>) as Category[];
-  },
-  { server: false },
-);
+const { data: categories, error: categoriesError, status: categoriesStatus } = useGetCategories();
 
 const selectedCategory = ref<Category | null>(null);
 const categoryNameQuery = ref("");
