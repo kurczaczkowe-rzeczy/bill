@@ -38,6 +38,7 @@ const {
   deleteProductFromShoppingList,
   switchProductCategory,
   shoppingListDetails,
+  refresh,
 } = useShoppingList(route.params.id, {
   useAutoListenFor: ["shoppingListChanges"],
 });
@@ -216,6 +217,12 @@ function handleToggleInCart(productId: bigint) {
   toggleInCart(productId);
 }
 
+function handleVisibilityChange() {
+  if (document.visibilityState === "visible") {
+    refresh();
+  }
+}
+
 onMounted(() => {
   // ToDo: If ls is empty and shopping list has product in cart but they isn't already fetched, form stays open.
   //  Probably using cookies solves it.
@@ -224,6 +231,12 @@ onMounted(() => {
   if (hasAnyInCart && import.meta.client && !isAddProductFormHidden.value) {
     toggleAddForm();
   }
+
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("visibilitychange", handleVisibilityChange);
 });
 
 function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string): boolean {
@@ -294,7 +307,7 @@ function useCollapsedAddForm(listId: string) {
       <transition name="collapse">
         <form
           v-show="!isAddProductFormHidden"
-          class="list-row-separator grid grid-cols-[80px_minmax(0,_auto)_45px]"
+          class="list-row-separator grid grid-cols-[80px_minmax(0,auto)_45px]"
           @submit.prevent="handleAddToShoppingList"
         >
           <button class="btn btn-ghost btn-circle">
@@ -440,10 +453,7 @@ function useCollapsedAddForm(listId: string) {
   padding-inline: var(--card-p, 1.5rem);
   overflow: auto;
   justify-items: flex-start;
-}
-
-.category-list:not(:last-of-type) {
-  margin-bottom: var(--radius-box);
+  gap: var(--radius-box);
 }
 
 .collapse-enter-active,
