@@ -1,22 +1,21 @@
 <script lang="ts" setup>
 import {
   type Category,
+  CategoryWithProducts,
   type Product,
-  type ShoppingListDetails,
   UnitEnum,
 } from "@bill/Bill-shoppingList";
-import type { DraggableEvent } from "vue-draggable-plus";
 
+import BaseCollapse from "~/components/BaseCollapse.vue";
+import CategoryDescriptor from "~/components/CategoryDescriptor.vue";
+import CategoryWithProductList from "~/components/CategoryWithProductList.vue";
 import { type AddToShoppingListParameters, useShoppingList } from "~/composables/useShoppingList";
 import { productClient } from "~/constants";
-import CategoryListItem from "~/pages/lists/CategoryListItem.vue";
 import { getStringParam } from "~/utils/getStringParam";
-import { isNil } from "~/utils/isNil";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 import { useGetCategories } from "~~/layers/category/composables/useGetCategories";
 
-const ITEM_CHOOSE_TIMESTAMP_TIMEOUT = 150;
 const COLLAPSED_ADD_FORM_LIST_IDS = "collapsedAddFormListIds";
 
 const route = useRoute();
@@ -46,39 +45,6 @@ const {
 const leftToBuy = computed(() =>
   shoppingListDetails.value.reduce((prev, curr) => prev + Number(!curr.inCart), 0),
 );
-
-const itemChooseTimeStamp = ref<number | null>(null);
-
-const draggableOptions = {
-  group: "shopping-list",
-  animation: 200,
-  handle: ".handle",
-  onEnd: (evt: DraggableEvent<ShoppingListDetails>) => {
-    if (isNil(evt.data)) {
-      return;
-    }
-
-    const category = categories.value?.find(
-      (c) => c.id === BigInt(evt.to.parentElement?.dataset.categoryId ?? -1),
-    );
-
-    if (!category) {
-      return;
-    }
-
-    switchProductCategory(evt.data.id, category);
-    // Timestamp is set to prevent calling whole click event when user chooses an element to reorder.
-    // So I need to reset it here to make it possible to call click event.
-    setTimeout(() => {
-      itemChooseTimeStamp.value = null;
-    }, ITEM_CHOOSE_TIMESTAMP_TIMEOUT);
-  },
-  forceFallback: true,
-  fallbackClass: "hidden",
-  onChoose: (_evt: DraggableEvent<ShoppingListDetails>) => {
-    itemChooseTimeStamp.value = Date.now();
-  },
-};
 
 const formErrors = reactive({
   name: "",
@@ -203,13 +169,6 @@ function resetAddToShoppingListParameters() {
 }
 
 function handleToggleInCart(productId: bigint) {
-  if (
-    itemChooseTimeStamp.value &&
-    Date.now() - itemChooseTimeStamp.value > ITEM_CHOOSE_TIMESTAMP_TIMEOUT
-  ) {
-    return;
-  }
-
   if (!hasEverToggledAddForm.value && !isAddProductFormHidden.value) {
     toggleAddForm();
   }
@@ -286,105 +245,108 @@ function useCollapsedAddForm(listId: string) {
 <template>
   <div class="card flex flex-col max-w-xl m-auto max-h-screen">
     <div class="card-body bg-base-100 rounded-box shadow-md w-full overflow-y-auto">
-      <div class="grid items-center gap-2 grid-cols-[45px_1rem_auto_45px] text-base">
-        <NuxtLink class="btn btn-ghost btn-circle relative" to="/">
-          <Icon name="streamline-freehand:keyboard-arrow-return" />
-        </NuxtLink>
-        <Icon
-          :class="shoppingListDetailsLoading ? '' : 'invisible'"
-          class="animate-spin text-info"
-          name="streamline-freehand:loading-star-1"
-        />
-        <span class="justify-self-end">Pozostało: {{ leftToBuy }}</span>
-        <button class="btn btn-ghost btn-circle" @click="toggleAddForm">
-          <Icon
-            :class="isAddProductFormHidden ? 'rotate-270' : 'rotate-90'"
-            class="transition-transform"
-            name="streamline-freehand:move-rectangle-left"
-          />
-        </button>
-      </div>
-      <transition name="collapse">
-        <form
-          v-show="!isAddProductFormHidden"
-          class="list-row-separator grid grid-cols-[80px_minmax(0,auto)_45px]"
-          @submit.prevent="handleAddToShoppingList"
-        >
-          <button class="btn btn-ghost btn-circle">
-            <Icon name="streamline-freehand:add-sign-bold" />
-          </button>
-          <BaseAutocomplete
-            v-model="addToShoppingListParameters.name"
-            :is-loading="suggestionsLoading"
-            :match-by="matchProductSuggestionBy"
-            :suggestions="suggestions"
-            label-key="name"
-            list-id="suggestions"
-            name="product"
-            placeholder="Nazwa produktu"
-            wrapperClass="col-span-2"
-            @search="fetchSuggestions"
-            @select="selectSuggestion"
+      <BaseCollapse v-model:open="isAddProductFormHidden" :toggleable="false" class="shrink-0">
+        <template #summary>
+          <div class="grid items-center gap-2 grid-cols-[45px_1rem_auto_45px] text-base">
+            <NuxtLink class="btn btn-ghost btn-circle relative" to="/">
+              <Icon name="streamline-freehand:keyboard-arrow-return" />
+            </NuxtLink>
+            <Icon
+              :class="shoppingListDetailsLoading ? '' : 'invisible'"
+              class="animate-spin text-info"
+              name="streamline-freehand:loading-star-1"
+            />
+            <span class="justify-self-end">Pozostało: {{ leftToBuy }}</span>
+            <button class="btn btn-ghost btn-circle" @click="toggleAddForm">
+              <Icon
+                :class="isAddProductFormHidden ? 'rotate-270' : 'rotate-90'"
+                class="transition-transform"
+                name="streamline-freehand:move-rectangle-left"
+              />
+            </button>
+          </div>
+        </template>
+        <template #content>
+          <form
+            class="list-row-separator grid grid-cols-[80px_minmax(0,auto)_45px]"
+            @submit.prevent="handleAddToShoppingList"
           >
-            <template #item="{ item: suggestion }">
-              <span class="list-col-grow">{{ suggestion.name }}</span>
-              <span class="badge badge-ghost badge-sm">{{ suggestion.unit || 'szt.' }}</span>
-            </template>
-          </BaseAutocomplete>
-          <input
-            v-model="addToShoppingListParameters.quantity"
-            class="input input-ghost"
-            min="1"
-            name="quantity"
-            required
-            type="number"
-          />
-          <select v-model="addToShoppingListParameters.unit" class="select select-ghost col-span-2 w-full" name="unit">
-            <option disabled selected>Wybierz jednostkę</option>
-            <option v-for="unit in units" :key="unit.name" :value="unit">{{ unit.name }}</option>
-          </select>
+            <button class="btn btn-ghost btn-circle">
+              <Icon name="streamline-freehand:add-sign-bold" />
+            </button>
+            <BaseAutocomplete
+              v-model="addToShoppingListParameters.name"
+              :is-loading="suggestionsLoading"
+              :match-by="matchProductSuggestionBy"
+              :suggestions="suggestions"
+              label-key="name"
+              list-id="suggestions"
+              name="product"
+              placeholder="Nazwa produktu"
+              wrapperClass="col-span-2"
+              @search="fetchSuggestions"
+              @select="selectSuggestion"
+            >
+              <template #item="{ item: suggestion }">
+                <span class="list-col-grow">{{ suggestion.name }}</span>
+                <span class="badge badge-ghost badge-sm">{{ suggestion.unit || 'szt.' }}</span>
+              </template>
+            </BaseAutocomplete>
+            <input
+              v-model="addToShoppingListParameters.quantity"
+              class="input input-ghost"
+              min="1"
+              name="quantity"
+              required
+              type="number"
+            />
+            <select v-model="addToShoppingListParameters.unit" class="select select-ghost col-span-2 w-full" name="unit">
+              <option disabled selected>Wybierz jednostkę</option>
+              <option v-for="unit in units" :key="unit.name" :value="unit">{{ unit.name }}</option>
+            </select>
 
-          <BaseAutocomplete
-            v-model="categoryNameQuery"
-            :is-loading="categoriesStatus === 'pending'"
-            :suggestions="categoriesFilterDownByQuery ?? []"
-            label-key="name"
-            list-id="categories"
-            name="category"
-            wrapperClass="col-span-3"
-            @select="selectCategory as any"
-          >
-            <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef, attrs }">
-              <div :ref="bindFieldRef as any" class="flex items-center gap-2 input input-ghost w-full">
-                <CategoryListItem
-                  :color="selectedCategory?.color ?? '323232'"
-                  :name="selectedCategory?.name ?? query"
-                >
-                  <template #label>
-                    <input
-                      :aria-controls="listId"
-                      :value="query"
-                      aria-autocomplete="list"
-                      autocomplete="off"
-                      placeholder="Wybierz kategorię"
-                      role="combobox"
-                      type="text"
-                      v-bind="attrs"
-                      @click="handleClick"
-                      @input="handleInput"
-                      @keydown="handleKeydown"
-                    />
-                  </template>
-                </CategoryListItem>
-                <Icon class="autocomplete-arrow" name="mdi:chevron-down" />
-              </div>
-            </template>
-            <template #item="{ item: selectedCategory }">
-              <CategoryListItem :="selectedCategory" />
-            </template>
-          </BaseAutocomplete>
-        </form>
-      </transition>
+            <BaseAutocomplete
+              v-model="categoryNameQuery"
+              :is-loading="categoriesStatus === 'pending'"
+              :suggestions="categoriesFilterDownByQuery ?? []"
+              label-key="name"
+              list-id="categories"
+              name="category"
+              wrapperClass="col-span-3"
+              @select="selectCategory as any"
+            >
+              <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef, attrs }">
+                <div :ref="bindFieldRef as any" class="flex items-center gap-2 input input-ghost w-full">
+                  <CategoryDescriptor
+                    :color="selectedCategory?.color ?? '323232'"
+                    :name="selectedCategory?.name ?? query"
+                  >
+                    <template #label>
+                      <input
+                        :aria-controls="listId"
+                        :value="query"
+                        aria-autocomplete="list"
+                        autocomplete="off"
+                        placeholder="Wybierz kategorię"
+                        role="combobox"
+                        type="text"
+                        v-bind="attrs"
+                        @click="handleClick"
+                        @input="handleInput"
+                        @keydown="handleKeydown"
+                      />
+                    </template>
+                  </CategoryDescriptor>
+                  <Icon class="autocomplete-arrow" name="mdi:chevron-down" />
+                </div>
+              </template>
+              <template #item="{ item: selectedCategory }">
+                <CategoryDescriptor :name="selectedCategory.name" :color="selectedCategory.color" />
+              </template>
+            </BaseAutocomplete>
+          </form>
+        </template>
+      </BaseCollapse>
       <ul class="list category-lists">
         <li
           v-for="categoryWithProducts in categoriesWithProducts"
@@ -392,31 +354,13 @@ function useCollapsedAddForm(listId: string) {
           :key="categoryWithProducts.category.id.toString()"
           class="category-list"
         >
-          <CategoryListItem :="categoryWithProducts.category" />
-          <DraggableList
-            :data-category-id="categoryWithProducts.category.id"
-            :itemProps="(product) => ({
-              class: { 'line-through': product.inCart },
-              onClick: () => handleToggleInCart( product.id )
-            })"
-            :items="categoryWithProducts.products as ShoppingListDetails[]"
-            :="draggableOptions"
-          >
-            <template #item="{ item: product }">
-              <span class="list-col-grow">{{ product.name }} </span>
-              <button
-                class="btn btn-ghost btn-sm handle absolute px-2 py-4 mx-1 -my-4"
-                @click.stop
-              >
-                <Icon name="streamline-freehand:data-transfer-vertical" />
-              </button>
-              <span>{{ product.quantity }} {{ product.unit }}</span>
-              <button @click.stop="deleteProductFromShoppingList(product.id)">
-                <Icon name="streamline-freehand:remove-delete-sign-bold" />
-              </button>
-            </template>
-            <template #empty>Brak produktów w kategorii</template>
-          </DraggableList>
+          <CategoryWithProductList
+            :categories="categories ?? []"
+            :category-with-products="categoryWithProducts as unknown as CategoryWithProducts"
+            :on-delete-product="deleteProductFromShoppingList"
+            :on-toggle-in-cart="handleToggleInCart"
+            :switch-product-category="switchProductCategory"
+          />
         </li>
         <li v-else class="list-row">Brak produktów na liście</li>
       </ul>
@@ -454,20 +398,5 @@ function useCollapsedAddForm(listId: string) {
   overflow: auto;
   justify-items: flex-start;
   gap: var(--radius-box);
-}
-
-.collapse-enter-active,
-.collapse-leave-active {
-  transition: all 0.3s ease;
-  max-height: 500px;
-  overflow-y: hidden;
-}
-
-.collapse-enter-from,
-.collapse-leave-to {
-  max-height: 0;
-  opacity: 0;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 </style>

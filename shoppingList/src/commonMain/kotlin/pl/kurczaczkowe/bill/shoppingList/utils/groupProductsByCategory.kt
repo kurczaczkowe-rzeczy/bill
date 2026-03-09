@@ -23,5 +23,5 @@ fun groupProductsByCategory(
                 products = categoryProducts
             )
         }
-    }
+    }.sortedBy { it.products.all { product -> product.inCart } }
 }

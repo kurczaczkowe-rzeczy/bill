@@ -15,7 +15,7 @@ const emit = defineEmits(["update-available", "updated", "offline-ready"]);
 const needRefresh = ref(false);
 const offlineReady = ref(false);
 const isUpdating = ref(false);
-const updateSW = ref(null);
+const updateSW = ref<((reloadPage?: boolean) => Promise<void>) | null>(null);
 
 onMounted(async () => {
   try {

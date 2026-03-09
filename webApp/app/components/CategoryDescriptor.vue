@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import type { Category } from "@bill/Bill-shoppingList";
 
-interface CategoryListItemProps {
+// ToDo: to powinno być w komponentach
+interface CategoryDescriptorProps {
   name: Category["name"];
   color: Category["color"];
 }
 
-const props = defineProps<CategoryListItemProps>();
+const props = defineProps<CategoryDescriptorProps>();
 const initials = computed(() => {
   if (!props.name) {
     return "";
