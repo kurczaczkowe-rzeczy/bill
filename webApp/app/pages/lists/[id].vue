@@ -387,11 +387,6 @@ function useCollapsedAddForm(listId: string) {
   }
 }
 
-.handle {
-  left: calc(var(--card-p, 1.5rem) * -1);
-  height: fit-content;
-}
-
 .category-lists {
   margin-inline: calc(var(--card-p, 1.5rem) * -1);
   padding-inline: var(--card-p, 1.5rem);

@@ -42,6 +42,7 @@ const query = ref<Query>(props.modelValue);
 const isOpen = ref(false);
 const highlightedIndex = ref(-1);
 const containerRef = ref<HTMLElement>();
+const listRef = ref<HTMLElement>();
 
 const reference = ref();
 const floating = ref();
@@ -81,23 +82,46 @@ function handleInput(event: Event) {
   }
 }
 
+function scrollToHighlighted() {
+  if (highlightedIndex.value < 0 || !listRef.value) {
+    return;
+  }
+
+  const listElement = listRef.value;
+  const highlightedElement = listElement.children[highlightedIndex.value] as HTMLElement;
+
+  if (highlightedElement) {
+    highlightedElement.scrollIntoView({
+      block: "nearest",
+      behavior: "smooth",
+    });
+  }
+}
+
 function handleKeydown(event: KeyboardEvent) {
   switch (event.key.toLowerCase()) {
     case "arrowdown": {
       event.preventDefault();
-      highlightedIndex.value = Math.min(highlightedIndex.value + 1, props.suggestions.length - 1);
+      highlightedIndex.value =
+        highlightedIndex.value + 1 === props.suggestions.length ? 0 : highlightedIndex.value + 1;
       if (!isOpen.value && highlightedIndex.value >= 0) {
         selectItem(props.suggestions[highlightedIndex.value]);
       }
+      scrollToHighlighted();
       break;
     }
 
     case "arrowup": {
       event.preventDefault();
-      highlightedIndex.value = Math.max(highlightedIndex.value - 1, 0);
+      highlightedIndex.value =
+        highlightedIndex.value - 1 === 0
+          ? props.suggestions.length - 1
+          : highlightedIndex.value - 1;
+
       if (!isOpen.value && highlightedIndex.value >= 0) {
         selectItem(props.suggestions[highlightedIndex.value]);
       }
+      scrollToHighlighted();
       break;
     }
 
@@ -224,6 +248,7 @@ watch(
       >
         <ul
           :id="listId"
+          ref="listRef"
           class="list max-h-64 overflow-auto"
         >
           <!-- Slot: Loading -->
