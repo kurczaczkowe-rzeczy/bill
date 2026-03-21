@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import BaseButton from "@ui/components/BaseButton.vue";
+
 const props = defineProps({
   showChangelog: {
     type: Boolean,
@@ -128,22 +130,22 @@ const close = () => {
         </div>
 
         <div class="modal-action">
-          <button
+          <BaseButton
               @click="close"
-              class="btn btn-ghost"
               :disabled="isUpdating"
           >
             Później
-          </button>
-          <button
+          </BaseButton>
+          <BaseButton
               @click="updateServiceWorker"
-              class="btn btn-primary"
+              appearance="solid"
+              color="primary"
               :disabled="isUpdating"
           >
             <Icon v-if="isUpdating" name="mdi:loading" class="animate-spin" />
             <Icon v-else name="mdi:download" />
             {{ isUpdating ? 'Aktualizowanie...' : 'Aktualizuj teraz' }}
-          </button>
+          </BaseButton>
         </div>
       </div>
 

@@ -15,6 +15,7 @@ import { getStringParam } from "~/utils/getStringParam";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 import { useGetCategories } from "~~/layers/category/composables/useGetCategories";
+import BaseButton from "~~/layers/ui/components/BaseButton.vue";
 
 const COLLAPSED_ADD_FORM_LIST_IDS = "collapsedAddFormListIds";
 
@@ -90,6 +91,8 @@ function selectSuggestion(s: ProductSuggestion) {
 }
 
 async function fetchSuggestions(query: string) {
+  // ToDo: jak już wcześniej nie znaleziono i dopisujesz litery to weź nie puszczaj rq bo to nie ma sensu
+  // ToDo 2: Najlepiej jak se zrobisz testy pod to bo trzeba kilka warunków ogarnąć które i tak zapomnisz :D
   if (!query || query.trim().length < 2) {
     suggestions.value = [];
     closeSuggestions();
@@ -248,32 +251,33 @@ function useCollapsedAddForm(listId: string) {
       <BaseCollapse v-model:open="isAddProductFormHidden" :toggleable="false" class="shrink-0">
         <template #summary>
           <div class="grid items-center gap-2 grid-cols-[45px_1rem_auto_45px] text-base">
-            <NuxtLink class="btn btn-ghost btn-circle relative" to="/">
+            <BaseButton circle class="relative" to="/">
               <Icon name="streamline-freehand:keyboard-arrow-return" />
-            </NuxtLink>
+            </BaseButton>
             <Icon
               :class="shoppingListDetailsLoading ? '' : 'invisible'"
               class="animate-spin text-info"
               name="streamline-freehand:loading-star-1"
             />
             <span class="justify-self-end">Pozostało: {{ leftToBuy }}</span>
-            <button class="btn btn-ghost btn-circle" @click="toggleAddForm">
+            <BaseButton circle @click="toggleAddForm">
               <Icon
                 :class="isAddProductFormHidden ? 'rotate-270' : 'rotate-90'"
                 class="transition-transform"
                 name="streamline-freehand:move-rectangle-left"
               />
-            </button>
+            </BaseButton>
           </div>
         </template>
         <template #content>
+<!--          ToDo: Najlepiej jak ten formularz będzie w wersji mobilnej w bottomszicie a na większych ekranach zboku, nie będzie to wtedy przeszkadzało przeglądać liste-->
           <form
             class="list-row-separator grid grid-cols-[80px_minmax(0,auto)_45px]"
             @submit.prevent="handleAddToShoppingList"
           >
-            <button class="btn btn-ghost btn-circle">
+            <BaseButton circle>
               <Icon name="streamline-freehand:add-sign-bold" />
-            </button>
+            </BaseButton>
             <BaseAutocomplete
               v-model="addToShoppingListParameters.name"
               :is-loading="suggestionsLoading"

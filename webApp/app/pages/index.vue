@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import BaseButton from "@ui/components/BaseButton.vue";
+
 import BaseList from "~/components/BaseList.vue";
 import { useShoppingLists } from "~/composables/useShoppingLists";
 import { handleResponseError } from "~/utils/handleResponseError";
@@ -49,8 +51,9 @@ function defaultName() {
 <template>
   <div class="card flex justify-center max-w-xl m-auto">
     <BaseList
-      class="card-body bg-base-100 rounded-box shadow-md w-full"
       :items="shoppingLists"
+      class="card-body bg-base-100 rounded-box shadow-md w-full"
+      :item-props="(shoppingList) => ({ class: 'items-center' })"
     >
       <template #static>
         <li class="p-4 grid grid-cols-[80px_1fr]">
@@ -58,20 +61,20 @@ function defaultName() {
           <span class="col-2 justify-self-end">List: {{ shoppingLists.length }}</span>
         </li>
         <li>
-          <form class="list-row" @submit.prevent="handleAddShoppingList">
+          <form class="list-row items-center" @submit.prevent="handleAddShoppingList">
             <label class="list-col-grow">
               <input
                 v-model="nameRef"
                 :aria-invalid="!!formNameError"
-                class="input input-ghost validator"
                 :placeholder="defaultName()"
+                class="input input-ghost validator"
                 type="text"
               />
               <span v-if="!!formNameError.trim()" class="validator-hint hidden">{{ formNameError }}</span>
             </label>
-            <button class="btn btn-ghost btn-circle">
+            <BaseButton circle>
               <Icon name="streamline-freehand:add-sign-bold" />
-            </button>
+            </BaseButton>
           </form>
         </li>
       </template>
@@ -80,9 +83,9 @@ function defaultName() {
           <span>{{ shoppingList.name }}</span>
         </NuxtLink>
         <span>{{ shoppingList.productAmount }} <Icon name="streamline-freehand:shopping-cart-trolley" /></span>
-        <button @click="handleDelete(shoppingList.id)">
+        <BaseButton circle class="-m-4" size="sm" @click="handleDelete(shoppingList.id)">
           <Icon name="streamline-freehand:remove-delete-sign-bold" />
-        </button>
+        </BaseButton>
       </template>
       <template #empty>Brak list</template>
     </BaseList>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Category, CategoryWithProducts, ShoppingListDetails } from "@bill/Bill-shoppingList";
+import BaseButton from "@ui/components/BaseButton.vue";
 import type { DraggableEvent } from "vue-draggable-plus";
 
 import BaseCollapse from "~/components/BaseCollapse.vue";
@@ -93,19 +94,22 @@ function handleToggleInCart(productId: bigint) {
         :items="categoryWithProducts.products as unknown as ShoppingListDetails[]"
       >
         <template #item="{ item: product }">
-          <button
-            class="btn btn-ghost btn-sm handle relative -my-3"
+          <BaseButton
+            size="sm"
+            class="handle relative -my-3"
             @click.stop
           >
             <Icon name="streamline-freehand:data-transfer-vertical" />
-          </button>
+          </BaseButton>
           <span class="list-col-grow -ml-10">{{ product.name }} </span>
           <span>{{ product.quantity }} {{ product.unit }}</span>
-          <button
-            class="btn btn-ghost btn-sm -m-4"
+          <BaseButton
+            size="sm"
+            class="-m-4"
+            circle
             @click.stop="onDeleteProduct(product.id)">
             <Icon name="streamline-freehand:remove-delete-sign-bold" />
-          </button>
+          </BaseButton>
         </template>
         <template #empty>Brak produktów w kategorii</template>
       </DraggableList>

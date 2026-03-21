@@ -15,5 +15,5 @@
       "path": "./.nuxt/tsconfig.node.json"
     }
   ],
-  "include": ["../build/js/packages/**/*"]
+  "include": ["../build/js/packages/**/*"],
 }

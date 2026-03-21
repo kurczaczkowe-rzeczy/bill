@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import BaseButton from "@ui/components/BaseButton.vue";
+
 interface Props {
   open?: boolean;
   defaultOpen?: boolean;
@@ -23,15 +25,14 @@ watchEffect(() => {
 
 <template>
   <div class="overflow-y-hidden">
-    <button
+    <BaseButton
       v-if="toggleable"
       :aria-expanded="isOpen"
-      class="collapse-title cursor-pointer btn btn-ghost"
-      type="button"
+      class="collapse-title cursor-pointer"
       @click="isOpen = !isOpen"
     >
       <slot name="summary"></slot>
-    </button>
+    </BaseButton>
     <div
       v-else
     >
