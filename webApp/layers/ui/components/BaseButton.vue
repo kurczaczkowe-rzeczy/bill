@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { type ButtonVariants, buttonVariants } from "@ui/components/buttonVariants";
+import {
+  type ButtonVariants,
+  buttonVariants,
+  type UiLayerButtonConfig,
+} from "@ui/components/buttonVariants";
 import { classMerge } from "@ui/utils/classMerge";
 import type { RouteLocationRaw } from "vue-router";
 
@@ -20,6 +24,21 @@ interface BaseButtonProps {
 
 const buttonProps = defineProps<BaseButtonProps>();
 
+const buttonAppConfig = useAppConfig().ui?.button ?? {};
+
+const buttonConfig = computed(
+  () =>
+    ({
+      color: buttonProps.color ?? buttonAppConfig.color,
+      appearance: buttonProps.appearance ?? buttonAppConfig.appearance,
+      size: buttonProps.size ?? buttonAppConfig.size,
+      modifier: buttonProps.modifier ?? buttonAppConfig.modifier,
+      circle: buttonProps.circle ?? buttonAppConfig.circle,
+      square: buttonProps.square ?? buttonAppConfig.square,
+      disabled: buttonProps.disabled,
+    }) as UiLayerButtonConfig,
+);
+
 const isLink = computed(() => buttonProps.to);
 </script>
 
@@ -30,7 +49,7 @@ const isLink = computed(() => buttonProps.to);
       :href="href"
       @click="navigate"
       :class="classMerge(
-        buttonVariants(buttonProps),
+        buttonVariants(buttonConfig),
         isActive && (activeClass || 'btn-active'),
         buttonProps.class
       )"
@@ -44,7 +63,7 @@ const isLink = computed(() => buttonProps.to);
   <a
     v-else-if="href"
     :href="href"
-    :class="classMerge(buttonVariants(buttonProps), buttonProps.class)"
+    :class="classMerge(buttonVariants(buttonConfig), buttonProps.class)"
     :aria-label="ariaLabel"
   >
     <slot />
@@ -53,7 +72,7 @@ const isLink = computed(() => buttonProps.to);
   <!-- button -->
   <button
     v-else
-    :class="classMerge(buttonVariants(buttonProps), buttonProps.class)"
+    :class="classMerge(buttonVariants(buttonConfig), buttonProps.class)"
     :disabled="disabled"
     :aria-label="ariaLabel"
   >

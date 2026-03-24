@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@source "../../../layers/ui";
+
 @plugin "daisyui/theme" {
   name: tinymist;
   default: true;

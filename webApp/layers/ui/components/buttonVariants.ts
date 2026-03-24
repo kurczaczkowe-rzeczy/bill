@@ -3,10 +3,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 export const buttonVariants = cva("btn transition-colors", {
   variants: {
     color: {
+      neutral: "btn-neutral",
       primary: "btn-primary",
       secondary: "btn-secondary",
+      accent: "btn-accent",
+      info: "btn-info",
+      success: "btn-success",
+      warning: "btn-warning",
       error: "btn-error",
-      neutral: "btn-neutral",
+      noColor: "",
     },
     appearance: {
       solid: "",
@@ -31,9 +36,17 @@ export const buttonVariants = cva("btn transition-colors", {
   },
 
   defaultVariants: {
-    color: "neutral",
-    appearance: "ghost",
+    color: "primary",
+    appearance: "solid",
   },
 });
 
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
+
+export type UiLayerButtonConfig = Partial<ButtonVariants>;
+
+declare module "~/types/ui-layer-registry" {
+  interface UiLayerRegistry {
+    button: UiLayerButtonConfig;
+  }
+}
