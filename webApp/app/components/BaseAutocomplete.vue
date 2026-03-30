@@ -67,6 +67,7 @@ const { floatingStyles } = useFloating(reference, floating, {
 
 const debouncedSearch = useDebounceFn((value: string) => {
   emit("search", value);
+  highlightedIndex.value = 0;
 }, props.debounceMs);
 
 function handleInput(event: Event) {
@@ -75,7 +76,6 @@ function handleInput(event: Event) {
   const value = (event.target as HTMLInputElement).value;
   query.value = value;
   emit("update:modelValue", value);
-  highlightedIndex.value = -1;
 
   if (value.length >= props.minLengthQuery) {
     debouncedSearch(value);
@@ -98,12 +98,27 @@ function scrollToHighlighted() {
   }
 }
 
+function changeHighlightPosition(type: "increase" | "decrease") {
+  const suggestionLength = props.suggestions.length;
+
+  if (suggestionLength < 1) {
+    highlightedIndex.value = -1;
+    return;
+  }
+
+  const modifier = type === "increase" ? 1 : -1;
+
+  highlightedIndex.value =
+    (((highlightedIndex.value + modifier) % suggestionLength) + suggestionLength) %
+    suggestionLength;
+}
+
 function handleKeydown(event: KeyboardEvent) {
   switch (event.key.toLowerCase()) {
     case "arrowdown": {
       event.preventDefault();
-      highlightedIndex.value =
-        highlightedIndex.value + 1 === props.suggestions.length ? 0 : highlightedIndex.value + 1;
+      changeHighlightPosition("increase");
+
       if (!isOpen.value && highlightedIndex.value >= 0) {
         selectItem(props.suggestions[highlightedIndex.value]);
       }
@@ -113,10 +128,7 @@ function handleKeydown(event: KeyboardEvent) {
 
     case "arrowup": {
       event.preventDefault();
-      highlightedIndex.value =
-        highlightedIndex.value - 1 === 0
-          ? props.suggestions.length - 1
-          : highlightedIndex.value - 1;
+      changeHighlightPosition("decrease");
 
       if (!isOpen.value && highlightedIndex.value >= 0) {
         selectItem(props.suggestions[highlightedIndex.value]);
