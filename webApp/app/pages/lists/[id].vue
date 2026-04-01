@@ -5,6 +5,7 @@ import {
   type Product,
   UnitEnum,
 } from "@bill/Bill-shoppingList";
+import BaseMatchEmphasis from "@ui/components/BaseMatchEmphasis.vue";
 
 import BaseCollapse from "~/components/BaseCollapse.vue";
 import CategoryDescriptor from "~/components/CategoryDescriptor.vue";
@@ -292,7 +293,12 @@ function useCollapsedAddForm(listId: string) {
               @select="selectSuggestion"
             >
               <template #item="{ item: suggestion }">
-                <span class="list-col-grow">{{ suggestion.name }}</span>
+                <span class="list-col-grow">
+                  <BaseMatchEmphasis
+                    :text="suggestion.name"
+                    :query="addToShoppingListParameters.name"
+                  />
+                </span>
                 <span class="badge badge-ghost badge-sm">{{ suggestion.unit || 'szt.' }}</span>
               </template>
             </BaseAutocomplete>
