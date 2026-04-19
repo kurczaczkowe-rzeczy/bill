@@ -38,6 +38,9 @@ kotlin {
     js(IR) {
         useEsModules()
         browser {
+            commonWebpackConfig {
+                sourceMaps = true
+            }
             compilerOptions {
                 target = "es2015"
                 moduleKind.set(JsModuleKind.MODULE_ES)
@@ -52,6 +55,7 @@ kotlin {
             }
         }
     }
+
 
     sourceSets {
         
@@ -87,7 +91,7 @@ kotlin {
 
 android {
     namespace = "pl.kurczaczkowe.bill"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "pl.kurczaczkowe.bill"

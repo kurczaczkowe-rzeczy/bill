@@ -2,12 +2,14 @@ import love.forte.plugin.suspendtrans.configuration.SuspendTransformConfiguratio
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JsModuleKind
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.suspend.transform)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
@@ -36,6 +38,9 @@ kotlin {
     js(IR) {
         useEsModules()
         browser {
+            commonWebpackConfig {
+                sourceMaps = true
+            }
             compilerOptions {
                 target = "es2015"
                 moduleKind.set(JsModuleKind.MODULE_ES)
@@ -114,5 +119,46 @@ suspendTransformPlugin {
                 from(kotlinJsExportIgnoreClassInfo)
             }
         }
+    }
+}
+
+fun loadEnv(envName: String): Properties {
+    val props = Properties()
+    val file = rootProject.file("core/.env.$envName")
+    if (file.exists()) {
+        file.inputStream().use { props.load(it) }
+    }
+
+    System.getenv().forEach { (k, v) -> if (k.startsWith("SUPABASE_")) props[k] = v }
+    return props
+}
+
+val selectedEnv: String = (project.findProperty("env") as String?)
+    ?: System.getenv("ENV")
+    ?: "dev"
+
+val envProps = loadEnv(selectedEnv)
+
+buildkonfig {
+    packageName = "pl.kurczaczkowe.bill.core.config"
+    objectName = "BuildKonfig"
+    exposeObjectWithName = "BuildKonfig"
+
+    defaultConfigs {
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "SUPABASE_URL",
+            envProps.getProperty("SUPABASE_URL") ?: error("Missing SUPABASE_URL for env=$selectedEnv")
+        )
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "SUPABASE_KEY",
+            envProps.getProperty("SUPABASE_KEY") ?: error("Missing SUPABASE_KEY for env=$selectedEnv")
+        )
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "ENVIRONMENT",
+            selectedEnv
+        )
     }
 }

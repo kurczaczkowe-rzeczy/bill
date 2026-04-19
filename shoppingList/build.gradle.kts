@@ -36,6 +36,9 @@ kotlin {
     js(IR) {
         useEsModules()
         browser {
+            commonWebpackConfig {
+                sourceMaps = true
+            }
             compilerOptions {
                 target = "es2015"
                 moduleKind.set(JsModuleKind.MODULE_ES)

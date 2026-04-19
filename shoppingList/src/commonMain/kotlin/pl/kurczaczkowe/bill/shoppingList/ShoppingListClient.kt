@@ -4,7 +4,6 @@ import io.github.jan.supabase.realtime.PostgresAction
 import love.forte.plugin.suspendtrans.annotation.JsPromise
 import pl.kurczaczkowe.bill.core.networking.RemoteClient
 import pl.kurczaczkowe.bill.core.networking.Subscription
-import pl.kurczaczkowe.bill.core.networking.supabaseRemoteClient
 import pl.kurczaczkowe.bill.core.util.NetworkError
 import pl.kurczaczkowe.bill.core.util.Result
 import pl.kurczaczkowe.bill.shoppingList.dto.AddToShoppingListParameters
@@ -27,7 +26,7 @@ import kotlin.js.JsName
 import kotlin.time.ExperimentalTime
 
 @JsExport
-class ShoppingListClient(private val client: RemoteClient = supabaseRemoteClient) {
+class ShoppingListClient(private val client: RemoteClient) {
     // GENERAL
 
     fun unsubscribe(subscription: Subscription) = subscription.unsubscribe()

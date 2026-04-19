@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="product-js">
+    <output-path>$PROJECT_DIR$/product/build/libs</output-path>
+    <root id="archive" name="product-js.jar">
+      <element id="module-output" name="Bill.product.jsMain" />
+    </root>
+  </artifact>
+</component>

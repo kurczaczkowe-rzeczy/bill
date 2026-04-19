@@ -1,0 +1,1863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="fix[web](shoppingList): proper casting UnitEnum in groupProductsByCategoryJs">
+      <change afterPath="$PROJECT_DIR$/core/.env.dev" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/test/nuxt/categoryClientMock.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/test/nuxt/shoppingListClientMock.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/test/nuxt/useShoppingList.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/client_ chrome.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/server_ nuxt.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/vitest.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/composeApp/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/core/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/pl/kurczaczkowe/bill/core/networking/supabaseClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/pl/kurczaczkowe/bill/core/networking/supabaseClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/CategoryClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/CategoryClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ShoppingListClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ShoppingListClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/plugins/shoppingListClientPlugin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/plugins/shoppingListClientPlugin.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/category/plugins/categoryClientPlugin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/category/plugins/categoryClientPlugin.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/nuxt.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/package.json" afterDir="false" />
+    </list>
+    <list id="fa299268-d626-4cf1-b468-852614754013" name="envs" comment="">
+      <change afterPath="$PROJECT_DIR$/core/.env.prod" afterDir="false" />
+    </list>
+    <list id="285fcefc-03cf-401c-8c78-c887edb49b80" name="idk" comment="idk">
+      <change afterPath="$PROJECT_DIR$/category/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/category/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/category/src/commonMain/kotlin/pl/kurczaczkowe/bill/category/CategoryClient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/category/src/commonMain/kotlin/pl/kurczaczkowe/bill/category/dto/Category.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/category/src/jsMain/kotlin/pl/kurczaczkowe/bill/category/dto/Category.js.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/category/src/jsMain/kotlin/pl/kurczaczkowe/bill/category/utils/JSON.js.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/category/src/jsMain/kotlin/pl/kurczaczkowe/bill/category/utils/installToJsMethods.js.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/composeApp/src/jsMain/kotlin/pl/kurczaczkowe/bill/util/SuspendToPromise.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/src/commonMain/kotlin/pl/kurczaczkowe/bill/product/ProductClient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/src/commonMain/kotlin/pl/kurczaczkowe/bill/product/dto/Product.js.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/src/commonMain/kotlin/pl/kurczaczkowe/bill/product/dto/ProductSuggestionParameters.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/src/commonMain/kotlin/pl/kurczaczkowe/bill/product/dto/UnitEnum.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/dto/Product.js.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/dto/UnitEnum.js.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/utils/JSON.js.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/utils/installToJsMethods.js.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/pl/kurczaczkowe/bill/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/pl/kurczaczkowe/bill/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+    </list>
+    <list id="ba9607be-7672-40a9-8ed3-75862aed9174" name="layers" comment="layers">
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseCheckboxInput.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseInput.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseLabel.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseNumberInput.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseRadioInput.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseSelect.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseTextInput.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseTextarea.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseToggleInput.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/FormControl.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/typesField.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="129469" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[LocalEmulator::path=/home/lukasz/.android/avd/Pixel_3a_API_34_extension_level_7_x86_64.avd]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/composeApp">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/category">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/core">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/product">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/shoppingList">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="android" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build setup" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="buildkonfig" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="compose" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="ide" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="install" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="interop" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="kotlin browser" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="nodejs" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="signing" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="validation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="android" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="ide" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="install" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="interop" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="kotlin browser" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="nodejs" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="signing" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="validation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="category" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="android" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="compose" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="ide" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="install" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="interop" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="kotlin browser" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="nodejs" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="signing" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="validation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="composeApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="android" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="ide" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="install" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="interop" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="kotlin browser" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="nodejs" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="signing" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="validation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="android" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="ide" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="install" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="interop" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="kotlin browser" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="nodejs" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="signing" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="validation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="product" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="android" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="ide" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="install" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="interop" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="kotlin browser" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="nodejs" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="signing" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="validation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Bill" type="f1a62948:ProjectNode" />
+                <item name="shoppingList" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Enum" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin Script Gradle.gradle" />
+        <option value="Kotlin Script MainKts.main" />
+        <option value="CSS File" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+        <option value="Kotlin Data Class" />
+        <option value="TypeScript File" />
+        <option value="Vue Composition API Component" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LZygmunt&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:kurczaczkowe-rzeczy/bill.git&quot;,
+    &quot;accountId&quot;: &quot;1b52330b-d365-4903-9026-54075f95605c&quot;
+  }
+}</component>
+  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.0.0-bin/d6wjpkvcgsg3oed0qlfss3wgl/gradle-9.0.0" javaHome="$APPLICATION_HOME_DIR$/jbr" gradleVersion="9.0.0" />
+  <component name="KotlinCodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="KotlinMultiplatform" KONAN_HOME="$USER_HOME$/.konan/kotlin-native-prebuilt-linux-x86_64-2.1.20">
+    <executable TARGET="ios_x64" TARGET_NAME="iosX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":composeApp:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":composeApp:linkDebugTestIosX64" FILE="$PROJECT_DIR$/composeApp/build/bin/iosX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_simulator_arm64" TARGET_NAME="iosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":composeApp:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":composeApp:linkDebugTestIosSimulatorArm64" FILE="$PROJECT_DIR$/composeApp/build/bin/iosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_arm64" TARGET_NAME="iosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":composeApp:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":composeApp:linkDebugTestIosArm64" FILE="$PROJECT_DIR$/composeApp/build/bin/iosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2uP98H552TVpA1n6EE5s7aOBUpp" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.composeApp.executor": "Run",
+    "Gradle.Bill [browserProductionWebpack].executor": "Run",
+    "Gradle.Bill [build].executor": "Run",
+    "Gradle.Bill [clean].executor": "Run",
+    "Gradle.Bill [generateBuildKonfig].executor": "Run",
+    "Gradle.Bill [jsBrowserDevelopmentExecutableDistribution].executor": "Run",
+    "Gradle.Bill [jsBrowserDevelopmentLibraryDistribution].executor": "Run",
+    "Gradle.Bill [jsBrowserDevelopmentRun].executor": "Run",
+    "Gradle.Bill [jsBrowserDistribution].executor": "Run",
+    "Gradle.Bill [jsBrowserProductionLibraryDistribution].executor": "Run",
+    "Gradle.Bill [jsBrowserProductionWebpack].executor": "Run",
+    "Gradle.Bill [jsBuild].executor": "Run",
+    "Gradle.Bill [jsDevelopmentLibraryCompileSync].executor": "Run",
+    "Gradle.Bill [jsRun].executor": "Run",
+    "Gradle.Load Gradle Dependencies.executor": "Run",
+    "Gradle.bild dev continuously .executor": "Run",
+    "Gradle.build dev continuously .executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Shell Script.nuxt dev.executor": "Run",
+    "Shell Script.run vue.executor": "Run",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "master",
+    "js.last.introduce.type": "CONST",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "/home/lukasz/Projects/Bill/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils",
+    "last_opened_file_path": "/home/lukasz/Projects/Bill",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.deploy.executor": "Run",
+    "npm.dev.executor": "Run",
+    "prettierjs.PrettierConfiguration.Package": "/home/lukasz/Projects/Bill/webApp/node_modules/prettier",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "ml.llm.mcp",
+    "show.migrate.to.gradle.popup": "false",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/home/lukasz/.local/share/JetBrains/Toolbox/apps/webstorm-2/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "ts.rename.search.for.dynamic.occurrences": "true",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
+    ]
+  }
+}]]></component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+    <option name="BUILD_VARIANTS_TAB" value="Build Types" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/webApp/app/composables" />
+      <recent name="$PROJECT_DIR$/category" />
+      <recent name="$PROJECT_DIR$/category/src" />
+      <recent name="$PROJECT_DIR$/product/src" />
+      <recent name="$PROJECT_DIR$/product/src/commonMain/kotlin/pl/kurczaczkowe/bill/product" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/webApp/public/icons" />
+      <recent name="$PROJECT_DIR$/category" />
+      <recent name="$PROJECT_DIR$/shoppingList" />
+      <recent name="$PROJECT_DIR$/core/src/commonMain/kotlin/pl/kurczaczkowe/bill/core" />
+      <recent name="$PROJECT_DIR$/core/src/commonMain/kotlin/pl/kurczaczkowe/bill" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/webApp/app/utils/getStringParam.ts" />
+      <recent name="$PROJECT_DIR$/webApp/app/composables/routeParamToNumber.ts" />
+      <recent name="$PROJECT_DIR$/webApp/app/types/item.ts" />
+      <recent name="$PROJECT_DIR$/webApp/app/utils/channelAction.ts" />
+      <recent name="$PROJECT_DIR$/webApp/app/composables/types.ts" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="pl.kurczaczkowe.bill.util" />
+      <recent name="pl.kurczaczkowe.bill" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="pl.kurczaczkowe.bill.shoppingList.dto" />
+      <recent name="pl.kurczaczkowe.bill.shoppingList" />
+      <recent name="pl.kurczaczkowe.bill.networking" />
+    </key>
+    <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="pl.kurczaczkowe.bill.core.networking" />
+      <recent name="pl.kurczaczkowe.bill.shoppingList.utils" />
+      <recent name="pl.kurczaczkowe.bill.shoppingList.uti" />
+      <recent name="pl.kurczaczkowe.bill.shoppingList." />
+      <recent name="pl.kurczaczkowe.bill.shoppingList" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Compound.fullstack: nuxt">
+    <configuration name="composeApp" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="Bill.composeApp" />
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Bill [build]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <EXTENSION ID="com.android.tools.idea.testartifacts.testsuite.GradleRunConfigurationExtension">
+        <com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>false</com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>
+        <android.execution.deploysToLocalDevice>false</android.execution.deploysToLocalDevice>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Bill [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <EXTENSION ID="com.android.tools.idea.testartifacts.testsuite.GradleRunConfigurationExtension">
+        <com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>false</com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>
+        <android.execution.deploysToLocalDevice>false</android.execution.deploysToLocalDevice>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Bill [generateBuildKonfig]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="-Penv=prod" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="generateBuildKonfig" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Bill [jsBrowserDevelopmentExecutableDistribution]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jsBrowserDevelopmentExecutableDistribution" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <EXTENSION ID="com.android.tools.idea.testartifacts.testsuite.GradleRunConfigurationExtension">
+        <com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>false</com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>
+        <android.execution.deploysToLocalDevice>false</android.execution.deploysToLocalDevice>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Bill [jsBrowserDevelopmentLibraryDistribution]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jsBrowserDevelopmentLibraryDistribution" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <EXTENSION ID="com.android.tools.idea.testartifacts.testsuite.GradleRunConfigurationExtension">
+        <com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>false</com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>
+        <android.execution.deploysToLocalDevice>false</android.execution.deploysToLocalDevice>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Bill [jsBrowserProductionLibraryDistribution]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jsBrowserProductionLibraryDistribution" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <EXTENSION ID="com.android.tools.idea.testartifacts.testsuite.GradleRunConfigurationExtension">
+        <com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>false</com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>
+        <android.execution.deploysToLocalDevice>false</android.execution.deploysToLocalDevice>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Bill [jsBrowserProductionWebpack]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jsBrowserProductionWebpack" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <EXTENSION ID="com.android.tools.idea.testartifacts.testsuite.GradleRunConfigurationExtension">
+        <com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>false</com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>
+        <android.execution.deploysToLocalDevice>false</android.execution.deploysToLocalDevice>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Bill [jsDevelopmentLibraryCompileSync]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jsDevelopmentLibraryCompileSync" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <EXTENSION ID="com.android.tools.idea.testartifacts.testsuite.GradleRunConfigurationExtension">
+        <com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>false</com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>
+        <android.execution.deploysToLocalDevice>false</android.execution.deploysToLocalDevice>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="deploy" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/webApp/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="deploy" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/webApp/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <package-manager value="pnpm" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Android App.composeApp" />
+      <item itemvalue="Compound.fullstack: nuxt" />
+      <item itemvalue="Gradle.Bill [build]" />
+      <item itemvalue="Gradle.Bill [generateBuildKonfig]" />
+      <item itemvalue="Gradle.Bill [jsBrowserDevelopmentExecutableDistribution]" />
+      <item itemvalue="Gradle.Bill [jsBrowserProductionWebpack]" />
+      <item itemvalue="Gradle.Bill [clean]" />
+      <item itemvalue="Gradle.Bill [jsBrowserDevelopmentLibraryDistribution]" />
+      <item itemvalue="Gradle.Bill [jsBrowserProductionLibraryDistribution]" />
+      <item itemvalue="Gradle.Bill [jsDevelopmentLibraryCompileSync]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Bill [jsBrowserProductionLibraryDistribution]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3bd3a6803838-JavaScript-WS-261.22158.274" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="" />
+      <changelist id="285fcefc-03cf-401c-8c78-c887edb49b80" name="idk" comment="" />
+      <changelist id="ba9607be-7672-40a9-8ed3-75862aed9174" name="layers" comment="" />
+      <changelist id="fa299268-d626-4cf1-b468-852614754013" name="envs" comment="" />
+      <created>1742139180637</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742139180637</updated>
+      <workItem from="1742139181699" duration="469000" />
+      <workItem from="1742140800846" duration="11266000" />
+      <workItem from="1742217289799" duration="1237000" />
+      <workItem from="1742289960161" duration="599000" />
+      <workItem from="1742310022273" duration="583000" />
+      <workItem from="1742310611878" duration="65000" />
+      <workItem from="1742310682918" duration="599000" />
+      <workItem from="1742719122112" duration="23483000" />
+      <workItem from="1742811980866" duration="7102000" />
+      <workItem from="1742899625721" duration="12896000" />
+      <workItem from="1742932929132" duration="4767000" />
+      <workItem from="1742977680800" duration="3834000" />
+      <workItem from="1743068660709" duration="1114000" />
+      <workItem from="1743103368231" duration="112000" />
+      <workItem from="1743103571007" duration="154000" />
+      <workItem from="1743103734812" duration="599000" />
+      <workItem from="1743104499175" duration="599000" />
+      <workItem from="1743506732415" duration="609000" />
+      <workItem from="1743512198941" duration="470000" />
+      <workItem from="1743512684409" duration="599000" />
+      <workItem from="1743592710743" duration="692000" />
+      <workItem from="1743665431458" duration="686000" />
+      <workItem from="1744039934529" duration="599000" />
+      <workItem from="1744101731315" duration="599000" />
+      <workItem from="1744132703625" duration="599000" />
+      <workItem from="1744180983549" duration="1296000" />
+      <workItem from="1744269541394" duration="599000" />
+      <workItem from="1744281032963" duration="599000" />
+      <workItem from="1744369193468" duration="599000" />
+      <workItem from="1744389393842" duration="599000" />
+      <workItem from="1744449724196" duration="599000" />
+      <workItem from="1744485089253" duration="599000" />
+      <workItem from="1744563013240" duration="216000" />
+      <workItem from="1744563239168" duration="599000" />
+      <workItem from="1744615870330" duration="599000" />
+      <workItem from="1744708520872" duration="599000" />
+      <workItem from="1744789235908" duration="600000" />
+      <workItem from="1746873172647" duration="4258000" />
+      <workItem from="1746900369700" duration="998000" />
+      <workItem from="1747043873366" duration="612000" />
+      <workItem from="1747063183907" duration="599000" />
+      <workItem from="1747121463464" duration="599000" />
+      <workItem from="1747215660452" duration="599000" />
+      <workItem from="1747293480738" duration="19000" />
+      <workItem from="1747293521626" duration="627000" />
+      <workItem from="1747331365794" duration="599000" />
+      <workItem from="1747378758711" duration="599000" />
+      <workItem from="1747733240437" duration="1198000" />
+      <workItem from="1747767209649" duration="599000" />
+      <workItem from="1748504111167" duration="599000" />
+      <workItem from="1748599825562" duration="599000" />
+      <workItem from="1749639164450" duration="599000" />
+      <workItem from="1749733138740" duration="599000" />
+      <workItem from="1749800150270" duration="599000" />
+      <workItem from="1749821750490" duration="323000" />
+      <workItem from="1749822081174" duration="599000" />
+      <workItem from="1750147606241" duration="599000" />
+      <workItem from="1750516111666" duration="599000" />
+      <workItem from="1750597309401" duration="1198000" />
+      <workItem from="1750684656372" duration="653000" />
+      <workItem from="1750704600495" duration="599000" />
+      <workItem from="1750755091641" duration="599000" />
+      <workItem from="1750845197250" duration="599000" />
+      <workItem from="1750930817413" duration="599000" />
+      <workItem from="1750960439436" duration="599000" />
+      <workItem from="1751004689139" duration="599000" />
+      <workItem from="1751018518364" duration="1801000" />
+      <workItem from="1751033458622" duration="609000" />
+      <workItem from="1751043237989" duration="599000" />
+      <workItem from="1751096882265" duration="599000" />
+      <workItem from="1751104904737" duration="277000" />
+      <workItem from="1751105189376" duration="780000" />
+      <workItem from="1751224251223" duration="599000" />
+      <workItem from="1751271848299" duration="599000" />
+      <workItem from="1751388065206" duration="599000" />
+      <workItem from="1751473920482" duration="595000" />
+      <workItem from="1751475110644" duration="599000" />
+      <workItem from="1751562251228" duration="599000" />
+      <workItem from="1751607236956" duration="599000" />
+      <workItem from="1751703385151" duration="599000" />
+      <workItem from="1751733013040" duration="599000" />
+      <workItem from="1751744907293" duration="599000" />
+      <workItem from="1751792379557" duration="599000" />
+      <workItem from="1751985631653" duration="599000" />
+      <workItem from="1752053221958" duration="599000" />
+      <workItem from="1752131237781" duration="599000" />
+      <workItem from="1752134306116" duration="599000" />
+      <workItem from="1752217439832" duration="599000" />
+      <workItem from="1752481688215" duration="599000" />
+      <workItem from="1752507683116" duration="599000" />
+      <workItem from="1752564024267" duration="1202000" />
+      <workItem from="1752652928794" duration="1290000" />
+      <workItem from="1752735276199" duration="599000" />
+      <workItem from="1752907322054" duration="599000" />
+      <workItem from="1753028236769" duration="599000" />
+      <workItem from="1753195829965" duration="627000" />
+      <workItem from="1753260205147" duration="599000" />
+      <workItem from="1753363930254" duration="4502000" />
+      <workItem from="1753461438839" duration="492000" />
+      <workItem from="1753461953057" duration="102000" />
+      <workItem from="1755104984807" duration="9961000" />
+      <workItem from="1755178842996" duration="4830000" />
+      <workItem from="1755186299978" duration="582000" />
+      <workItem from="1755186898323" duration="12205000" />
+      <workItem from="1755242767551" duration="650000" />
+      <workItem from="1755330706778" duration="600000" />
+      <workItem from="1755331679285" duration="7952000" />
+      <workItem from="1755354897961" duration="2272000" />
+      <workItem from="1755366324561" duration="2960000" />
+      <workItem from="1755417198451" duration="588000" />
+      <workItem from="1755445827113" duration="3404000" />
+      <workItem from="1755450230056" duration="1628000" />
+      <workItem from="1755457839873" duration="4797000" />
+      <workItem from="1755506724350" duration="7583000" />
+      <workItem from="1755614317858" duration="7436000" />
+      <workItem from="1755705875568" duration="20000" />
+      <workItem from="1755706568104" duration="65000" />
+      <workItem from="1755706656318" duration="192000" />
+      <workItem from="1755706863977" duration="15000" />
+      <workItem from="1755707146343" duration="2713000" />
+      <workItem from="1755709874151" duration="86000" />
+      <workItem from="1755710117385" duration="12402000" />
+      <workItem from="1755772627948" duration="26485000" />
+      <workItem from="1755848209421" duration="6269000" />
+      <workItem from="1755862282545" duration="11657000" />
+      <workItem from="1755877132030" duration="1688000" />
+      <workItem from="1755878826855" duration="15375000" />
+      <workItem from="1755937083933" duration="17271000" />
+      <workItem from="1756040420770" duration="21265000" />
+      <workItem from="1756064234033" duration="4960000" />
+      <workItem from="1756134537418" duration="8177000" />
+      <workItem from="1756147547494" duration="8455000" />
+      <workItem from="1756306795543" duration="20850000" />
+      <workItem from="1756362866554" duration="542000" />
+      <workItem from="1756373995092" duration="25698000" />
+      <workItem from="1756454625449" duration="1240000" />
+      <workItem from="1756464795188" duration="1294000" />
+      <workItem from="1756474209040" duration="2099000" />
+      <workItem from="1756487414988" duration="11080000" />
+      <workItem from="1756553214385" duration="23457000" />
+      <workItem from="1756634857476" duration="23190000" />
+      <workItem from="1756709714968" duration="22371000" />
+      <workItem from="1756796823398" duration="12110000" />
+      <workItem from="1756880714445" duration="24740000" />
+      <workItem from="1756967219700" duration="20000" />
+      <workItem from="1757006486353" duration="7566000" />
+      <workItem from="1757080405068" duration="14660000" />
+      <workItem from="1757147802554" duration="2509000" />
+      <workItem from="1757263977992" duration="2373000" />
+      <workItem from="1757266356509" duration="230000" />
+      <workItem from="1757266645878" duration="55000" />
+      <workItem from="1757266707295" duration="25000" />
+      <workItem from="1757268738011" duration="81000" />
+      <workItem from="1757441747942" duration="8117000" />
+      <workItem from="1757516675439" duration="11661000" />
+      <workItem from="1757606310531" duration="7536000" />
+      <workItem from="1757682583372" duration="938000" />
+      <workItem from="1757864591015" duration="9559000" />
+      <workItem from="1758043878998" duration="9814000" />
+      <workItem from="1758117606205" duration="12878000" />
+      <workItem from="1758219618003" duration="1539000" />
+      <workItem from="1758295795510" duration="11000" />
+      <workItem from="1758295855383" duration="17000" />
+      <workItem from="1758295917285" duration="44000" />
+      <workItem from="1758295978139" duration="14110000" />
+      <workItem from="1758312027586" duration="2466000" />
+      <workItem from="1758647730287" duration="3250000" />
+      <workItem from="1758808519694" duration="4937000" />
+      <workItem from="1758819681006" duration="11071000" />
+      <workItem from="1758980600955" duration="3251000" />
+      <workItem from="1759326456702" duration="4152000" />
+      <workItem from="1759417323623" duration="3647000" />
+      <workItem from="1759564350458" duration="354000" />
+      <workItem from="1759575796281" duration="12649000" />
+      <workItem from="1760106776304" duration="2214000" />
+      <workItem from="1760112608551" duration="11101000" />
+      <workItem from="1760191488044" duration="5697000" />
+      <workItem from="1760287523171" duration="1733000" />
+      <workItem from="1760370543129" duration="13277000" />
+      <workItem from="1760874413651" duration="10032000" />
+      <workItem from="1760949391595" duration="4427000" />
+      <workItem from="1761154262432" duration="3579000" />
+      <workItem from="1761228028172" duration="601000" />
+      <workItem from="1761228634789" duration="624000" />
+      <workItem from="1761229274298" duration="57000" />
+      <workItem from="1761229333058" duration="83000" />
+      <workItem from="1761229418033" duration="2172000" />
+      <workItem from="1761842727442" duration="1745000" />
+      <workItem from="1763792899339" duration="501000" />
+      <workItem from="1763793431844" duration="1146000" />
+      <workItem from="1763896263291" duration="1207000" />
+      <workItem from="1763897476815" duration="98000" />
+      <workItem from="1763897627037" duration="889000" />
+      <workItem from="1774544368049" duration="343000" />
+      <workItem from="1776529700708" duration="683000" />
+      <workItem from="1776530574950" duration="640000" />
+      <workItem from="1776532504138" duration="23000" />
+      <workItem from="1776532536469" duration="207000" />
+      <workItem from="1776532752909" duration="1361000" />
+      <workItem from="1776592121536" duration="1455000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: init kmp compose + nuxt app">
+      <option name="closed" value="true" />
+      <created>1755244938493</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1755244938493</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: add core module with handling base networking">
+      <option name="closed" value="true" />
+      <created>1755245178638</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755245178638</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: add shopping list module">
+      <option name="closed" value="true" />
+      <created>1755245233591</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1755245233591</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat[web]: prepare basic transform form kotlin objects to plain js objects">
+      <option name="closed" value="true" />
+      <created>1755245361724</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1755245361724</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat[web]: handle view for shopping lists">
+      <option name="closed" value="true" />
+      <created>1755251279578</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1755251279578</updated>
+    </task>
+    <task id="LOCAL-00006" summary="docs: Describe shortly project in README.md">
+      <option name="closed" value="true" />
+      <created>1755256020041</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1755256020041</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat[web](core): handle “in cart” toggle for product&#10;&#10;feat(core): handle empty response">
+      <option name="closed" value="true" />
+      <created>1755273168351</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1755273168351</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat[web](shoppingList): handle adding a shopping list and adding products to them">
+      <option name="closed" value="true" />
+      <created>1755357311452</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1755357311452</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat[web](shoppingList): add product suggestion&#10;&#10;feat[web](shoppingList): improve handling kotlin classes in JS via add to class objects toJs method&#10;refactor(core): adjust val names to their file names&#10;refactor: remove unused imports from gradle files">
+      <option name="closed" value="true" />
+      <created>1755719073065</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1755719073065</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat[web](shoppingList): display and group by categories&#10;&#10;feat[web](shoppingList): add setting categories to add to list form">
+      <option name="closed" value="true" />
+      <created>1755790753154</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1755790753154</updated>
+    </task>
+    <task id="LOCAL-00011" summary="ci[web]: include building kmp in building web proces">
+      <option name="closed" value="true" />
+      <created>1755801118688</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1755801118688</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat[web](shoppingList): handle realtime changes on toggling inCart">
+      <option name="closed" value="true" />
+      <created>1756046754046</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1756046754046</updated>
+    </task>
+    <task id="LOCAL-00013" summary="refactor[web](shoppingList): change listenForChangesShoppingList to listenForShoppingListChanges">
+      <option name="closed" value="true" />
+      <created>1756059961455</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1756059961455</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat[web](shoppingList): handle dynamic product updates in real-time with details retrieval">
+      <option name="closed" value="true" />
+      <created>1756152823011</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1756152823011</updated>
+    </task>
+    <task id="LOCAL-00015" summary="feat[web](shoppingList): handle dynamic product updates in real-time with details retrieval">
+      <option name="closed" value="true" />
+      <created>1756153048393</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1756153048393</updated>
+    </task>
+    <task id="LOCAL-00016" summary="refactor[web](shoppingList): move shoppingListClient to own composable">
+      <option name="closed" value="true" />
+      <created>1756329569605</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1756329569605</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat[web]: handle PWA">
+      <option name="closed" value="true" />
+      <created>1756411875802</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1756411875802</updated>
+    </task>
+    <task id="LOCAL-00018" summary="feat[web](shoppingList): handle optimistic updates on a list of shopping lists&#10;&#10;refactor[web](shoppingList): better handling services of modifying shoppingLists and products on them in composables">
+      <option name="closed" value="true" />
+      <created>1756668054058</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1756668054058</updated>
+    </task>
+    <task id="LOCAL-00019" summary="refactor[web](shoppingList): better handling changes listener in prior to optimistic updates&#10;&#10;fix[web](product): casting to string unit enums">
+      <option name="closed" value="true" />
+      <created>1756894015614</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1756894015614</updated>
+    </task>
+    <task id="LOCAL-00020" summary="feat[web](shoppingList): handle optimistic update for adding new product to a list">
+      <option name="closed" value="true" />
+      <created>1756916644431</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1756916644431</updated>
+    </task>
+    <task id="LOCAL-00021" summary="feat[web](shoppingList): add switching category for products">
+      <option name="closed" value="true" />
+      <created>1757097479209</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1757097479209</updated>
+    </task>
+    <task id="LOCAL-00022" summary="feat[web](shoppingList): add switching category for products">
+      <option name="closed" value="true" />
+      <created>1757097551546</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1757097551546</updated>
+    </task>
+    <task id="LOCAL-00023" summary="feat[web](shoppingList): add deleting product from shopping list">
+      <option name="closed" value="true" />
+      <created>1757264424167</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1757264424167</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat[web](shoppingList): add deleting product from shopping list">
+      <option name="closed" value="true" />
+      <created>1757264453111</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1757264453111</updated>
+    </task>
+    <task id="LOCAL-00025" summary="feat[web](shoppingList): add deleting product from shopping list">
+      <option name="closed" value="true" />
+      <created>1757264473552</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1757264473552</updated>
+    </task>
+    <task id="LOCAL-00026" summary="feat[web]: add generated icons for pwa">
+      <option name="closed" value="true" />
+      <created>1757265926710</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1757265926710</updated>
+    </task>
+    <task id="LOCAL-00027" summary="refactor[web]: separate lists to standalone components&#10;&#10;style[web]: fix formatting and lint errors">
+      <option name="closed" value="true" />
+      <created>1757530714355</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1757530714355</updated>
+    </task>
+    <task id="LOCAL-00028" summary="feat[web](shoppingList): add info of left products">
+      <option name="closed" value="true" />
+      <created>1757530800321</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1757530800321</updated>
+    </task>
+    <task id="LOCAL-00029" summary="fix[web]: remove zooming when user enter in input on mobile">
+      <option name="closed" value="true" />
+      <created>1757530847334</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1757530847334</updated>
+    </task>
+    <task id="LOCAL-00030" summary="fix[web]: remove zooming when user enter in input on mobile">
+      <option name="closed" value="true" />
+      <created>1757530866212</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1757530866212</updated>
+    </task>
+    <task id="LOCAL-00031" summary="feat[web](shoppingList): expand/collapse adding product to shopping list&#10;&#10;refactor[web]: switch square buttons to circle">
+      <option name="closed" value="true" />
+      <created>1757531995619</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1757531995619</updated>
+    </task>
+    <task id="LOCAL-00032" summary="fix[web](shoppingList): expand/collapse adding product to shopping list">
+      <option name="closed" value="true" />
+      <created>1758124066136</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1758124066136</updated>
+    </task>
+    <task id="LOCAL-00033" summary="refactor[web](shoppingList): unify the product suggestion list and category list into BaseAutocomplete&#10;&#10;refactor[web](shoppingList): make one component for a category list item">
+      <option name="closed" value="true" />
+      <created>1758831850205</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1758831850205</updated>
+    </task>
+    <task id="LOCAL-00034" summary="refactor[web](BaseAutocomplete): improve type usage and add `matchBy` prop&#10;&#10;fix[web](shoppingList): persist state of add product form and improve UX&#10;feat[web](shoppingList): add custom product suggestion matching logic">
+      <option name="closed" value="true" />
+      <created>1759593538215</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1759593538215</updated>
+    </task>
+    <task id="LOCAL-00035" summary="fix[web](shoppingList): reacting on deleting an item from a list">
+      <option name="closed" value="true" />
+      <created>1760118557584</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1760118557584</updated>
+    </task>
+    <task id="LOCAL-00036" summary="feat[web](DraggableList): add animations for sorting, adding, and removing items&#10;&#10;refactor[web](shoppingList): enhance DraggableList typing and improve category handling logic">
+      <option name="closed" value="true" />
+      <created>1760378258633</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1760378258633</updated>
+    </task>
+    <task id="LOCAL-00037" summary="chore: update libraries">
+      <option name="closed" value="true" />
+      <created>1764522107854</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1764522107854</updated>
+    </task>
+    <task id="LOCAL-00038" summary="build: setup buildings types for ts as mts&#10;&#10;build: move compose related apis to composeApp gradle file">
+      <option name="closed" value="true" />
+      <created>1764524722631</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1764524722631</updated>
+    </task>
+    <task id="LOCAL-00039" summary="fix[web](shoppingList): proper casting UnitEnum in groupProductsByCategoryJs">
+      <option name="closed" value="true" />
+      <created>1764524830918</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1764524830918</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:androidx.compose.runtime:runtime" />
+    <option featureType="com.intellij.configurationType" implementationName="JavascriptDebugType" />
+    <option featureType="com.intellij.configurationType" implementationName="js.build_tools.npm" />
+    <option featureType="com.intellij.configurationType" implementationName="NodeJSConfigurationType" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/webApp" />
+    </ignored-roots>
+    <MESSAGE value="feat[web](shoppingList): handle dynamic product updates in real-time with details retrieval" />
+    <MESSAGE value="refactor[web](shoppingList): move shoppingListClient to own composable" />
+    <MESSAGE value="feat[web]: handle PWA" />
+    <MESSAGE value="feat[web](shoppingList): handle optimistic updates on a list of shopping lists&#10;&#10;refactor[web](shoppingList): better handling services of modifying shoppingLists and products on them in composables" />
+    <MESSAGE value="refactor[web](shoppingList): better handling changes listener in prior to optimistic updates&#10;&#10;fix[web](product): casting to string unit enums" />
+    <MESSAGE value="feat[web](shoppingList): handle optimistic update for adding new product to a list" />
+    <MESSAGE value="feat[web](shoppingList): add switching category for products" />
+    <MESSAGE value="feat[web](shoppingList): add deleting product from shopping list" />
+    <MESSAGE value="feat[web]: add generated icons for pwa" />
+    <MESSAGE value="refactor[web]: separate lists to standalone components&#10;&#10;style[web]: fix formatting and lint errors" />
+    <MESSAGE value="feat[web](shoppingList): add info of left products" />
+    <MESSAGE value="fix[web]: remove zooming when user enter in input on mobile" />
+    <MESSAGE value="feat[web](shoppingList): expand/collapse adding product to shopping list&#10;&#10;refactor[web]: switch square buttons to circle" />
+    <MESSAGE value="fix[web](shoppingList): expand/collapse adding product to shopping list" />
+    <MESSAGE value="refactor[web](shoppingList): unify the product suggestion list and category list into BaseAutocomplete&#10;&#10;refactor[web](shoppingList): make one component for a category list item" />
+    <MESSAGE value="refactor[web](shoppingList): enhance BaseAutocomplete with flexible matching logic, improve form toggle state persistence" />
+    <MESSAGE value="refactor[web](shoppingList): improve BaseAutocomplete flexibility and enhance add product form functionality&#10;&#10;- Updated BaseAutocomplete to support custom `matchBy` function and generic types.&#10;- Refactored add product form with better state management and saved preferences.&#10;- Enhanced form elements with proper attributes for accessibility and focus handling." />
+    <MESSAGE value="refactor[web](BaseAutocomplete): improve type usage and add `matchBy` prop&#10;&#10;fix[web](shoppingList): persist state of add product form and improve UX&#10;feat[web](shoppingList): add custom product suggestion matching logic" />
+    <MESSAGE value="fix[web](shoppingList): reacting on deleting item on list" />
+    <MESSAGE value="fix[web](shoppingList): reacting on deleting an item from a list" />
+    <MESSAGE value="feat[web](DraggableList): add animation when sort, add and remove element&#10;&#10;refactor[web](shoppingList): enhance DraggableList typing and improve category handling logic" />
+    <MESSAGE value="feat[web](DraggableList): add animations for sorting, adding, and removing items&#10;&#10;refactor[web](shoppingList): enhance DraggableList typing and improve category handling logic" />
+    <MESSAGE value="chore: update libraries" />
+    <MESSAGE value="build: setup buildings types for ts as mts&#10;&#10;build: move compose related apis to composeApp gradle file" />
+    <MESSAGE value="fix[web](shoppingList): proper casting UnitEnum in groupProductsByCategoryJs" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix[web](shoppingList): proper casting UnitEnum in groupProductsByCategoryJs" />
+  </component>
+  <component name="VueSettings">
+    <option name="useTypesFromServer" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="play_dynamic_filters_status">
+    <option name="appIdToCheckInfo">
+      <map>
+        <entry key="pl.kurczaczkowe.bill">
+          <value>
+            <CheckInfo lastCheckTimestamp="1755243748379" />
+          </value>
+        </entry>
+        <entry key="pl.kurczaczkowe.bill.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1755243748379" />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

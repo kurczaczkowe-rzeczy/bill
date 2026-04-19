@@ -2,7 +2,6 @@ package pl.kurczaczkowe.bill.shoppingList
 
 import love.forte.plugin.suspendtrans.annotation.JsPromise
 import pl.kurczaczkowe.bill.core.networking.RemoteClient
-import pl.kurczaczkowe.bill.core.networking.supabaseRemoteClient
 import pl.kurczaczkowe.bill.core.util.NetworkError
 import pl.kurczaczkowe.bill.core.util.Result
 import pl.kurczaczkowe.bill.shoppingList.dto.Product
@@ -10,7 +9,7 @@ import pl.kurczaczkowe.bill.shoppingList.dto.ProductSuggestionParameters
 import kotlin.js.JsExport
 
 @JsExport
-class ProductClient(private val client: RemoteClient = supabaseRemoteClient) {
+class ProductClient(private val client: RemoteClient) {
     @JsPromise
     @JsExport.Ignore
     suspend fun getProductSuggestion(
