@@ -10,13 +10,15 @@ import BaseMatchEmphasis from "@ui/components/BaseMatchEmphasis.vue";
 import BaseCollapse from "~/components/BaseCollapse.vue";
 import CategoryDescriptor from "~/components/CategoryDescriptor.vue";
 import CategoryWithProductList from "~/components/CategoryWithProductList.vue";
+import { useProductClient } from '~/composables/useProductClient'
 import { type AddToShoppingListParameters, useShoppingList } from "~/composables/useShoppingList";
-import { productClient } from "~/constants";
 import { getStringParam } from "~/utils/getStringParam";
 import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 import { useGetCategories } from "~~/layers/category/composables/useGetCategories";
 import BaseButton from "~~/layers/ui/components/BaseButton.vue";
+
+const productClient = useProductClient();
 
 const COLLAPSED_ADD_FORM_LIST_IDS = "collapsedAddFormListIds";
 
