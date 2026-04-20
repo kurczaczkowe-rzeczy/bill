@@ -13,8 +13,7 @@ jobs:
       - name: Ping
         run: |
           curl -f "${{ secrets.SUPABASE_URL }}/rest/v1/" \
-            -H "apikey: ${{ secrets.SUPABASE_KEY }}"
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}"
+            -H "apikey: ${{ secrets.SUPABASE_SECRET_KEY }}"
   ping-prod:
     runs-on: ubuntu-latest
     environment: Production
@@ -22,5 +21,4 @@ jobs:
       - name: Ping
         run: |
           curl -f "${{ secrets.SUPABASE_URL }}/rest/v1/" \
-            -H "apikey: ${{ secrets.SUPABASE_KEY }}"
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}"
+            -H "apikey: ${{ secrets.SUPABASE_SECRET_KEY }}"
