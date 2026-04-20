@@ -2,7 +2,7 @@ name: Keep Supabase alive
 
 on:
   schedule:
-    - cron: '0 10 */3 * *'  # co 3 dni o 10:00
+    - cron: '0 10 */3 * *'
   workflow_dispatch:
 
 jobs:
@@ -14,6 +14,7 @@ jobs:
         run: |
           curl -f "${{ secrets.SUPABASE_URL }}/rest/v1/" \
             -H "apikey: ${{ secrets.SUPABASE_KEY }}"
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}"
   ping-prod:
     runs-on: ubuntu-latest
     environment: Production
@@ -22,3 +23,4 @@ jobs:
         run: |
           curl -f "${{ secrets.SUPABASE_URL }}/rest/v1/" \
             -H "apikey: ${{ secrets.SUPABASE_KEY }}"
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}"
