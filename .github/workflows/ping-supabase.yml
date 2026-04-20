@@ -1,0 +1,24 @@
+name: Keep Supabase alive
+
+on:
+  schedule:
+    - cron: '0 10 */3 * *'  # co 3 dni o 10:00
+  workflow_dispatch:
+
+jobs:
+  ping-dev:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Ping
+        run: |
+          curl -f "${{ secrets.SUPABASE_URL }}/rest/v1/" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}"
+  ping-prod:
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - name: Ping
+        run: |
+          curl -f "${{ secrets.SUPABASE_URL }}/rest/v1/" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}"
