@@ -9,7 +9,7 @@ import pl.kurczaczkowe.bill.core.config.BuildKonfig
 val supabaseClient by lazy {
     createSupabaseClient(
         supabaseUrl = BuildKonfig.SUPABASE_URL,
-        supabaseKey = BuildKonfig.SUPABASE_KEY,
+        supabaseKey = BuildKonfig.SUPABASE_ANON_KEY,
     ) {
         install(Auth)
         install(Realtime)

@@ -152,8 +152,8 @@ buildkonfig {
         )
         buildConfigField(
             com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
-            "SUPABASE_KEY",
-            envProps.getProperty("SUPABASE_KEY") ?: error("Missing SUPABASE_KEY for env=$selectedEnv")
+            "SUPABASE_ANON_KEY",
+            envProps.getProperty("SUPABASE_ANON_KEY") ?: error("Missing SUPABASE_ANON_KEY for env=$selectedEnv")
         )
         buildConfigField(
             com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,

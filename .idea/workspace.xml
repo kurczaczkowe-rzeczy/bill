@@ -9,22 +9,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="feat: handle environment variables">
-      <change afterPath="$PROJECT_DIR$/webApp/app/composables/useProductClient.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/app/plugins/productClientPlugin.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/client_ chrome.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/server_ nuxt.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/vitest.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="ci: use secret key instead of anon">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/constants.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/nuxt.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/pl/kurczaczkowe/bill/core/networking/supabaseClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/pl/kurczaczkowe/bill/core/networking/supabaseClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
     </list>
     <list id="285fcefc-03cf-401c-8c78-c887edb49b80" name="idk" comment="idk">
       <change afterPath="$PROJECT_DIR$/category/.gitignore" afterDir="false" />
@@ -45,8 +35,16 @@
       <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/dto/UnitEnum.js.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/utils/JSON.js.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/utils/installToJsMethods.js.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/client_ chrome.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/server_ nuxt.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/vitest.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/pl/kurczaczkowe/bill/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/pl/kurczaczkowe/bill/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/nuxt.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/package.json" afterDir="false" />
     </list>
     <list id="ba9607be-7672-40a9-8ed3-75862aed9174" name="layers" comment="layers">
       <change afterPath="$PROJECT_DIR$/webApp/db-dump.sql" afterDir="false" />
@@ -88,7 +86,7 @@
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="917" />
+    <option name="cachedIndexableFilesCount" value="130244" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[LocalEmulator::path=/home/lukasz/.android/avd/Pixel_3a_API_34_extension_level_7_x86_64.avd]" />
@@ -767,14 +765,6 @@
       </variant>
     </executable>
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/settings.gradle.kts">
-      <ranges>
-        <range start1="32" end1="32" start2="32" end2="33" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
-        <range start1="33" end1="33" start2="34" end2="35" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
-      </ranges>
-    </file>
-  </component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -795,74 +785,75 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Android App.composeApp.executor": "Run",
-    "Gradle.Bill [browserProductionWebpack].executor": "Run",
-    "Gradle.Bill [build].executor": "Run",
-    "Gradle.Bill [clean].executor": "Run",
-    "Gradle.Bill [generateBuildKonfig].executor": "Run",
-    "Gradle.Bill [jsBrowserDevelopmentExecutableDistribution].executor": "Run",
-    "Gradle.Bill [jsBrowserDevelopmentLibraryDistribution].executor": "Run",
-    "Gradle.Bill [jsBrowserDevelopmentRun].executor": "Run",
-    "Gradle.Bill [jsBrowserDistribution].executor": "Run",
-    "Gradle.Bill [jsBrowserProductionLibraryDistribution].executor": "Run",
-    "Gradle.Bill [jsBrowserProductionWebpack].executor": "Run",
-    "Gradle.Bill [jsBuild].executor": "Run",
-    "Gradle.Bill [jsDevelopmentLibraryCompileSync].executor": "Run",
-    "Gradle.Bill [jsRun].executor": "Run",
-    "Gradle.Load Gradle Dependencies.executor": "Run",
-    "Gradle.bild dev continuously .executor": "Run",
-    "Gradle.build dev continuously .executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Shell Script.nuxt dev.executor": "Run",
-    "Shell Script.run vue.executor": "Run",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "master",
-    "js.last.introduce.type": "CONST",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "/home/lukasz/Projects/Bill/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils",
-    "last_opened_file_path": "/home/lukasz/Projects/Bill/webApp/app/composables",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.deploy.executor": "Run",
-    "npm.dev.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "/home/lukasz/Projects/Bill/webApp/node_modules/prettier",
-    "project.structure.last.edited": "Suggestions",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "show.migrate.to.gradle.popup": "false",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "/home/lukasz/.local/share/JetBrains/Toolbox/apps/webstorm-2/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "ts.rename.search.for.dynamic.occurrences": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Android App.composeApp.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [browserProductionWebpack].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [generateBuildKonfig].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [jsBrowserDevelopmentExecutableDistribution].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [jsBrowserDevelopmentLibraryDistribution].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [jsBrowserDevelopmentRun].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [jsBrowserDistribution].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [jsBrowserProductionLibraryDistribution].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [jsBrowserProductionWebpack].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [jsBuild].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [jsDevelopmentLibraryCompileSync].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Bill [jsRun].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Load Gradle Dependencies.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.bild dev continuously .executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.build dev continuously .executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Shell Script.nuxt dev.executor&quot;: &quot;Run&quot;,
+    &quot;Shell Script.run vue.executor&quot;: &quot;Run&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;js.last.introduce.type&quot;: &quot;CONST&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;/home/lukasz/Projects/Bill/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/lukasz/Projects/Bill/webApp/app/composables&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.deploy.executor&quot;: &quot;Run&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/lukasz/Projects/Bill/webApp/node_modules/prettier&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Suggestions&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/lukasz/.local/share/JetBrains/Toolbox/apps/webstorm-2/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;ts.rename.search.for.dynamic.occurrences&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Composition API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Composition API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Properties" />
     <option name="BUILD_VARIANTS_TAB" value="Build Types" />
@@ -908,7 +899,7 @@
       <recent name="pl.kurczaczkowe.bill.shoppingList" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="Gradle.Bill [jsBrowserProductionLibraryDistribution]">
     <configuration name="composeApp" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="Bill.composeApp" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
@@ -1262,7 +1253,6 @@
       <changelist id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="" />
       <changelist id="285fcefc-03cf-401c-8c78-c887edb49b80" name="idk" comment="" />
       <changelist id="ba9607be-7672-40a9-8ed3-75862aed9174" name="layers" comment="" />
-      <changelist id="fa299268-d626-4cf1-b468-852614754013" name="envs" comment="" />
       <created>1742139180637</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -1467,6 +1457,12 @@
       <workItem from="1776532536469" duration="207000" />
       <workItem from="1776532752909" duration="1361000" />
       <workItem from="1776592121536" duration="1455000" />
+      <workItem from="1776700393369" duration="114000" />
+      <workItem from="1776700517069" duration="32000" />
+      <workItem from="1776700559268" duration="59000" />
+      <workItem from="1776700628189" duration="71000" />
+      <workItem from="1776700709076" duration="6481000" />
+      <workItem from="1776871042189" duration="1518000" />
     </task>
     <task id="LOCAL-00001" summary="feat: init kmp compose + nuxt app">
       <option name="closed" value="true" />
@@ -1788,16 +1784,53 @@
       <option name="project" value="LOCAL" />
       <updated>1776621634872</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="feat[web]: handle productClient as separate plugin">
+      <option name="closed" value="true" />
+      <created>1776624348672</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1776624348672</updated>
+    </task>
+    <task id="LOCAL-00042" summary="ci: keep supabase alive">
+      <option name="closed" value="true" />
+      <created>1776704369072</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1776704369072</updated>
+    </task>
+    <task id="LOCAL-00043" summary="ci: add bearer authorization to supabase ping requests">
+      <option name="closed" value="true" />
+      <created>1776705588046</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1776705588046</updated>
+    </task>
+    <task id="LOCAL-00044" summary="ci: use secret key instead of anon">
+      <option name="closed" value="true" />
+      <created>1776707881525</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1776707881525</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.kts" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:tailwindcss" />
     <option featureType="dependencySupport" implementationName="java:androidx.compose.runtime:runtime" />
     <option featureType="com.intellij.configurationType" implementationName="JavascriptDebugType" />
+    <option featureType="com.intellij.configurationType" implementationName="AndroidRunConfigurationType" />
     <option featureType="com.intellij.configurationType" implementationName="js.build_tools.npm" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:nuxt" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:vue" />
     <option featureType="com.intellij.configurationType" implementationName="NodeJSConfigurationType" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1827,10 +1860,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/webApp" />
     </ignored-roots>
-    <MESSAGE value="refactor[web](shoppingList): move shoppingListClient to own composable" />
-    <MESSAGE value="feat[web]: handle PWA" />
-    <MESSAGE value="feat[web](shoppingList): handle optimistic updates on a list of shopping lists&#10;&#10;refactor[web](shoppingList): better handling services of modifying shoppingLists and products on them in composables" />
-    <MESSAGE value="refactor[web](shoppingList): better handling changes listener in prior to optimistic updates&#10;&#10;fix[web](product): casting to string unit enums" />
     <MESSAGE value="feat[web](shoppingList): handle optimistic update for adding new product to a list" />
     <MESSAGE value="feat[web](shoppingList): add switching category for products" />
     <MESSAGE value="feat[web](shoppingList): add deleting product from shopping list" />
@@ -1852,7 +1881,11 @@
     <MESSAGE value="build: setup buildings types for ts as mts&#10;&#10;build: move compose related apis to composeApp gradle file" />
     <MESSAGE value="fix[web](shoppingList): proper casting UnitEnum in groupProductsByCategoryJs" />
     <MESSAGE value="feat: handle environment variables" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: handle environment variables" />
+    <MESSAGE value="feat[web]: handle productClient as separate plugin" />
+    <MESSAGE value="ci: keep supabase alive" />
+    <MESSAGE value="ci: add bearer authorization to supabase ping requests" />
+    <MESSAGE value="ci: use secret key instead of anon" />
+    <option name="LAST_COMMIT_MESSAGE" value="ci: use secret key instead of anon" />
   </component>
   <component name="VueSettings">
     <option name="useTypesFromServer" value="true" />
