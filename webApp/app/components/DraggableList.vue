@@ -103,12 +103,22 @@ function onMove(evt: MoveEvent, originalEvent: Event) {
 function onChange(e: DraggableEvent<TItem>) {
   emit("change", e);
 }
+function clone(item: TItem) {
+  if (item === undefined || item === null) {
+    return item;
+  }
+
+  const rawItem = toRaw(item);
+
+  return structuredClone(rawItem);
+}
 </script>
 
 <template>
   <VueDraggable
     v-model="localItems"
     v-bind="propsDraggableOptions"
+    :clone="clone"
     @update="onUpdate as SortableEventHandler"
     @start="onStart as SortableEventHandler"
     @add="onAdd as SortableEventHandler"
