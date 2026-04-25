@@ -2,6 +2,7 @@
 
 import {
   type Category,
+  type DisplayUnit,
   type EntityId,
   getShoppingListChannelName,
   groupProductsByCategoryJs,
@@ -10,7 +11,6 @@ import {
   type ShoppingListDetails,
   type ShoppingListRow,
   type Subscription,
-  UnitEnum,
 } from "@bill/Bill-shoppingList";
 
 import type { Channels, ClientOptionsWithAutoListener } from "~/composables/types";
@@ -22,6 +22,8 @@ import { getStringParam } from "~/utils/getStringParam";
 import { ktToJs } from "~/utils/ktToJs";
 import { readResponse } from "~/utils/readResponse";
 import { useGetCategories } from "~~/layers/category/composables/useGetCategories";
+
+import { INITIAL_DISPLAY_UNITS, useDisplayUnits } from "./useDisplayUnits";
 
 type ListenerType = "shoppingListChanges";
 
@@ -41,16 +43,18 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
   const error = ref<Error | null>(null);
   const channel = ref<Channels>(new Map() as Channels);
 
+  const { mapUnitToDisplayUnit } = useDisplayUnits();
+
   const { data: categories } = useGetCategories();
 
-  const shoppingListClient = client ?? useShoppingListClient();
+  const shoppingListClient: ShoppingListClient = client ?? useShoppingListClient();
 
   const {
     data,
     pending,
     error: fetchError,
     refresh,
-  } = useKtClientData(
+  } = useKtClientData<ShoppingListDetails[]>(
     `shoppingListDetails:${parsedListId.value}`,
     () => shoppingListClient.getShoppingListAsync(parsedListId.value),
     asyncDataOptions,
@@ -66,11 +70,32 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
     blockAction,
   } = useOptimisticUpdatedList(data);
 
-  const categoriesWithProducts = computed(() =>
-    shoppingListDetails.value && categories.value
-      ? ktToJs(groupProductsByCategoryJs(shoppingListDetails.value, categories.value))
-      : [],
-  );
+  const categoriesWithProducts = computed(() => {
+    if (!shoppingListDetails.value || !categories.value) return [];
+    const groupedProductsByCategory = ktToJs(
+      groupProductsByCategoryJs(shoppingListDetails.value, categories.value),
+    );
+
+    if (!Array.isArray(groupedProductsByCategory)) {
+      // This condition hit when groupProductsByCategoryJs return empty list from kt
+      return [];
+    }
+
+    return groupedProductsByCategory.map((group) => {
+      const products = Array.isArray(group.products) ? group.products : [];
+      return {
+        category: group.category,
+        products: products.map((product) => {
+          const { unit, quantity } = mapUnitToDisplayUnit(product.unit, product.quantity);
+          return {
+            ...product,
+            quantity,
+            unit,
+          } as ShoppingListDetails;
+        }),
+      };
+    });
+  });
 
   async function handleChanges(
     payload:
@@ -119,7 +144,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
             id: jsPayload.record!.id,
             createdAt: new Date().toISOString(),
             quantity: jsPayload.record!.quantity,
-            unit: UnitEnum.GRAM,
+            unit: INITIAL_DISPLAY_UNITS[0],
             name: `Ładowanie...`, //ToDo: Add shrimmerlike thing
             inCart: jsPayload.record!.inCart,
             category,
@@ -243,8 +268,8 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
     shoppingListClient
       .addToShoppingListAsync(
         routeListIdToNumber(params.listId),
-        UnitEnum.valueOf(params.unit.name),
-        params.quantity,
+        params.unit.baseUnit,
+        params.quantity * params.unit.multiplier,
         params.name,
         params.categoryId,
       )
@@ -355,6 +380,6 @@ function routeListIdToNumber(id: unknown): bigint {
 export interface AddToShoppingListParameters {
   name: string;
   quantity: number;
-  unit: UnitEnum;
+  unit: DisplayUnit;
   categoryId: bigint;
 }

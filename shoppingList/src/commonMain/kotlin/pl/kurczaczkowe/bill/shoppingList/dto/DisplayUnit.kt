@@ -1,13 +1,14 @@
 package pl.kurczaczkowe.bill.shoppingList.dto
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
 
 @JsExport
 @Serializable
-data class Product(
-    val id: Long,
-    val createdAt: String,
+data class DisplayUnit(
+    val baseUnit: String,
     val name: String,
-    val unit: String,
+    val shortName: String,
+    val multiplier: Float,
 )

@@ -11,7 +11,7 @@ data class ShoppingListDetails(
     @SerialName("created_at")
     val createdAt: String,
     val quantity: Int,
-    val unit: UnitEnum,
+    val unit: String,
     val name: String,
     @SerialName("in_cart")
     val inCart: Boolean,

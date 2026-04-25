@@ -9,19 +9,36 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="ci: use secret key instead of anon">
+    <list default="true" id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="fix[web](components/DraggableList): use a custom clone function to handle more structure">
+      <change afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/DisplayUnit.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/composables/useDisplayUnits.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/category_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/category_js.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/composeApp_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/composeApp_js.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/core_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/core_js.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/product_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/product_js.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/shoppingList_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/shoppingList_js.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/pl/kurczaczkowe/bill/core/networking/supabaseClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/pl/kurczaczkowe/bill/core/networking/supabaseClient.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ShoppingListClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ShoppingListClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/AddToShoppingListParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/AddToShoppingListParameters.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Product.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Product.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDetails.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UnitEnum.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UpdateInShoppingListParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UpdateInShoppingListParameters.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Product.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Product.js.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDetails.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDetails.js.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils/groupProductsByCategory.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils/groupProductsByCategory.js.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" afterDir="false" />
     </list>
     <list id="285fcefc-03cf-401c-8c78-c887edb49b80" name="idk" comment="idk">
       <change afterPath="$PROJECT_DIR$/category/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/category/build.gradle.kts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/category/src/commonMain/kotlin/pl/kurczaczkowe/bill/category/CategoryClient.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/category/src/commonMain/kotlin/pl/kurczaczkowe/bill/category/dto/Category.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category/src/jsMain/kotlin/pl/kurczaczkowe/bill/category/dto/Category.js.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/category/src/jsMain/kotlin/pl/kurczaczkowe/bill/category/utils/JSON.js.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/category/src/jsMain/kotlin/pl/kurczaczkowe/bill/category/utils/installToJsMethods.js.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/composeApp/src/jsMain/kotlin/pl/kurczaczkowe/bill/util/SuspendToPromise.kt" afterDir="false" />
@@ -30,9 +47,7 @@
       <change afterPath="$PROJECT_DIR$/product/src/commonMain/kotlin/pl/kurczaczkowe/bill/product/ProductClient.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/product/src/commonMain/kotlin/pl/kurczaczkowe/bill/product/dto/Product.js.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/product/src/commonMain/kotlin/pl/kurczaczkowe/bill/product/dto/ProductSuggestionParameters.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product/src/commonMain/kotlin/pl/kurczaczkowe/bill/product/dto/UnitEnum.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/dto/Product.js.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/dto/UnitEnum.js.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/utils/JSON.js.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/product/src/jsMain/kotlin/pl/kurczaczkowe/bill/product/utils/installToJsMethods.js.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/webApp/client_ chrome.run.xml" afterDir="false" />
@@ -40,9 +55,12 @@
       <change afterPath="$PROJECT_DIR$/webApp/vitest.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/pl/kurczaczkowe/bill/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/pl/kurczaczkowe/bill/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UnitEnum.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/category/src/jsMain/kotlin/pl/kurczaczkowe/bill/category/dto/Category.js.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webApp/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/nuxt.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/package.json" afterDir="false" />
     </list>
@@ -61,7 +79,6 @@
       <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/typesField.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/webApp/tsconfig.tsbuildinfo" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/webApp/założenia.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" afterDir="false" />
     </list>
     <list id="24cc038b-f0e7-42b7-878b-6470fe932e14" name="testy" comment="">
       <change afterPath="$PROJECT_DIR$/webApp/app/test/nuxt/categoryClientMock.ts" afterDir="false" />
@@ -86,7 +103,7 @@
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="130244" />
+    <option name="cachedIndexableFilesCount" value="326" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[LocalEmulator::path=/home/lukasz/.android/avd/Pixel_3a_API_34_extension_level_7_x86_64.avd]" />
@@ -204,18 +221,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Bill" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="signing" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="validation" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="verification" type="c8890929:TasksNode$1" />
               </path>
               <path>
@@ -296,20 +301,6 @@
                 <item name="category" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="other" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="category" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="signing" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="category" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="validation" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -404,20 +395,6 @@
                 <item name="Bill" type="f1a62948:ProjectNode" />
                 <item name="composeApp" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="signing" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="composeApp" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="validation" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="composeApp" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="verification" type="c8890929:TasksNode$1" />
               </path>
               <path>
@@ -493,20 +470,6 @@
                 <item name="core" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="other" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="core" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="signing" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="core" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="validation" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -594,20 +557,6 @@
                 <item name="Bill" type="f1a62948:ProjectNode" />
                 <item name="product" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="signing" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="product" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="validation" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="product" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="verification" type="c8890929:TasksNode$1" />
               </path>
               <path>
@@ -683,20 +632,6 @@
                 <item name="shoppingList" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="other" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="shoppingList" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="signing" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Bill" type="f1a62948:ProjectNode" />
-                <item name="shoppingList" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="validation" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -723,9 +658,9 @@
         <option value="CSS File" />
         <option value="Kotlin File" />
         <option value="Kotlin Class" />
-        <option value="Kotlin Data Class" />
         <option value="TypeScript File" />
         <option value="Vue Composition API Component" />
+        <option value="Kotlin Data Class" />
       </list>
     </option>
   </component>
@@ -764,6 +699,59 @@
         <envs />
       </variant>
     </executable>
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts">
+      <ranges>
+        <range start1="4" end1="4" start2="4" end2="5" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="12" end1="13" start2="13" end2="13" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="25" end1="25" start2="25" end2="27" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="41" end1="41" start2="43" end2="44" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="43" end1="43" start2="46" end2="48" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="45" end1="46" start2="50" end2="51" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="52" end1="53" start2="57" end2="58" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="68" end1="73" start2="73" end2="99" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="121" end1="122" start2="147" end2="148" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="228" end1="228" start2="254" end2="256" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="230" end1="230" start2="258" end2="259" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="245" end1="247" start2="274" end2="276" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="286" end1="286" start2="315" end2="316" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="298" end1="298" start2="328" end2="329" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="301" end1="301" start2="332" end2="333" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="357" end1="358" start2="389" end2="390" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue">
+      <ranges>
+        <range start1="1" end1="3" start2="1" end2="3" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="4" end1="6" start2="4" end2="6" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="9" end1="9" start2="9" end2="10" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="12" end1="13" start2="13" end2="15" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="32" end1="33" start2="34" end2="35" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="59" end1="60" start2="61" end2="62" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="67" end1="68" start2="69" end2="72" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="88" end1="89" start2="92" end2="93" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="121" end1="121" start2="125" end2="130" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="122" end1="123" start2="131" end2="138" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="207" end1="210" start2="222" end2="223" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="275" end1="276" start2="288" end2="288" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="277" end1="278" start2="289" end2="290" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="280" end1="280" start2="292" end2="293" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="292" end1="293" start2="305" end2="306" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="303" end1="304" start2="316" end2="317" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="314" end1="315" start2="327" end2="328" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="316" end1="317" start2="329" end2="330" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="326" end1="327" start2="339" end2="340" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="370" end1="371" start2="383" end2="384" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt">
+      <ranges>
+        <range start1="6" end1="6" start2="6" end2="7" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="17" end1="17" start2="18" end2="19" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="28" end1="28" start2="30" end2="42" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+      </ranges>
+    </file>
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -876,11 +864,11 @@
       <recent name="$PROJECT_DIR$/core/src/commonMain/kotlin/pl/kurczaczkowe/bill/core" />
     </key>
     <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/webApp/app/composables/useDisplayUnits.ts" />
       <recent name="$PROJECT_DIR$/webApp/app/utils/getStringParam.ts" />
       <recent name="$PROJECT_DIR$/webApp/app/composables/routeParamToNumber.ts" />
       <recent name="$PROJECT_DIR$/webApp/app/types/item.ts" />
       <recent name="$PROJECT_DIR$/webApp/app/utils/channelAction.ts" />
-      <recent name="$PROJECT_DIR$/webApp/app/composables/types.ts" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="pl.kurczaczkowe.bill.util" />
@@ -899,7 +887,7 @@
       <recent name="pl.kurczaczkowe.bill.shoppingList" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Bill [jsBrowserProductionLibraryDistribution]">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="composeApp" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="Bill.composeApp" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
@@ -929,7 +917,6 @@
         <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
         <option name="SHOW_OPTIMIZED_WARNING" value="true" />
         <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
       </Auto>
       <Hybrid>
         <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
@@ -938,11 +925,9 @@
         <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
         <option name="SHOW_OPTIMIZED_WARNING" value="true" />
         <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
       </Hybrid>
       <Java>
         <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
       </Java>
       <Native>
         <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
@@ -951,7 +936,6 @@
         <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
         <option name="SHOW_OPTIMIZED_WARNING" value="true" />
         <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
       </Native>
       <Profilers>
         <option name="ADVANCED_PROFILING_ENABLED" value="false" />
@@ -1053,35 +1037,6 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="Bill [jsBrowserDevelopmentExecutableDistribution]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jsBrowserDevelopmentExecutableDistribution" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
-      <EXTENSION ID="com.android.tools.idea.testartifacts.testsuite.GradleRunConfigurationExtension">
-        <com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>false</com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>
-        <android.execution.deploysToLocalDevice>false</android.execution.deploysToLocalDevice>
-      </EXTENSION>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <GradleProfilingDisabled>false</GradleProfilingDisabled>
-      <GradleCoverageDisabled>false</GradleCoverageDisabled>
-      <method v="2" />
-    </configuration>
     <configuration name="Bill [jsBrowserDevelopmentLibraryDistribution]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -1140,41 +1095,12 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="Bill [jsBrowserProductionWebpack]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jsBrowserProductionWebpack" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
-      <EXTENSION ID="com.android.tools.idea.testartifacts.testsuite.GradleRunConfigurationExtension">
-        <com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>false</com.android.tools.idea.testartifacts.testsuite.SHOW_TEST_RESULT_IN_ANDROID_TEST_SUITE_VIEW>
-        <android.execution.deploysToLocalDevice>false</android.execution.deploysToLocalDevice>
-      </EXTENSION>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <GradleProfilingDisabled>false</GradleProfilingDisabled>
-      <GradleCoverageDisabled>false</GradleCoverageDisabled>
-      <method v="2" />
-    </configuration>
     <configuration name="Bill [jsDevelopmentLibraryCompileSync]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -1223,8 +1149,6 @@
       <item itemvalue="Compound.fullstack: nuxt" />
       <item itemvalue="Gradle.Bill [build]" />
       <item itemvalue="Gradle.Bill [generateBuildKonfig]" />
-      <item itemvalue="Gradle.Bill [jsBrowserDevelopmentExecutableDistribution]" />
-      <item itemvalue="Gradle.Bill [jsBrowserProductionWebpack]" />
       <item itemvalue="Gradle.Bill [clean]" />
       <item itemvalue="Gradle.Bill [jsBrowserDevelopmentLibraryDistribution]" />
       <item itemvalue="Gradle.Bill [jsBrowserProductionLibraryDistribution]" />
@@ -1243,7 +1167,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3bd3a6803838-JavaScript-WS-261.22158.274" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.23567.141" />
       </set>
     </attachedChunks>
   </component>
@@ -1463,6 +1387,11 @@
       <workItem from="1776700628189" duration="71000" />
       <workItem from="1776700709076" duration="6481000" />
       <workItem from="1776871042189" duration="1518000" />
+      <workItem from="1776960968803" duration="1662000" />
+      <workItem from="1777040195584" duration="46000" />
+      <workItem from="1777040263161" duration="8047000" />
+      <workItem from="1777048483412" duration="9384000" />
+      <workItem from="1777095710987" duration="14146000" />
     </task>
     <task id="LOCAL-00001" summary="feat: init kmp compose + nuxt app">
       <option name="closed" value="true" />
@@ -1816,7 +1745,23 @@
       <option name="project" value="LOCAL" />
       <updated>1776707881525</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="ci: proper handle anon key env">
+      <option name="closed" value="true" />
+      <created>1776888625160</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1776888625160</updated>
+    </task>
+    <task id="LOCAL-00046" summary="fix[web](components/DraggableList): use a custom clone function to handle more structure">
+      <option name="closed" value="true" />
+      <created>1777116406932</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1777116406932</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1828,6 +1773,7 @@
     <option featureType="dependencySupport" implementationName="java:androidx.compose.runtime:runtime" />
     <option featureType="com.intellij.configurationType" implementationName="JavascriptDebugType" />
     <option featureType="com.intellij.configurationType" implementationName="AndroidRunConfigurationType" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.kt" />
     <option featureType="com.intellij.configurationType" implementationName="js.build_tools.npm" />
     <option featureType="dependencySupport" implementationName="javascript:npm:nuxt" />
     <option featureType="dependencySupport" implementationName="javascript:npm:vue" />
@@ -1860,8 +1806,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/webApp" />
     </ignored-roots>
-    <MESSAGE value="feat[web](shoppingList): handle optimistic update for adding new product to a list" />
-    <MESSAGE value="feat[web](shoppingList): add switching category for products" />
     <MESSAGE value="feat[web](shoppingList): add deleting product from shopping list" />
     <MESSAGE value="feat[web]: add generated icons for pwa" />
     <MESSAGE value="refactor[web]: separate lists to standalone components&#10;&#10;style[web]: fix formatting and lint errors" />
@@ -1885,7 +1829,9 @@
     <MESSAGE value="ci: keep supabase alive" />
     <MESSAGE value="ci: add bearer authorization to supabase ping requests" />
     <MESSAGE value="ci: use secret key instead of anon" />
-    <option name="LAST_COMMIT_MESSAGE" value="ci: use secret key instead of anon" />
+    <MESSAGE value="ci: proper handle anon key env" />
+    <MESSAGE value="fix[web](components/DraggableList): use a custom clone function to handle more structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix[web](components/DraggableList): use a custom clone function to handle more structure" />
   </component>
   <component name="VueSettings">
     <option name="useTypesFromServer" value="true" />
@@ -1899,12 +1845,12 @@
       <map>
         <entry key="pl.kurczaczkowe.bill">
           <value>
-            <CheckInfo lastCheckTimestamp="1755243748379" />
+            <CheckInfo lastCheckTimestamp="1776892160507" />
           </value>
         </entry>
         <entry key="pl.kurczaczkowe.bill.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1755243748379" />
+            <CheckInfo lastCheckTimestamp="1776892160506" />
           </value>
         </entry>
       </map>

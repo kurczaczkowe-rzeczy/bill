@@ -1,8 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="shoppingList-js">
     <output-path>$PROJECT_DIR$/shoppingList/build/libs</output-path>
-    <root id="archive" name="shoppingList-js.jar">
-      <element id="module-output" name="Bill.shoppingList.jsMain" />
-    </root>
+    <root id="archive" name="shoppingList-js.jar" />
   </artifact>
 </component>

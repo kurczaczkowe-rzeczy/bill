@@ -8,7 +8,7 @@ import kotlin.js.JsExport
 data class UpdateInShoppingListParameters(
     val id: Long,
     val shopping_list_id: Long,
-    val unit: UnitEnum?,
+    val unit: String?,
     val quantity: Float?,
     val name: String?,
     val category_id: String?,

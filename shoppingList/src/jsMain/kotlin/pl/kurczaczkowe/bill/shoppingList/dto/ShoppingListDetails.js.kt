@@ -6,7 +6,7 @@ fun ShoppingListDetails.toJs(): dynamic {
     val id = this.id
     val createdAt = this.createdAt
     val quantity = this.quantity
-    val unit = this.unit.toJs()
+    val unit = this.unit
     val name = this.name
     val inCart = this.inCart
     val category = this.category.toJs()

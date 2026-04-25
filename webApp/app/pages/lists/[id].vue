@@ -1,16 +1,18 @@
 <script lang="ts" setup>
-import {
-  type Category,
+import type {
+  Category,
   CategoryWithProducts,
-  type Product,
-  UnitEnum,
+  DisplayUnit,
+  Product,
 } from "@bill/Bill-shoppingList";
 import BaseMatchEmphasis from "@ui/components/BaseMatchEmphasis.vue";
 
+import BaseAutocomplete from "~/components/BaseAutocomplete.vue";
 import BaseCollapse from "~/components/BaseCollapse.vue";
 import CategoryDescriptor from "~/components/CategoryDescriptor.vue";
 import CategoryWithProductList from "~/components/CategoryWithProductList.vue";
-import { useProductClient } from '~/composables/useProductClient'
+import { INITIAL_DISPLAY_UNITS, useDisplayUnits } from '~/composables/useDisplayUnits'
+import { useProductClient } from "~/composables/useProductClient";
 import { type AddToShoppingListParameters, useShoppingList } from "~/composables/useShoppingList";
 import { getStringParam } from "~/utils/getStringParam";
 import type { KtList } from "~/utils/ktListToArray";
@@ -30,7 +32,7 @@ const {
   hasEverToggled: hasEverToggledAddForm,
 } = useCollapsedAddForm(getStringParam(route.params.id));
 
-const units = UnitEnum.values();
+const { data: displayUnits } = useDisplayUnits();
 
 const {
   categoriesWithProducts,
@@ -57,7 +59,7 @@ const formErrors = reactive({
 const addToShoppingListParameters = reactive<AddToShoppingListParameters>({
   name: "",
   quantity: 1,
-  unit: UnitEnum.GRAM,
+  unit: INITIAL_DISPLAY_UNITS[0],
   categoryId: 1n,
 });
 
@@ -65,7 +67,9 @@ const errors = computed(() =>
   [shoppingListDetailsError.value, categoriesError.value].filter(Boolean),
 );
 
-type ProductSuggestion = Product;
+interface ProductSuggestion extends Omit<Product, 'unit'> {
+  unit: DisplayUnit
+}
 
 const suggestions = ref<ProductSuggestion[]>([]);
 const suggestionsOpen = ref(false);
@@ -86,7 +90,7 @@ function closeSuggestions() {
 function selectSuggestion(s: ProductSuggestion) {
   try {
     addToShoppingListParameters.name = s.name;
-    addToShoppingListParameters.unit = UnitEnum.valueOf(s.unit.name);
+    addToShoppingListParameters.unit = s.unit;
     closeSuggestions();
   } catch (e) {
     console.error("selectSuggestion->", e);
@@ -119,8 +123,19 @@ async function fetchSuggestions(query: string) {
     }
 
     const result = ktToJs(response.result as KtList<Product>) as Product[];
+    const mappedSuggestions = result.map((suggestion) => {
+      const unit =
+        displayUnits.value?.find(
+          ({ baseUnit, multiplier }) => baseUnit === suggestion.unit && multiplier === 1,
+        ) ?? new DisplayUnit(suggestion.unit, suggestion.unit, suggestion.unit, 1);
 
-    suggestions.value = result || [];
+      return {
+        ...suggestion,
+        unit,
+      } as ProductSuggestion;
+    });
+
+    suggestions.value = mappedSuggestions || [];
 
     openSuggestions();
   } finally {
@@ -205,9 +220,7 @@ onUnmounted(() => {
 });
 
 function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string): boolean {
-  return (
-    suggestion.name === query && suggestion.unit.name === addToShoppingListParameters.unit.name
-  );
+  return suggestion.name === query && suggestion.unit === addToShoppingListParameters.unit;
 }
 
 function useCollapsedAddForm(listId: string) {
@@ -273,9 +286,8 @@ function useCollapsedAddForm(listId: string) {
           </div>
         </template>
         <template #content>
-<!--          ToDo: Najlepiej jak ten formularz będzie w wersji mobilnej w bottomszicie a na większych ekranach zboku, nie będzie to wtedy przeszkadzało przeglądać liste-->
           <form
-            class="list-row-separator grid grid-cols-[80px_minmax(0,auto)_45px]"
+            class="list-row-separator grid grid-cols-[80px_100px_minmax(0,auto)_45px]"
             @submit.prevent="handleAddToShoppingList"
           >
             <BaseButton circle>
@@ -290,7 +302,7 @@ function useCollapsedAddForm(listId: string) {
               list-id="suggestions"
               name="product"
               placeholder="Nazwa produktu"
-              wrapperClass="col-span-2"
+              wrapperClass="col-span-3"
               @search="fetchSuggestions"
               @select="selectSuggestion"
             >
@@ -301,7 +313,7 @@ function useCollapsedAddForm(listId: string) {
                     :query="addToShoppingListParameters.name"
                   />
                 </span>
-                <span class="badge badge-ghost badge-sm">{{ suggestion.unit || 'szt.' }}</span>
+                <span class="badge badge-ghost badge-sm">{{ suggestion.unit.shortName || 'szt.' }}</span>
               </template>
             </BaseAutocomplete>
             <input
@@ -312,9 +324,9 @@ function useCollapsedAddForm(listId: string) {
               required
               type="number"
             />
-            <select v-model="addToShoppingListParameters.unit" class="select select-ghost col-span-2 w-full" name="unit">
+            <select v-model="addToShoppingListParameters.unit" class="select select-ghost w-full" name="unit">
               <option disabled selected>Wybierz jednostkę</option>
-              <option v-for="unit in units" :key="unit.name" :value="unit">{{ unit.name }}</option>
+              <option v-for="unit in displayUnits" :key="unit.name" :value="unit">{{ unit.shortName }}</option>
             </select>
 
             <BaseAutocomplete
@@ -324,7 +336,7 @@ function useCollapsedAddForm(listId: string) {
               label-key="name"
               list-id="categories"
               name="category"
-              wrapperClass="col-span-3"
+              wrapperClass="col-span-2"
               @select="selectCategory as any"
             >
               <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef, attrs }">
@@ -368,7 +380,7 @@ function useCollapsedAddForm(listId: string) {
         >
           <CategoryWithProductList
             :categories="categories ?? []"
-            :category-with-products="categoryWithProducts as unknown as CategoryWithProducts"
+            :category-with-products="categoryWithProducts as CategoryWithProducts"
             :on-delete-product="deleteProductFromShoppingList"
             :on-toggle-in-cart="handleToggleInCart"
             :switch-product-category="switchProductCategory"

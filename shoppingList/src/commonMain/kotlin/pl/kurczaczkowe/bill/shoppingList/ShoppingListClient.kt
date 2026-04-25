@@ -18,7 +18,6 @@ import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDetails
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListProductParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.ToggleProductInCartParameters
-import pl.kurczaczkowe.bill.shoppingList.dto.UnitEnum
 import pl.kurczaczkowe.bill.shoppingList.dto.UpdateInShoppingListParameters
 import pl.kurczaczkowe.bill.shoppingList.dto.UpdateShoppingListParameters
 import kotlin.js.JsExport
@@ -106,7 +105,7 @@ class ShoppingListClient(private val client: RemoteClient) {
     @JsExport.Ignore
     suspend fun addToShoppingList(
         shoppingListId: Long,
-        productUnit: UnitEnum,
+        productUnit: String,
         productQuantity: Float,
         productName: String,
         categoryId: Long,
@@ -143,7 +142,7 @@ class ShoppingListClient(private val client: RemoteClient) {
     suspend fun updateInShoppingList(
         id: Long,
         shoppingListId: Long,
-        productUnit: UnitEnum?,
+        productUnit: String?,
         productQuantity: Float?,
         productName: String?,
         categoryId: Long?,

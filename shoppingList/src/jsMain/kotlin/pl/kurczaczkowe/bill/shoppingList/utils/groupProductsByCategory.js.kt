@@ -3,7 +3,6 @@ package pl.kurczaczkowe.bill.shoppingList.utils
 import pl.kurczaczkowe.bill.shoppingList.dto.Category
 import pl.kurczaczkowe.bill.shoppingList.dto.CategoryWithProducts
 import pl.kurczaczkowe.bill.shoppingList.dto.ShoppingListDetails
-import pl.kurczaczkowe.bill.shoppingList.dto.UnitEnum
 
 @JsExport
 fun groupProductsByCategoryJs(
@@ -21,7 +20,7 @@ fun groupProductsByCategoryJs(
                 color = (p.category.color as String),
             ),
             quantity = (p.quantity as Number).toInt(),
-            unit = UnitEnum.valueOf((p.unit as UnitEnum).name),
+            unit = p.unit,
             inCart = p.inCart as Boolean,
             createdAt = p.createdAt as String,
         )
