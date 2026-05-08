@@ -40,7 +40,7 @@ class ShoppingListClient(private val client: RemoteClient) {
     @JsPromise
     @JsExport.Ignore
     suspend fun getShoppingListDesc(
-        shoppingListId: Long,
+        shoppingListId: String,
     ): Result<ShoppingListDesc, NetworkError> {
         return try {
             client.post<ShoppingListDescParameters, ShoppingListDesc>(
@@ -56,12 +56,12 @@ class ShoppingListClient(private val client: RemoteClient) {
     @JsPromise
     @JsExport.Ignore
     suspend fun getShoppingList(
-        shoppingListId: Long,
+        shoppingListId: String,
     ): Result<List<ShoppingListDetails>, NetworkError> {
         return try {
             client.post<ShoppingListParameters, List<ShoppingListDetails>>(
                 rpcFunction = "get_shopping_list", parameters = ShoppingListParameters(
-                    shopping_list_id = shoppingListId
+                    shoppingListId = shoppingListId
                 )
             )
         } catch (e: Exception) {
@@ -73,12 +73,12 @@ class ShoppingListClient(private val client: RemoteClient) {
     @JsPromise
     @JsExport.Ignore
     suspend fun getShoppingListProduct(
-        productInShoppingListId: Long,
+        productInShoppingListId: String,
     ): Result<ShoppingListDetails, NetworkError> {
         return try {
             client.post<ShoppingListProductParameters, ShoppingListDetails>(
                 rpcFunction = "get_product_from_shopping_list", parameters = ShoppingListProductParameters(
-                    product_in_shopping_list_id = productInShoppingListId
+                    productInShoppingListId = productInShoppingListId
                 )
             )
         } catch (e: Exception) {
@@ -89,11 +89,11 @@ class ShoppingListClient(private val client: RemoteClient) {
 
     @JsPromise
     @JsExport.Ignore
-    suspend fun toggleProductInCart(productInCartId: Long): Result<ShoppingListDetails, NetworkError> {
+    suspend fun toggleProductInCart(productInCartId: String): Result<ShoppingListDetails, NetworkError> {
         return try {
             client.post<ToggleProductInCartParameters, ShoppingListDetails>(
                 rpcFunction = "toggle_product_in_cart",
-                parameters = ToggleProductInCartParameters(product_in_shopping_list_id = productInCartId)
+                parameters = ToggleProductInCartParameters(productInShoppingListId = productInCartId)
             )
         } catch (e: Exception) {
             println(e)
@@ -104,21 +104,21 @@ class ShoppingListClient(private val client: RemoteClient) {
     @JsPromise
     @JsExport.Ignore
     suspend fun addToShoppingList(
-        shoppingListId: Long,
-        productUnit: String,
+        shoppingListId: String,
+        productBaseUnit: String,
         productQuantity: Float,
         productName: String,
-        categoryId: Long,
+        categoryId: String,
     ): Result<ShoppingListDetails, NetworkError> {
         return try {
             client.post<AddToShoppingListParameters, ShoppingListDetails>(
                 rpcFunction = "add_product_to_shopping_list",
                 parameters = AddToShoppingListParameters(
-                    shopping_list_id = shoppingListId,
-                    product_unit = productUnit,
-                    product_quantity = productQuantity,
-                    product_name = productName,
-                    category_id = categoryId,
+                    shoppingListId = shoppingListId,
+                    productBaseUnit = productBaseUnit,
+                    productQuantity = productQuantity,
+                    productName = productName,
+                    categoryId = categoryId,
                 )
             )
         } catch (e: Exception) {
@@ -129,7 +129,7 @@ class ShoppingListClient(private val client: RemoteClient) {
 
     @JsName("listenForShoppingListChangesPlain")
     fun listenForShoppingListChanges(
-        listId: Long,
+        listId: String,
         action: (PostgresAction) -> Unit,
     ): Subscription = client.subscribe(
         channelName = getShoppingListChannelName(listId = listId),
@@ -140,22 +140,22 @@ class ShoppingListClient(private val client: RemoteClient) {
     @JsPromise
     @JsExport.Ignore
     suspend fun updateInShoppingList(
-        id: Long,
-        shoppingListId: Long,
-        productUnit: String?,
+        id: String,
+        shoppingListId: String,
+        productBaseUnit: String?,
         productQuantity: Float?,
         productName: String?,
-        categoryId: Long?,
+        categoryId: String?,
     ): Result<ShoppingListDetails, NetworkError> {
         return try {
             client.post<UpdateInShoppingListParameters, ShoppingListDetails>(
                 rpcFunction = "edit_product_in_shopping_list",
                 parameters = UpdateInShoppingListParameters(
-                    shopping_list_id = shoppingListId,
-                    unit = productUnit,
+                    shoppingListId = shoppingListId,
+                    baseUnit = productBaseUnit,
                     quantity = productQuantity,
                     name = productName,
-                    category_id = categoryId?.toString(),
+                    categoryId = categoryId,
                     id = id,
                 )
             )
@@ -168,7 +168,7 @@ class ShoppingListClient(private val client: RemoteClient) {
     @JsPromise
     @JsExport.Ignore
     suspend fun deleteFromShoppingList(
-        productInShoppingListId: Long,
+        productInShoppingListId: String,
     ): Result<EntityId, NetworkError> {
         return try {
             client.post<DeleteFromShoppingListParameters, EntityId>(
@@ -224,7 +224,7 @@ class ShoppingListClient(private val client: RemoteClient) {
     @JsPromise
     @JsExport.Ignore
     suspend fun updateShoppingList(
-        id: Long,
+        id: String,
         name: String?,
         date: String?,
     ): Result<ShoppingList, NetworkError> {
@@ -241,11 +241,11 @@ class ShoppingListClient(private val client: RemoteClient) {
 
     @JsPromise
     @JsExport.Ignore
-    suspend fun deleteShoppingList(id: Long): Result<EntityId, NetworkError> {
+    suspend fun deleteShoppingList(id: String): Result<EntityId, NetworkError> {
         return try {
             client.post<DeleteShoppingListParameters, EntityId>(
                 rpcFunction = "remove_shopping_list",
-                parameters = DeleteShoppingListParameters( shopping_list_id = id )
+                parameters = DeleteShoppingListParameters( shoppingListId = id )
             )
         } catch (e: Exception) {
             println(e)
@@ -265,7 +265,7 @@ class ShoppingListClient(private val client: RemoteClient) {
 }
 
 @JsExport
-fun getShoppingListChannelName(listId: Long) = "shopping-list-$listId"
+fun getShoppingListChannelName(listId: String) = "shopping-list-$listId"
 
 @JsExport
 fun getShoppingListsChannelName() = "shopping-lists"

@@ -57,65 +57,65 @@ export function useShoppingLists(options?: ShoppingListsOptions) {
     blockAction,
   } = useOptimisticUpdatedList(data);
 
-  async function listenForShoppingListsChanges(): Promise<Subscription> {
-    if (channel.value.has(channelName.value) && channel.value.get(channelName.value)) {
-      shoppingListClient.unsubscribe(channel.value.get(channelName.value)!);
-    }
+  async function handleChanges(
+    payload:
+      | JsPostgresAction<ShoppingList, null>
+      | JsPostgresAction<ShoppingList, EntityId>
+      | JsPostgresAction<null, EntityId>,
+  ) {
+    try {
+      const jsPayload = ktToJs(payload);
 
-    async function handleChanges(
-      payload:
-        | JsPostgresAction<ShoppingList, null>
-        | JsPostgresAction<ShoppingList, EntityId>
-        | JsPostgresAction<null, EntityId>,
-    ) {
-      try {
-        const jsPayload = ktToJs(payload);
+      // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
+      const channelAction = getChannelActionFrom(jsPayload as any);
+      const isBlocked = isActionBlocked(
+        jsPayload.record?.id ?? jsPayload.oldRecord?.id ?? "00000000-0000-0000-0000-000000000000",
+        channelAction,
+      );
 
-        // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
-        const channelAction = getChannelActionFrom(jsPayload as any);
-        const isBlocked = isActionBlocked(
-          jsPayload.record?.id ?? jsPayload.oldRecord?.id ?? -1,
-          channelAction,
-        );
+      if (isBlocked) {
+        return;
+      }
 
-        if (isBlocked) {
-          return;
-        }
-
-        switch (channelAction) {
-          case "insert": {
-            __upsertList(
-              {
-                id: jsPayload.record!.id,
-                createdAt: new Date().toISOString(),
-                name: jsPayload.record!.name,
-                date: jsPayload.record!.date,
-                productAmount: jsPayload.record!.productAmount,
-              } as ShoppingList,
-              0,
-            );
-
-            break;
-          }
-          case "update":
-            __upsertList({
+      switch (channelAction) {
+        case "insert": {
+          __upsertList(
+            {
               id: jsPayload.record!.id,
               createdAt: new Date().toISOString(),
               name: jsPayload.record!.name,
               date: jsPayload.record!.date,
-            } as ShoppingList);
+              productAmount: jsPayload.record!.productAmount,
+            } as ShoppingList,
+            0,
+          );
 
-            break;
-          case "delete":
-            __deleteList(jsPayload.oldRecord!.id);
-
-            break;
-          default:
-            throw new Error("Invalid payload");
+          break;
         }
-      } catch (error) {
-        console.error(error);
+        case "update":
+          __upsertList({
+            id: jsPayload.record!.id,
+            createdAt: new Date().toISOString(),
+            name: jsPayload.record!.name,
+            date: jsPayload.record!.date,
+          } as ShoppingList);
+
+          break;
+        case "delete":
+          __deleteList(jsPayload.oldRecord!.id);
+
+          break;
+        default:
+          throw new Error("Invalid payload");
       }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function listenForShoppingListsChanges(): Promise<Subscription> {
+    if (channel.value.has(channelName.value) && channel.value.get(channelName.value)) {
+      shoppingListClient.unsubscribe(channel.value.get(channelName.value)!);
     }
 
     channel.value.set(
@@ -135,7 +135,7 @@ export function useShoppingLists(options?: ShoppingListsOptions) {
 
     loading.value = true;
     const now = new Date();
-    const preparedId = now.valueOf() * 2;
+    const preparedId = (now.valueOf() * 2).toString();
     blockAction(preparedId, "insert");
 
     __upsertList(
@@ -181,7 +181,7 @@ export function useShoppingLists(options?: ShoppingListsOptions) {
     __upsertList({ ...params }, listToUpdate.index);
 
     return shoppingListClient
-      .updateShoppingListAsync(BigInt(params.id), params.name, params.date)
+      .updateShoppingListAsync(params.id, params.name, params.date)
       .then((response) => {
         const parsedRes = readResponse<ShoppingList>(response);
         __upsertList(parsedRes, listToUpdate.index);
@@ -209,7 +209,7 @@ export function useShoppingLists(options?: ShoppingListsOptions) {
     __deleteList(params.id);
 
     return shoppingListClient
-      .deleteShoppingListAsync(BigInt(params.id))
+      .deleteShoppingListAsync(params.id)
       .catch((err) => {
         console.error(err);
         __upsertList(listToDelete.item, listToDelete.index);
@@ -259,9 +259,9 @@ export interface AddShoppingListParameters {
 }
 export interface UpdateShoppingListParameters {
   name?: string;
-  id: number;
+  id: string;
   date?: string;
 }
 export interface DeleteShoppingListParameters {
-  id: number;
+  id: string;
 }

@@ -11,9 +11,9 @@ import { isNil } from "~/utils/isNil";
 interface Props {
   categories: Category[];
   categoryWithProducts: CategoryWithProducts;
-  onDeleteProduct: (productId: bigint) => void;
-  onToggleInCart: (productId: bigint) => void;
-  switchProductCategory: (id: bigint, category: Category) => Promise<void>;
+  onDeleteProduct: (productId: string) => void;
+  onToggleInCart: (productId: string) => void;
+  switchProductCategory: (id: string, category: Category) => Promise<void>;
 }
 
 const props = defineProps<Props>();
@@ -45,7 +45,7 @@ const draggableOptions = {
     }
 
     const category = props.categories.find(
-      (c) => c.id === BigInt(evt.to.parentElement?.dataset.categoryId ?? -1),
+      (c) => c.id === evt.to.parentElement?.dataset.categoryId,
     );
 
     if (!category) {
@@ -66,7 +66,7 @@ const draggableOptions = {
   },
 };
 
-function handleToggleInCart(productId: bigint) {
+function handleToggleInCart(productId: string) {
   if (
     itemChooseTimeStamp.value &&
     Date.now() - itemChooseTimeStamp.value > ITEM_CHOOSE_TIMESTAMP_TIMEOUT
@@ -102,7 +102,7 @@ function handleToggleInCart(productId: bigint) {
             <Icon name="streamline-freehand:data-transfer-vertical" />
           </BaseButton>
           <span class="list-col-grow -ml-10">{{ product.name }} </span>
-          <span>{{ product.quantity }} {{ product.unit }}</span>
+          <span>{{ product.quantity }} {{ product.baseUnit }}</span>
           <BaseButton
             size="sm"
             class="-m-4"

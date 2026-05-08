@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type {
-  Category,
-  CategoryWithProducts,
+import {
+  type Category,
+  type CategoryWithProducts,
   DisplayUnit,
-  Product,
+  type Product,
 } from "@bill/Bill-shoppingList";
 import BaseMatchEmphasis from "@ui/components/BaseMatchEmphasis.vue";
 
@@ -59,16 +59,16 @@ const formErrors = reactive({
 const addToShoppingListParameters = reactive<AddToShoppingListParameters>({
   name: "",
   quantity: 1,
-  unit: INITIAL_DISPLAY_UNITS[0],
-  categoryId: 1n,
+  baseUnit: INITIAL_DISPLAY_UNITS[0],
+  categoryId: "00000000-0000-0000-0000-000000000000",
 });
 
 const errors = computed(() =>
   [shoppingListDetailsError.value, categoriesError.value].filter(Boolean),
 );
 
-interface ProductSuggestion extends Omit<Product, 'unit'> {
-  unit: DisplayUnit
+interface ProductSuggestion extends Omit<Product, 'baseUnit'> {
+  baseUnit: DisplayUnit
 }
 
 const suggestions = ref<ProductSuggestion[]>([]);
@@ -90,7 +90,7 @@ function closeSuggestions() {
 function selectSuggestion(s: ProductSuggestion) {
   try {
     addToShoppingListParameters.name = s.name;
-    addToShoppingListParameters.unit = s.unit;
+    addToShoppingListParameters.baseUnit = s.baseUnit;
     closeSuggestions();
   } catch (e) {
     console.error("selectSuggestion->", e);
@@ -126,12 +126,12 @@ async function fetchSuggestions(query: string) {
     const mappedSuggestions = result.map((suggestion) => {
       const unit =
         displayUnits.value?.find(
-          ({ baseUnit, multiplier }) => baseUnit === suggestion.unit && multiplier === 1,
-        ) ?? new DisplayUnit(suggestion.unit, suggestion.unit, suggestion.unit, 1);
+          ({ baseUnit, multiplier }) => baseUnit === suggestion.baseUnit && multiplier === 1,
+        ) ?? new DisplayUnit(suggestion.baseUnit, suggestion.baseUnit, suggestion.baseUnit, 1);
 
       return {
         ...suggestion,
-        unit,
+        baseUnit: unit,
       } as ProductSuggestion;
     });
 
@@ -159,7 +159,7 @@ const categoriesFilterDownByQuery = computed(() => {
 
 const selectCategory = (category: Category) => {
   selectedCategory.value = category;
-  addToShoppingListParameters.categoryId = BigInt(category.id);
+  addToShoppingListParameters.categoryId = category.id;
   categoryNameQuery.value = category.name;
 };
 
@@ -189,7 +189,7 @@ function resetAddToShoppingListParameters() {
   formErrors.name = "";
 }
 
-function handleToggleInCart(productId: bigint) {
+function handleToggleInCart(productId: string) {
   if (!hasEverToggledAddForm.value && !isAddProductFormHidden.value) {
     toggleAddForm();
   }
@@ -220,7 +220,7 @@ onUnmounted(() => {
 });
 
 function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string): boolean {
-  return suggestion.name === query && suggestion.unit === addToShoppingListParameters.unit;
+  return suggestion.name === query && suggestion.baseUnit === addToShoppingListParameters.baseUnit;
 }
 
 function useCollapsedAddForm(listId: string) {
@@ -313,7 +313,7 @@ function useCollapsedAddForm(listId: string) {
                     :query="addToShoppingListParameters.name"
                   />
                 </span>
-                <span class="badge badge-ghost badge-sm">{{ suggestion.unit.shortName || 'szt.' }}</span>
+                <span class="badge badge-ghost badge-sm">{{ suggestion.baseUnit.shortName || 'szt.' }}</span>
               </template>
             </BaseAutocomplete>
             <input
@@ -324,7 +324,7 @@ function useCollapsedAddForm(listId: string) {
               required
               type="number"
             />
-            <select v-model="addToShoppingListParameters.unit" class="select select-ghost w-full" name="unit">
+            <select v-model="addToShoppingListParameters.baseUnit" class="select select-ghost w-full" name="unit">
               <option disabled selected>Wybierz jednostkę</option>
               <option v-for="unit in displayUnits" :key="unit.name" :value="unit">{{ unit.shortName }}</option>
             </select>
@@ -380,7 +380,7 @@ function useCollapsedAddForm(listId: string) {
         >
           <CategoryWithProductList
             :categories="categories ?? []"
-            :category-with-products="categoryWithProducts as CategoryWithProducts"
+            :category-with-products="categoryWithProducts as unknown as CategoryWithProducts"
             :on-delete-product="deleteProductFromShoppingList"
             :on-toggle-in-cart="handleToggleInCart"
             :switch-product-category="switchProductCategory"

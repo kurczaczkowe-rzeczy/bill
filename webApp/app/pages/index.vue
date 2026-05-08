@@ -30,11 +30,11 @@ async function handleAddShoppingList(e: Event) {
     });
 }
 
-async function handleDelete(id: number) {
+async function handleDelete(id: string) {
   deleteShoppingList({ id });
 }
 
-async function handleUpdate(id: number) {
+async function handleUpdate(id: string) {
   updateShoppingList({ id });
 }
 

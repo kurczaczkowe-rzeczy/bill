@@ -1,7 +1,7 @@
 import type { ChannelAction } from "~/utils/channelAction";
 import { isNil } from "~/utils/isNil";
 
-type Id = number | bigint;
+type Id = string;
 
 interface Item {
   id: Id;

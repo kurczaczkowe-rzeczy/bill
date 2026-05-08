@@ -7,11 +7,12 @@ import kotlin.js.JsExport
 @JsExport
 @Serializable
 data class ShoppingListDetails(
-    val id: Long,
+    val id: String,
     @SerialName("created_at")
     val createdAt: String,
     val quantity: Int,
-    val unit: String,
+    @SerialName("base_unit")
+    val baseUnit: String,
     val name: String,
     @SerialName("in_cart")
     val inCart: Boolean,

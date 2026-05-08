@@ -37,7 +37,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
   const { client, useAutoListenFor, ...asyncDataOptions } = options ?? {};
 
   const listIdRef = toRef(listId);
-  const parsedListId = computed(() => routeListIdToNumber(toValue(listIdRef)));
+  const parsedListId = computed(() => getStringParam(toValue(listIdRef)));
   const channelName = computed(() => getShoppingListChannelName(toValue(parsedListId)));
   const loading = ref(false);
   const error = ref<Error | null>(null);
@@ -86,11 +86,11 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
       return {
         category: group.category,
         products: products.map((product) => {
-          const { unit, quantity } = mapUnitToDisplayUnit(product.unit, product.quantity);
+          const { baseUnit, quantity } = mapUnitToDisplayUnit(product.baseUnit, product.quantity);
           return {
             ...product,
             quantity,
-            unit,
+            baseUnit,
           } as ShoppingListDetails;
         }),
       };
@@ -113,7 +113,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
       // biome-ignore lint/suspicious/noExplicitAny: fix after fixing ktToJs
       const channelAction = getChannelActionFrom(jsPayload as any);
       const isBlocked = isActionBlocked(
-        jsPayload.record?.id ?? jsPayload.oldRecord?.id ?? -1,
+        jsPayload.record?.id ?? jsPayload.oldRecord?.id ?? "00000000-0000-0000-0000-000000000000",
         channelAction,
       );
 
@@ -144,7 +144,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
             id: jsPayload.record!.id,
             createdAt: new Date().toISOString(),
             quantity: jsPayload.record!.quantity,
-            unit: INITIAL_DISPLAY_UNITS[0],
+            baseUnit: INITIAL_DISPLAY_UNITS[0],
             name: `Ładowanie...`, //ToDo: Add shrimmerlike thing
             inCart: jsPayload.record!.inCart,
             category,
@@ -207,7 +207,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
     return channel.value.get(channelName.value) as Subscription;
   }
 
-  async function toggleInCart(id: bigint) {
+  async function toggleInCart(id: string) {
     if (!shoppingListDetails.value) {
       throw new Error("Shopping list not found");
     }
@@ -262,14 +262,14 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
 
     loading.value = true;
     const now = new Date();
-    const preparedId = now.valueOf() * 2;
+    const preparedId = (now.valueOf() * 2).toString();
     blockAction(preparedId, "insert");
 
     shoppingListClient
       .addToShoppingListAsync(
-        routeListIdToNumber(params.listId),
-        params.unit.baseUnit,
-        params.quantity * params.unit.multiplier,
+        getStringParam(params.listId),
+        params.baseUnit.baseUnit,
+        params.quantity * params.baseUnit.multiplier,
         params.name,
         params.categoryId,
       )
@@ -288,7 +288,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
       });
   }
 
-  async function deleteProductFromShoppingList(id: bigint) {
+  async function deleteProductFromShoppingList(id: string) {
     const productToDelete = __getProduct(id);
 
     loading.value = true;
@@ -309,7 +309,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
       });
   }
 
-  async function switchProductCategory(id: bigint, category: Category) {
+  async function switchProductCategory(id: string, category: Category) {
     loading.value = true;
     blockAction(id, "update");
 
@@ -367,19 +367,9 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
   };
 }
 
-function routeListIdToNumber(id: unknown): bigint {
-  const preparedId = getStringParam(id);
-
-  const parsedId = parseInt(preparedId, 10);
-  if (Number.isNaN(parsedId)) {
-    throw new Error(`Invalid list ID. Is not a number. Actual value: ${preparedId}`);
-  }
-  return BigInt(parsedId);
-}
-
 export interface AddToShoppingListParameters {
   name: string;
   quantity: number;
-  unit: DisplayUnit;
-  categoryId: bigint;
+  baseUnit: DisplayUnit;
+  categoryId: string;
 }

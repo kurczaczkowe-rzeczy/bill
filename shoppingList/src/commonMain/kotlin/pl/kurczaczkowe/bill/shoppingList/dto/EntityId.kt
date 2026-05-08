@@ -6,5 +6,5 @@ import kotlin.js.JsExport
 @JsExport
 @Serializable
 data class EntityId(
-    val id: Long
+    val id: String
 )

@@ -7,7 +7,7 @@ import kotlin.js.JsExport
 @JsExport
 @Serializable
 data class ShoppingListDesc(
-    val id: Long,
+    val id: String,
     @SerialName("created_at")
     val createdAt: String,
     val name: String,

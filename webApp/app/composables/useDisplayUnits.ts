@@ -40,19 +40,19 @@ export function useDisplayUnits(options?: Options) {
     }, new Map<DisplayUnit["baseUnit"], DisplayUnit[]>()),
   );
 
-  function mapUnitToDisplayUnit(unit: string, quantity: number) {
-    const displayUnits = displayUnitsMap.value?.get(unit) ?? [];
+  function mapUnitToDisplayUnit(baseUnit: string, quantity: number) {
+    const displayUnits = displayUnitsMap.value?.get(baseUnit) ?? [];
     const sortedDisplayUnit = displayUnits.toSorted((a, b) => b.multiplier - a.multiplier);
 
     let resultQuantity: number;
     for (const displayUnit of sortedDisplayUnit) {
       resultQuantity = quantity / displayUnit.multiplier;
       if (resultQuantity >= 1) {
-        return { quantity: resultQuantity, unit: displayUnit.shortName };
+        return { quantity: resultQuantity, baseUnit: displayUnit.shortName };
       }
     }
 
-    return { quantity, unit };
+    return { quantity, baseUnit: baseUnit };
   }
 
   return {

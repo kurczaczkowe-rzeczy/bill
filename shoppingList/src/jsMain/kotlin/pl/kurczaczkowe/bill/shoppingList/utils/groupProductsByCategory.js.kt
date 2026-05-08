@@ -11,16 +11,16 @@ fun groupProductsByCategoryJs(
 ): List<CategoryWithProducts> {
     val productsList = products.map { p ->
         ShoppingListDetails(
-            id = (p.id as Number).toLong(),
+            id = p.id as String,
             name = p.name as String,
             category = Category(
-                id = (p.category.id as Number).toLong(),
-                createdAt = (p.category.createdAt as String),
-                name = (p.category.name as String),
-                color = (p.category.color as String),
+                id = p.category.id as String,
+                createdAt = p.category.createdAt as String,
+                name = p.category.name as String,
+                color = p.category.color as String,
             ),
             quantity = (p.quantity as Number).toInt(),
-            unit = p.unit,
+            baseUnit = p.baseUnit,
             inCart = p.inCart as Boolean,
             createdAt = p.createdAt as String,
         )
@@ -28,10 +28,10 @@ fun groupProductsByCategoryJs(
 
     val categoriesList = categories.map { c ->
         Category(
-            id = (c.id as Number).toLong(),
-            createdAt = (c.createdAt as String),
-            name = (c.name as String),
-            color = (c.color as String),
+            id = c.id as String,
+            createdAt = c.createdAt as String,
+            name = c.name as String,
+            color = c.color as String,
         )
     }
 
