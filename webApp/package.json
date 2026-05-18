@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "bill-web",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,15 +12,15 @@
   },
   "dependencies": {
     "@bill": "file:../build/js/packages",
-    "@floating-ui/vue": "^1.1.9",
-    "@nuxt/icon": "2.1.1",
-    "@tailwindcss/vite": "^4.2.2",
-    "@vueuse/core": "^14.1.0",
+    "@floating-ui/vue": "^1.1.11",
+    "@nuxt/icon": "2.2.2",
+    "@tailwindcss/vite": "^4.3.0",
+    "@vueuse/core": "^14.3.0",
     "daisyui": "^5.5.19",
-    "nuxt": "^4.2.2",
-    "tailwindcss": "^4.2.2",
-    "vue": "^3.5.26",
-    "vue-draggable-plus": "^0.6.0",
+    "nuxt": "^4.4.5",
+    "tailwindcss": "^4.3.0",
+    "vue": "^3.5.34",
+    "vue-draggable-plus": "^0.6.1",
     "vue-router": "^4.6.4"
   },
   "packageManager": "pnpm@10.32.1",

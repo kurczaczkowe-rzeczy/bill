@@ -10,4 +10,12 @@ export default defineNuxtConfig({
   alias: {
     "@ui": fileURLToPath(new URL(".", import.meta.url)),
   },
+
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        lib: ["esnext", "dom"],
+      }
+    }
+  },
 });

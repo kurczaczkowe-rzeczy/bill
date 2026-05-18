@@ -49,6 +49,7 @@
       var(--color-base-100) 14px
     );
     background-size: 40px 40px;
+
   }
 }
 
@@ -60,5 +61,8 @@
         border-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
       }
     }
+  }
+  :root {
+    scrollbar-color: var(--color-success) color-mix(in oklab, var(--color-success-content) 5%, transparent);
   }
 }
