@@ -145,6 +145,13 @@ async function fetchSuggestions(query: string) {
 
 const { data: categories, error: categoriesError, status: categoriesStatus } = useGetCategories();
 
+function normalizeText(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
 const selectedCategory = ref<Category | null>(null);
 const categoryNameQuery = ref("");
 const categoriesFilterDownByQuery = computed(() => {
@@ -153,7 +160,7 @@ const categoriesFilterDownByQuery = computed(() => {
   }
 
   return categories.value?.filter(({ name }) =>
-    new RegExp(categoryNameQuery.value, "i").test(name),
+    normalizeText(name).includes(normalizeText(categoryNameQuery.value)),
   );
 });
 
