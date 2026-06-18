@@ -9,52 +9,75 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="fix(shoppingList): adapt new structure for units">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="fix[shoppingList]: normalize category names in category select">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/category_js_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/composeApp_js_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/core_js_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/product_js_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/shoppingList_js_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/biome.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/MenuClient.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/CreateMealWithIngredientsParameters.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/app/pages/meal/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/sqls/db-dump.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/sqls/poprawione.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/CreateUserMealIngredient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/GetUserMealIngredientsParameters.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/GetUserMealParameters.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Ingredient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UserMeal.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UserMealWithIngredients.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/components/global/ArrowDownIcon.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/components/global/RestaurantMenuIcon.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/index.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/middleware/auth.global.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/pages/meals/[id].vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/app/pages/meals/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/menu/composables/useGetMeals.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/menu/composables/useMenuClient.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/menu/nuxt.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/menu/plugins/menu.client.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseCard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/cardVarinats.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/appInsightsSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/appInsightsSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/category_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/category_js.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/composeApp_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/composeApp_js.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/core_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/core_js.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/product_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/product_js.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/shoppingList_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/shoppingList_js.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ShoppingListClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ShoppingListClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/AddToShoppingListParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/AddToShoppingListParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Category.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Category.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/CreateShoppingListParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/CreateShoppingListParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/DeleteFromShoppingListParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/DeleteFromShoppingListParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/DeleteShoppingListParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/DeleteShoppingListParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/DisplayUnit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/DisplayUnit.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/EntityId.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/EntityId.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Product.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Product.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ProductSuggestionParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ProductSuggestionParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDesc.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDesc.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDescParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDescParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDetails.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListProductParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListProductParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ToggleProductInCartParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ToggleProductInCartParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UpdateInShoppingListParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UpdateInShoppingListParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UpdateShoppingListParameters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UpdateShoppingListParameters.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Category.js.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/CategoryWithProducts.js.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/Product.js.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingList.js.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDesc.js.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListDetails.js.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListRow.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/ShoppingListRow.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils/groupProductsByCategory.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils/groupProductsByCategory.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils/installListenersToShoppingListClient.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils/installListenersToShoppingListClient.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/components/CategoryWithProductList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/components/CategoryWithProductList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useDisplayUnits.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useDisplayUnits.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useOptimisticUpdatedList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useOptimisticUpdatedList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingLists.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/assets/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/assets/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/layouts/auth.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/layouts/auth.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/layouts/default.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/pages/auth/callback.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/auth/callback.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/pages/auth/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/auth/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/pages/auth/register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/auth/register.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/pages/auth/reset-password.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/auth/reset-password.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webApp/app/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/app/types/@bill.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/types/@bill.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/plugins/00.supabase.client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/plugins/00.supabase.client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/plugins/01.auth.client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/plugins/01.auth.client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/plugins/product.client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/plugins/product.client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/plugins/shoppingList.client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/plugins/shoppingList.client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/biome.json" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/biome.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/BaseButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseButton.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/BaseNumberInput.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseNumberInput.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/BaseSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseSelect.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/BaseTextInput.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseTextInput.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/BaseTextarea.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseTextarea.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/FormControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/FormControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/buttonVariants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/buttonVariants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/numberInputVarinats.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/numberInputVarinats.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/selectVariants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/selectVariants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/textInputVarinats.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/textInputVarinats.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/textareaVariants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/textareaVariants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/typesField.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/typesField.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/nuxt.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/pnpm-lock.yaml" afterDir="false" />
     </list>
     <list id="285fcefc-03cf-401c-8c78-c887edb49b80" name="idk" comment="idk">
       <change afterPath="$PROJECT_DIR$/category/.gitignore" afterDir="false" />
@@ -79,24 +102,22 @@
       <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList/ProductClient.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/dto/UnitEnum.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/category/src/jsMain/kotlin/pl/kurczaczkowe/bill/category/dto/Category.js.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/components/BaseList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/components/BaseList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/components/CategoryWithProductList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/components/CategoryWithProductList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/components/DraggableList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/components/DraggableList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/components/PWAUpdate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/components/PWAUpdate.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useDisplayUnits.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useDisplayUnits.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useKtClientData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/composables/useShoppingList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/app/utils/ktToJs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/app/utils/ktToJs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/category/plugins/categoryClientPlugin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/category/plugins/categoryClientPlugin.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/BaseButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseButton.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/BaseFieldset.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseFieldset.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/BaseRadioInput.vue" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseRadioInput.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/components/labelVarinats.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/components/labelVarinats.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webApp/layers/ui/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/layers/ui/nuxt.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webApp/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/nuxt.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webApp/package.json" afterDir="false" />
-    </list>
-    <list id="ba9607be-7672-40a9-8ed3-75862aed9174" name="layers" comment="layers">
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseCheckboxInput.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseInput.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseLabel.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseNumberInput.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseRadioInput.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseSelect.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseTextInput.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseTextarea.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/BaseToggleInput.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/FormControl.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/layers/ui/components/typesField.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/tsconfig.tsbuildinfo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webApp/założenia.md" afterDir="false" />
     </list>
     <list id="24cc038b-f0e7-42b7-878b-6470fe932e14" name="testy" comment="">
       <change afterPath="$PROJECT_DIR$/webApp/app/test/nuxt/categoryClientMock.ts" afterDir="false" />
@@ -121,7 +142,7 @@
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="323" />
+    <option name="cachedIndexableFilesCount" value="375" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[LocalEmulator::path=/home/lukasz/.android/avd/Pixel_3a_API_34_extension_level_7_x86_64.avd]" />
@@ -668,16 +689,17 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Interface" />
         <option value="Kotlin Enum" />
         <option value="Kotlin Object" />
         <option value="Kotlin Script Gradle.gradle" />
         <option value="Kotlin Script MainKts.main" />
         <option value="CSS File" />
-        <option value="Kotlin File" />
-        <option value="Kotlin Class" />
-        <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
+        <option value="Kotlin Interface" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Class" />
+        <option value="Kotlin File" />
+        <option value="TypeScript File" />
         <option value="Vue Composition API Component" />
       </list>
     </option>
@@ -717,6 +739,39 @@
         <envs />
       </variant>
     </executable>
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/webApp/layers/ui/components/BaseButton.vue">
+      <ranges>
+        <range start1="14" end1="14" start2="14" end2="15" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="38" end1="38" start2="39" end2="40" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="47" end1="47" start2="49" end2="50" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="62" end1="62" start2="65" end2="66" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="74" end1="74" start2="78" end2="79" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/webApp/nuxt.config.ts">
+      <ranges>
+        <range start1="1" end1="1" start2="1" end2="5" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="16" end1="17" start2="20" end2="21" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="19" end1="20" start2="23" end2="24" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="31" end1="31" start2="35" end2="57" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="35" end1="36" start2="61" end2="62" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="39" end1="41" start2="65" end2="68" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="48" end1="50" start2="75" end2="77" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/webApp/app/pages/lists/[id].vue">
+      <ranges>
+        <range start1="13" end1="14" start2="13" end2="14" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="22" end1="22" start2="22" end2="26" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="69" end1="71" start2="73" end2="75" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="239" end1="240" start2="243" end2="244" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="299" end1="299" start2="303" end2="305" changelist="285fcefc-03cf-401c-8c78-c887edb49b80" />
+        <range start1="346" end1="347" start2="352" end2="353" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+        <range start1="349" end1="350" start2="355" end2="356" changelist="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" />
+      </ranges>
+    </file>
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -780,7 +835,7 @@
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;/home/lukasz/Projects/Bill/shoppingList/src/jsMain/kotlin/pl/kurczaczkowe/bill/shoppingList/utils&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/lukasz/Projects/Bill/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/lukasz/Projects/Bill/webApp/layers/ui/components&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -794,7 +849,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.SQL&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Settings.Biome&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
     &quot;sql.codeStylePanel.last.previewDialect&quot;: &quot;SQL2016&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
@@ -820,44 +875,45 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList" />
-      <recent name="$PROJECT_DIR$/webApp/app/composables" />
+      <recent name="$PROJECT_DIR$/webApp/layers/ui/components" />
+      <recent name="$PROJECT_DIR$/webApp/layers" />
+      <recent name="$PROJECT_DIR$/webApp/app/pages/auth" />
       <recent name="$PROJECT_DIR$/webApp/app/plugins" />
-      <recent name="$PROJECT_DIR$/category" />
-      <recent name="$PROJECT_DIR$/category/src" />
+      <recent name="$PROJECT_DIR$/shoppingList/src/commonMain/kotlin/pl/kurczaczkowe/bill/shoppingList" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/webApp/app/components/global" />
+      <recent name="$PROJECT_DIR$/webApp/app/assets/icons" />
       <recent name="$PROJECT_DIR$/webApp/sqls" />
       <recent name="$PROJECT_DIR$/core" />
       <recent name="$PROJECT_DIR$/webApp/public/icons" />
-      <recent name="$PROJECT_DIR$/category" />
-      <recent name="$PROJECT_DIR$/shoppingList" />
     </key>
     <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/webApp/layers/ui/components/typesField.ts" />
+      <recent name="$PROJECT_DIR$/webApp/app/composables/useAuth.ts" />
       <recent name="$PROJECT_DIR$/webApp/app/composables/useDisplayUnits.ts" />
       <recent name="$PROJECT_DIR$/webApp/app/utils/getStringParam.ts" />
       <recent name="$PROJECT_DIR$/webApp/app/composables/routeParamToNumber.ts" />
-      <recent name="$PROJECT_DIR$/webApp/app/types/item.ts" />
-      <recent name="$PROJECT_DIR$/webApp/app/utils/channelAction.ts" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="pl.kurczaczkowe.bill.util" />
       <recent name="pl.kurczaczkowe.bill" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="pl.kurczaczkowe.bill.core.auth" />
       <recent name="pl.kurczaczkowe.bill.shoppingList.dto" />
       <recent name="pl.kurczaczkowe.bill.shoppingList" />
       <recent name="pl.kurczaczkowe.bill.networking" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
       <recent name="pl.kurczaczkowe.bill.shoppingList.dto" />
+      <recent name="pl.kurczaczkowe.bill.shoppingList" />
+      <recent name="pl.kurczaczkowe.bill.core.auth" />
       <recent name="pl.kurczaczkowe.bill.core.networking" />
       <recent name="pl.kurczaczkowe.bill.shoppingList.utils" />
-      <recent name="pl.kurczaczkowe.bill.shoppingList.uti" />
-      <recent name="pl.kurczaczkowe.bill.shoppingList." />
     </key>
   </component>
-  <component name="RunManager" selected="Android App.composeApp">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="composeApp" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="Bill.composeApp" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
@@ -1012,7 +1068,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="-t" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -1116,7 +1172,6 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Android App.composeApp" />
       <item itemvalue="Compound.fullstack: nuxt" />
       <item itemvalue="Gradle.Bill [build]" />
       <item itemvalue="Gradle.Bill [generateBuildKonfig]" />
@@ -1124,9 +1179,14 @@
       <item itemvalue="Gradle.Bill [jsBrowserDevelopmentLibraryDistribution]" />
       <item itemvalue="Gradle.Bill [jsBrowserProductionLibraryDistribution]" />
       <item itemvalue="Gradle.Bill [jsDevelopmentLibraryCompileSync]" />
+      <item itemvalue="JavaScript Debug.client: chrome" />
+      <item itemvalue="Node.js.server: nuxt" />
+      <item itemvalue="npm.deploy" />
+      <item itemvalue="npm.dev" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Bill [jsBrowserDevelopmentLibraryDistribution]" />
         <item itemvalue="Gradle.Bill [jsBrowserProductionLibraryDistribution]" />
       </list>
     </recent_temporary>
@@ -1143,7 +1203,6 @@
     <task active="true" id="Default" summary="Default task">
       <changelist id="c112b4a8-bc49-4ba0-a5e1-9cdeb0f18578" name="Changes" comment="" />
       <changelist id="285fcefc-03cf-401c-8c78-c887edb49b80" name="idk" comment="" />
-      <changelist id="ba9607be-7672-40a9-8ed3-75862aed9174" name="layers" comment="" />
       <created>1742139180637</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -1362,22 +1421,26 @@
       <workItem from="1777193489754" duration="2615000" />
       <workItem from="1778180886682" duration="2046000" />
       <workItem from="1778252938049" duration="870000" />
-    </task>
-    <task id="LOCAL-00001" summary="feat: init kmp compose + nuxt app">
-      <option name="closed" value="true" />
-      <created>1755244938493</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1755244938493</updated>
-    </task>
-    <task id="LOCAL-00002" summary="feat: add core module with handling base networking">
-      <option name="closed" value="true" />
-      <created>1755245178638</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1755245178638</updated>
+      <workItem from="1778323555269" duration="1298000" />
+      <workItem from="1778509807424" duration="1130000" />
+      <workItem from="1778594391818" duration="4385000" />
+      <workItem from="1778701126759" duration="6228000" />
+      <workItem from="1778767210982" duration="2534000" />
+      <workItem from="1778865730524" duration="2045000" />
+      <workItem from="1778945905417" duration="5569000" />
+      <workItem from="1779028708091" duration="14308000" />
+      <workItem from="1779118649751" duration="10306000" />
+      <workItem from="1779211506816" duration="1008000" />
+      <workItem from="1779291547850" duration="9245000" />
+      <workItem from="1779375266494" duration="10423000" />
+      <workItem from="1779723691337" duration="10244000" />
+      <workItem from="1779818211044" duration="10317000" />
+      <workItem from="1779894275666" duration="12416000" />
+      <workItem from="1780415901784" duration="3145000" />
+      <workItem from="1780929054905" duration="327000" />
+      <workItem from="1781202380449" duration="3665000" />
+      <workItem from="1781717401542" duration="6208000" />
+      <workItem from="1781791103989" duration="1875000" />
     </task>
     <task id="LOCAL-00003" summary="feat: add shopping list module">
       <option name="closed" value="true" />
@@ -1739,7 +1802,39 @@
       <option name="project" value="LOCAL" />
       <updated>1777117242842</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="refactor(shoppingList): use uuid for ids and update rpc function parameters names">
+      <option name="closed" value="true" />
+      <created>1778275829310</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1778275829310</updated>
+    </task>
+    <task id="LOCAL-00049" summary="build: add dev build version to build package">
+      <option name="closed" value="true" />
+      <created>1778612922860</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1778612922860</updated>
+    </task>
+    <task id="LOCAL-00050" summary="feat[core]: add auth module">
+      <option name="closed" value="true" />
+      <created>1779129477091</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1779129477091</updated>
+    </task>
+    <task id="LOCAL-00051" summary="fix[shoppingList]: normalize category names in category select">
+      <option name="closed" value="true" />
+      <created>1781205468225</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1781205468225</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1755,6 +1850,7 @@
     <option featureType="com.intellij.configurationType" implementationName="js.build_tools.npm" />
     <option featureType="dependencySupport" implementationName="javascript:npm:nuxt" />
     <option featureType="dependencySupport" implementationName="javascript:npm:vue" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="nuxt.config.ts" />
     <option featureType="com.intellij.configurationType" implementationName="NodeJSConfigurationType" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1784,10 +1880,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/webApp" />
     </ignored-roots>
-    <MESSAGE value="feat[web]: add generated icons for pwa" />
-    <MESSAGE value="refactor[web]: separate lists to standalone components&#10;&#10;style[web]: fix formatting and lint errors" />
-    <MESSAGE value="feat[web](shoppingList): add info of left products" />
-    <MESSAGE value="fix[web]: remove zooming when user enter in input on mobile" />
     <MESSAGE value="feat[web](shoppingList): expand/collapse adding product to shopping list&#10;&#10;refactor[web]: switch square buttons to circle" />
     <MESSAGE value="fix[web](shoppingList): expand/collapse adding product to shopping list" />
     <MESSAGE value="refactor[web](shoppingList): unify the product suggestion list and category list into BaseAutocomplete&#10;&#10;refactor[web](shoppingList): make one component for a category list item" />
@@ -1809,10 +1901,14 @@
     <MESSAGE value="ci: proper handle anon key env" />
     <MESSAGE value="fix[web](components/DraggableList): use a custom clone function to handle more structure" />
     <MESSAGE value="fix(shoppingList): adapt new structure for units" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(shoppingList): adapt new structure for units" />
+    <MESSAGE value="refactor(shoppingList): use uuid for ids and update rpc function parameters names" />
+    <MESSAGE value="build: add dev build version to build package" />
+    <MESSAGE value="feat[core]: add auth module" />
+    <MESSAGE value="fix[shoppingList]: normalize category names in category select" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix[shoppingList]: normalize category names in category select" />
   </component>
   <component name="VueSettings">
-    <option name="useTypesFromServer" value="true" />
+    <option name="tsPluginVersion" value="V3_2_4" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

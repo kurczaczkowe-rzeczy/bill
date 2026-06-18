@@ -12,6 +12,7 @@ interface BaseButtonProps {
   href?: string;
   ariaLabel?: string;
   disabled?: boolean;
+  active?: boolean;
   to?: RouteLocationRaw;
   activeClass?: string;
   color?: ButtonVariants["color"];
@@ -36,6 +37,7 @@ const buttonConfig = computed(
       circle: buttonProps.circle ?? buttonAppConfig.circle,
       square: buttonProps.square ?? buttonAppConfig.square,
       disabled: buttonProps.disabled,
+      active: buttonProps.active,
     }) as UiLayerButtonConfig,
 );
 
@@ -45,6 +47,7 @@ const isLink = computed(() => buttonProps.to);
 <template>
   <!-- NuxtLink -->
   <NuxtLink v-if="isLink" :to="to" custom v-slot="{ href, navigate, isActive }">
+    <!-- biome-ignore lint/a11y/useAnchorContent: ToDo: resolve later -->
     <a
       :href="href"
       @click="navigate"
@@ -60,6 +63,7 @@ const isLink = computed(() => buttonProps.to);
   </NuxtLink>
 
   <!-- a -->
+  <!-- biome-ignore lint/a11y/useAnchorContent: ToDo: resolve later -->
   <a
     v-else-if="href"
     :href="href"
@@ -72,6 +76,7 @@ const isLink = computed(() => buttonProps.to);
   <!-- button -->
   <button
     v-else
+    type="button"
     :class="classMerge(buttonVariants(buttonConfig), buttonProps.class)"
     :disabled="disabled"
     :aria-label="ariaLabel"

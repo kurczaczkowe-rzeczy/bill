@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { type TextareaVariants, textareaVariants } from './textareaVariants'
-import type { BaseInputProps } from './typesField'
+import { type TextareaVariants, textareaVariants } from "./textareaVariants";
+import type { BaseInputProps } from "./typesField";
 
 export interface BaseTextareaProps extends BaseInputProps<string> {
-  color?: TextareaVariants['color'];
-  appearance?: TextareaVariants['appearance'];
-  size?: TextareaVariants['size'];
+  color?: TextareaVariants["color"];
+  appearance?: TextareaVariants["appearance"];
+  size?: TextareaVariants["size"];
   wide?: boolean;
 }
 
 type BaseTextareaEmit = (e: "update:modelValue", value: string) => void;
 
-const props = withDefaults(defineProps<BaseTextareaProps>(), {});
+const props = withDefaults(defineProps<BaseTextareaProps>(), {
+  wide: true,
+});
 const emit = defineEmits<BaseTextareaEmit>();
 
 const textareaAppConfig = useAppConfig().ui?.textarea ?? {};

@@ -20,7 +20,7 @@ const slots = useSlots();
         class="list-row"
         v-for="item in props.items"
         v-bind="props.itemProps?.(item)"
-        :key="item.id"
+        :key="item.id.toString()"
         v-if="props.items?.length"
       >
         <slot name="item" :item="item"></slot>

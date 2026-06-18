@@ -1,7 +1,4 @@
-import { DisplayUnit, type Product, type ProductClient } from "@bill/Bill-shoppingList";
-
-import type { KtList } from "~/utils/ktListToArray";
-import { ktToJs } from "~/utils/ktToJs";
+import { DisplayUnit, type ProductClient } from "@bill/Bill-shoppingList";
 
 import { useKtClientData } from "./useKtClientData";
 

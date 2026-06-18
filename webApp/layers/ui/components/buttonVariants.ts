@@ -23,6 +23,7 @@ export const buttonVariants = cva("btn transition-colors", {
     circle: { true: "btn-circle", false: "" },
     square: { true: "btn-square", false: "" },
     disabled: { true: "btn-disabled", false: "" },
+    active: { true: "btn-active", false: "" },
     size: {
       sm: "btn-sm",
       md: "btn-md",

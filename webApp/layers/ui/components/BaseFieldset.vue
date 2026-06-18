@@ -4,7 +4,6 @@ interface BaseFieldsetProps {
 }
 
 defineProps<BaseFieldsetProps>();
-
 </script>
 
 <template>

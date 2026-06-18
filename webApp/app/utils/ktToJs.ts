@@ -56,12 +56,12 @@ export function ktToJs<T>(data: T): KtToJs<T> {
   }
 
   if (
-    data instanceof Date ||
-    data instanceof RegExp ||
-    data instanceof Map ||
-    data instanceof Set ||
-    data instanceof ArrayBuffer ||
-    ArrayBuffer.isView(data as any)
+    data instanceof Date
+    || data instanceof RegExp
+    || data instanceof Map
+    || data instanceof Set
+    || data instanceof ArrayBuffer
+    || ArrayBuffer.isView(data as any)
   ) {
     return data as any;
   }

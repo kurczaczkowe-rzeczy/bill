@@ -64,7 +64,7 @@ const updateServiceWorker = async () => {
     try {
       await updateSW.value();
       emit("updated");
-    } catch (error) {
+    } catch (_error) {
       isUpdating.value = false;
     }
   }

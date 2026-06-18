@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { type NumberInputVariants, numberInputVariants } from './numberInputVarinats'
-import type { BaseInputProps } from './typesField'
+import { type NumberInputVariants, numberInputVariants } from "./numberInputVarinats";
+import type { BaseInputProps } from "./typesField";
 
 export interface BaseNumberInputProps extends BaseInputProps<number> {
-  color?: NumberInputVariants['color'];
-  appearance?: NumberInputVariants['appearance'];
-  size?: NumberInputVariants['size'];
+  color?: NumberInputVariants["color"];
+  appearance?: NumberInputVariants["appearance"];
+  size?: NumberInputVariants["size"];
   wide?: boolean;
 }
 
 const numberInputProps = withDefaults(defineProps<BaseNumberInputProps>(), {
+  wide: true,
 });
 
 const numberInputAppConfig = useAppConfig().ui?.numberInput ?? {};
@@ -19,7 +20,7 @@ const numberInputConfig = computed(() => ({
   appearance: numberInputProps.appearance ?? numberInputAppConfig.appearance,
   size: numberInputProps.size ?? numberInputAppConfig.size,
   wide: numberInputProps.wide ?? numberInputAppConfig.wide,
-}))
+}));
 
 type BaseNumberInputEmit = (e: "update:modelValue", value: number) => void;
 

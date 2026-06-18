@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     tsConfig: {
       compilerOptions: {
         lib: ["esnext", "dom"],
-      }
-    }
+      },
+    },
   },
 });

@@ -10,10 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/category" />
-            <option value="$PROJECT_DIR$/composeApp" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/product" />
             <option value="$PROJECT_DIR$/shoppingList" />
           </set>
         </option>

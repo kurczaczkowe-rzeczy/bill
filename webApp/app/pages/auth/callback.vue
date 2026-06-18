@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const route = useRoute()
-const type = route.query.type
+const route = useRoute();
+const type = route.query.type;
 
-if (type === 'recovery') {
-  await navigateTo('/reset-password')
+if (type === "recovery") {
+  await navigateTo("/reset-password");
 } else {
-  await navigateTo('/')
+  await navigateTo("/");
 }
 </script>
 

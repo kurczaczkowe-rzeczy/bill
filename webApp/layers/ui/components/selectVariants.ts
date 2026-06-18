@@ -24,13 +24,15 @@ export const selectVariants = cva("select transition-colors", {
       xl: "select-xl",
     },
     wide: {
-      true: "w-full", false: ""
+      true: "w-full",
+      false: "",
     },
   },
 
   defaultVariants: {
     color: "primary",
     appearance: "solid",
+    wide: true,
   },
 });
 

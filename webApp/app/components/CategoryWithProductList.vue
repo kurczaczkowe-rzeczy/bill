@@ -85,7 +85,7 @@ function handleToggleInCart(productId: string) {
     </template>
     <template #content>
       <DraggableList
-        :="draggableOptions"
+        v-bind="draggableOptions"
         :data-category-id="categoryWithProducts.category.id"
         :itemProps="(product) => ({
           class: [{ 'line-through': product.inCart }, 'items-center'],

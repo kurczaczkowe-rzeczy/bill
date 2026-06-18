@@ -2,10 +2,10 @@
 definePageMeta({ layout: "auth" });
 
 import BaseButton from "@ui/components/BaseButton.vue";
-import BaseFieldset from '@ui/components/BaseFieldset.vue'
+import BaseFieldset from "@ui/components/BaseFieldset.vue";
 import FormControl from "@ui/components/FormControl.vue";
 
-import type { RegisterParameters } from '~/composables/useAuth'
+import type { RegisterParameters } from "~/composables/useAuth";
 
 const { signUp } = useAuth();
 

@@ -15,7 +15,10 @@ export interface BaseSelectInputProps extends BaseInputProps<Value> {
 
 type BaseSelectEmit = (e: "update:modelValue", value: Value) => void;
 
-const props = withDefaults(defineProps<BaseSelectInputProps>(), { options: () => [] as Options });
+const props = withDefaults(defineProps<BaseSelectInputProps>(), {
+  options: () => [] as Options,
+  wide: true,
+});
 const emit = defineEmits<BaseSelectEmit>();
 
 const selectAppConfig = useAppConfig().ui?.select ?? {};

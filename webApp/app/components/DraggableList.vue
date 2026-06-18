@@ -10,6 +10,7 @@ import {
 
 import type { Item } from "~/types/item";
 
+// biome-ignore lint/correctness/noUnusedVariables: It is used but biome not recognize it
 type SortableEventHandler = (e: SortableEvent) => void;
 type DraggableOptions = Partial<
   Omit<

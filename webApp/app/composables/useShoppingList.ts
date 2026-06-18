@@ -133,8 +133,8 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
           }
 
           const category =
-            categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
-            categories.value?.[0];
+            categories.value?.find((c) => c.id === jsPayload.record?.categoryId)
+            ?? categories.value?.[0];
 
           if (!category) {
             throw new Error("Category not found");
@@ -165,8 +165,8 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
           }
 
           const category =
-            categories.value?.find((c) => c.id === jsPayload.record?.categoryId) ??
-            categories.value?.[0];
+            categories.value?.find((c) => c.id === jsPayload.record?.categoryId)
+            ?? categories.value?.[0];
 
           if (!category) {
             throw new Error("Category not found");

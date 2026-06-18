@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -24,7 +24,7 @@
     "bracketSameLine": false,
     "bracketSpacing": true,
     "expand": "auto",
-    "attributePosition": "auto",
+    "attributePosition": "multiline",
     "formatWithErrors": true
   },
   "linter": {
@@ -85,7 +85,9 @@
       "enabled": true,
       "quoteStyle": "double",
       "jsxQuoteStyle": "double",
-      "bracketSpacing": true
+      "attributePosition": "multiline",
+      "bracketSpacing": true,
+      "operatorLinebreak": "before"
     },
     "assist": {
       "enabled": true
@@ -109,17 +111,15 @@
       "enabled": true
     }
   },
-  "overrides": [
-    {
-      "includes": ["*.vue", "**/*.vue"],
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noUnusedVariables": "off",
-            "noUnusedImports": "off"
-          }
-        }
-      }
-    }
-  ]
+  "html": {
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "indentStyle": "space",
+      "lineWidth": 100,
+      "attributePosition": "multiline",
+      "selfCloseVoidElements": "always"
+    },
+    "linter": { "enabled": true },
+    "assist": { "enabled": true }
+  }
 }

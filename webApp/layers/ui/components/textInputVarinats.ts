@@ -24,13 +24,15 @@ export const textInputVariants = cva("input transition-colors", {
       xl: "input-xl",
     },
     wide: {
-      true: "w-full", false: ""
+      true: "w-full",
+      false: "",
     },
   },
 
   defaultVariants: {
     color: "primary",
     appearance: "solid",
+    wide: true,
   },
 });
 

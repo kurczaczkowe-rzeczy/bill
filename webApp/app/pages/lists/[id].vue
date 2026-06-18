@@ -11,7 +11,7 @@ import BaseAutocomplete from "~/components/BaseAutocomplete.vue";
 import BaseCollapse from "~/components/BaseCollapse.vue";
 import CategoryDescriptor from "~/components/CategoryDescriptor.vue";
 import CategoryWithProductList from "~/components/CategoryWithProductList.vue";
-import { INITIAL_DISPLAY_UNITS, useDisplayUnits } from '~/composables/useDisplayUnits'
+import { INITIAL_DISPLAY_UNITS, useDisplayUnits } from "~/composables/useDisplayUnits";
 import { useProductClient } from "~/composables/useProductClient";
 import { type AddToShoppingListParameters, useShoppingList } from "~/composables/useShoppingList";
 import { getStringParam } from "~/utils/getStringParam";
@@ -19,6 +19,10 @@ import type { KtList } from "~/utils/ktListToArray";
 import { ktToJs } from "~/utils/ktToJs";
 import { useGetCategories } from "~~/layers/category/composables/useGetCategories";
 import BaseButton from "~~/layers/ui/components/BaseButton.vue";
+
+definePageMeta({
+  nav: "shopping-lists",
+});
 
 const productClient = useProductClient();
 
@@ -67,8 +71,8 @@ const errors = computed(() =>
   [shoppingListDetailsError.value, categoriesError.value].filter(Boolean),
 );
 
-interface ProductSuggestion extends Omit<Product, 'baseUnit'> {
-  baseUnit: DisplayUnit
+interface ProductSuggestion extends Omit<Product, "baseUnit"> {
+  baseUnit: DisplayUnit;
 }
 
 const suggestions = ref<ProductSuggestion[]>([]);
@@ -237,7 +241,7 @@ function useCollapsedAddForm(listId: string) {
     encode: (set) => JSON.stringify([...set]),
     decode: (str) => {
       try {
-        return new Set(JSON.parse(str));
+        return new Set(JSON.parse(str ?? ""));
       } catch {
         return new Set();
       }
@@ -344,10 +348,10 @@ function useCollapsedAddForm(listId: string) {
               list-id="categories"
               name="category"
               wrapperClass="col-span-2"
-              @select="selectCategory as any"
+              @select="selectCategory"
             >
               <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef, attrs }">
-                <div :ref="bindFieldRef as any" class="flex items-center gap-2 input input-ghost w-full">
+                <div :ref="bindFieldRef" class="flex items-center gap-2 input input-ghost w-full">
                   <CategoryDescriptor
                     :color="selectedCategory?.color ?? '323232'"
                     :name="selectedCategory?.name ?? query"

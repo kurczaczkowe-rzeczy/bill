@@ -17,6 +17,8 @@ type Value = string | number | boolean | SelectValue | RadioValue;
 
 interface FormControlProps {
   label?: string;
+  inputClass?: string;
+  wide?: boolean;
 }
 
 type CheckboxInputProps = BaseCheckboxInputProps & {
@@ -59,6 +61,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<InputProps>(), {
   options: () => [] as Options,
+  wide: true,
 });
 
 const model = defineModel<Value>();
@@ -74,6 +77,7 @@ const isRadio = computed(() => props.type === "radio");
 <template>
   <div
     class="grid gap-2"
+    :class="classMerge(props.wide && 'w-full', props.class)"
   >
     <BaseLabel
       v-if="label"
@@ -95,6 +99,7 @@ const isRadio = computed(() => props.type === "radio");
       :color="(props as BaseTextInputProps).color"
       :appearance="(props as BaseTextInputProps).appearance"
       :size="(props as BaseTextInputProps).size"
+      :class="props.inputClass"
       v-model="model as string"
       v-bind="$attrs"
     />
@@ -109,6 +114,7 @@ const isRadio = computed(() => props.type === "radio");
       :color="(props as TextareaProps).color"
       :appearance="(props as TextareaProps).appearance"
       :size="(props as TextareaProps).size"
+      :class="props.inputClass"
       v-model="model as string"
       v-bind="$attrs"
     />
@@ -123,6 +129,7 @@ const isRadio = computed(() => props.type === "radio");
       :color="(props as NumberInputProps).color"
       :appearance="(props as NumberInputProps).appearance"
       :size="(props as NumberInputProps).size"
+      :class="props.inputClass"
       v-model="model as number"
       v-bind="$attrs"
     />
@@ -139,6 +146,7 @@ const isRadio = computed(() => props.type === "radio");
       :appearance="(props as SelectInputProps).appearance"
       :size="(props as SelectInputProps).size"
       :multiple="(props as SelectInputProps).multiple"
+      :class="props.inputClass"
       v-model="model as SelectValue"
       v-bind="$attrs"
     />
@@ -151,6 +159,7 @@ const isRadio = computed(() => props.type === "radio");
       :name="name"
       :color="(props as CheckboxInputProps).color"
       :size="(props as CheckboxInputProps).size"
+      :class="props.inputClass"
       v-model="model as boolean"
       v-bind="$attrs"
     />
@@ -164,6 +173,7 @@ const isRadio = computed(() => props.type === "radio");
       :color="(props as RadioInputProps).color"
       :size="(props as RadioInputProps).size"
       :options="(props as RadioInputProps).options"
+      :class="props.inputClass"
       v-model="model as RadioValue"
       v-bind="$attrs"
     />

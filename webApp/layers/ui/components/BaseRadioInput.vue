@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { type RadioVariants, radioVariants } from './radioVariants'
-import type { BaseInputProps, Options } from './typesField.ts'
+import { type RadioVariants, radioVariants } from "./radioVariants";
+import type { BaseInputProps, Options } from "./typesField.ts";
 
 type Value = string | number;
 
 export interface BaseRadioInputProps extends BaseInputProps<Value> {
   type: "radio";
   options: Options;
-  color?: RadioVariants['color'];
-  size?: RadioVariants['size'];
+  color?: RadioVariants["color"];
+  size?: RadioVariants["size"];
 }
 
 type BaseRadioInputEmit = (e: "update:modelValue", value: Value) => void;

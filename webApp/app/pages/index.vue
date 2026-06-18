@@ -1,4 +1,13 @@
 <script lang="ts" setup>
+definePageMeta({
+  alias: "/lists",
+  nav: {
+    name: "shopping-lists",
+    icon: "streamline-freehand:task-list-pen",
+    label: "Listy Zakupów",
+  },
+});
+
 import BaseButton from "@ui/components/BaseButton.vue";
 
 import BaseList from "~/components/BaseList.vue";
@@ -53,7 +62,7 @@ function defaultName() {
     <BaseList
       :items="shoppingLists"
       class="card-body bg-base-100 rounded-box shadow-md w-full"
-      :item-props="(shoppingList) => ({ class: 'items-center' })"
+      :item-props="() => ({ class: 'items-center' })"
     >
       <template #static>
         <li class="p-4 grid grid-cols-[80px_1fr]">

@@ -1,18 +1,17 @@
 <script lang="ts" setup>
+import BaseButton from "@ui/components/BaseButton.vue";
+import BaseFieldset from "@ui/components/BaseFieldset.vue";
+import FormControl from "@ui/components/FormControl.vue";
 
-import BaseButton from '@ui/components/BaseButton.vue'
-import BaseFieldset from '@ui/components/BaseFieldset.vue'
-import FormControl from '@ui/components/FormControl.vue'
+const { resetPassword } = useAuth();
 
-const { resetPassword } = useAuth()
-
-const email = ref( '' )
+const email = ref("");
 
 async function handleResetPassword() {
   try {
-    await resetPassword( email.value )
-  } catch ( e ) {
-    console.error( e )
+    await resetPassword(email.value);
+  } catch (e) {
+    console.error(e);
   }
 }
 </script>

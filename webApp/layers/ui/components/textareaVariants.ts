@@ -24,13 +24,15 @@ export const textareaVariants = cva("textarea transition-colors", {
       xl: "textarea-xl",
     },
     wide: {
-      true: "w-full", false: ""
+      true: "w-full",
+      false: "",
     },
   },
 
   defaultVariants: {
     color: "primary",
     appearance: "solid",
+    wide: true,
   },
 });
 

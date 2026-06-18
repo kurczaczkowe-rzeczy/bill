@@ -3,7 +3,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 export const labelVariants = cva("transition-colors", {
   variants: {
     floating: {
-      true: "floating-label", false: "label"
+      true: "floating-label",
+      false: "label",
     },
   },
 

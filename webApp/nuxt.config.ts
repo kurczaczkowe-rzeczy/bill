@@ -1,4 +1,8 @@
 import tailwindcss from "@tailwindcss/vite";
+import { createResolver } from "nuxt/kit";
+
+const { resolve } = createResolver(import.meta.url);
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
@@ -29,6 +33,28 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: [
+        "@bill/Bill-shoppingList",
+        "@bill/Bill-shoppingList/kotlin/Bill-core",
+        "@floating-ui/vue",
+        "@vueuse/core",
+        "class-variance-authority",
+        "clsx",
+        "eruda", // CJS
+        "tailwind-merge",
+        "vue-draggable-plus",
+      ],
+    },
+  },
+
+  icon: {
+    customCollections: [
+      {
+        prefix: "bill-icon",
+        dir: resolve("./app/assets/icons"),
+      },
+    ],
   },
 
   css: ["~/assets/css/app.css"],

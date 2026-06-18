@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { type TextInputVariants, textInputVariants } from './textInputVarinats'
-import type { BaseInputProps } from './typesField'
+import { type TextInputVariants, textInputVariants } from "./textInputVarinats";
+import type { BaseInputProps } from "./typesField";
 
 export interface BaseTextInputProps extends BaseInputProps<string> {
   type: "text" | "password" | "email" | "tel";
-  color?: TextInputVariants['color'];
-  appearance?: TextInputVariants['appearance'];
-  size?: TextInputVariants['size'];
+  color?: TextInputVariants["color"];
+  appearance?: TextInputVariants["appearance"];
+  size?: TextInputVariants["size"];
   wide?: boolean;
 }
 
 type BaseTextInputEmit = (e: "update:modelValue", value: string) => void;
 
 const textInputProps = withDefaults(defineProps<BaseTextInputProps>(), {
+  wide: true,
 });
 
 const textInputAppConfig = useAppConfig().ui?.textInput ?? {};
@@ -22,13 +23,13 @@ const textInputConfig = computed(() => ({
   appearance: textInputProps.appearance ?? textInputAppConfig.appearance,
   size: textInputProps.size ?? textInputAppConfig.size,
   wide: textInputProps.wide ?? textInputAppConfig.wide,
-}))
+}));
 
 const emit = defineEmits<BaseTextInputEmit>();
 
-function handleInput( event: Event ): void {
-  const target = event.target as HTMLInputElement
-  emit( 'update:modelValue', target.value )
+function handleInput(event: Event): void {
+  const target = event.target as HTMLInputElement;
+  emit("update:modelValue", target.value);
 }
 </script>
 
