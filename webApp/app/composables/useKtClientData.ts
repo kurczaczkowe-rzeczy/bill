@@ -7,7 +7,7 @@ import { readResponse } from "~/utils/readResponse";
 export type KtClientDataOptions<TAsyncData> = AsyncDataOptions<AsyncDataWithTimestamp<TAsyncData>>;
 
 const _5_MINUTES = 5 * 60 * 1000;
-const TTL = _5_MINUTES;
+export const TTL = _5_MINUTES;
 
 export function useKtClientData<TAsyncData>(
   key: MaybeRefOrGetter<string>,
@@ -22,7 +22,11 @@ export function useKtClientData<TAsyncData>(
       return readResponse<TAsyncData>(response, { returnWithFetchedAt: true });
     },
     {
-      getCachedData(key, nuxtApp) {
+      getCachedData(key, nuxtApp, context) {
+        if (context.cause.includes("refresh")) {
+          return undefined;
+        }
+
         const cached = nuxtApp.payload.data[key] || nuxtApp.static.data[key];
 
         if (!cached || Date.now() > cached.fetchedAt + TTL) return undefined;
