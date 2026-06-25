@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { BaseInputProps, Options } from "../types/typesField.ts";
 import { type SelectVariants, selectVariants } from "./selectVariants";
-import type { BaseInputProps, Options } from "./typesField.ts";
 
 type Value = string | number | (string | number)[];
 

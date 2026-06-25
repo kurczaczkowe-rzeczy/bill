@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { BaseInputProps } from "../types/typesField";
 import { type NumberInputVariants, numberInputVariants } from "./numberInputVarinats";
-import type { BaseInputProps } from "./typesField";
 
 export interface BaseNumberInputProps extends BaseInputProps<number> {
   color?: NumberInputVariants["color"];

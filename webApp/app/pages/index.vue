@@ -81,7 +81,7 @@ function defaultName() {
               />
               <span v-if="!!formNameError.trim()" class="validator-hint hidden">{{ formNameError }}</span>
             </label>
-            <BaseButton circle>
+            <BaseButton circle size="sm" type="submit">
               <Icon name="streamline-freehand:add-sign-bold" />
             </BaseButton>
           </form>
@@ -92,7 +92,7 @@ function defaultName() {
           <span>{{ shoppingList.name }}</span>
         </NuxtLink>
         <span>{{ shoppingList.productAmount }} <Icon name="streamline-freehand:shopping-cart-trolley" /></span>
-        <BaseButton circle class="-m-4" size="sm" @click="handleDelete(shoppingList.id)">
+        <BaseButton circle class="-my-4" size="sm" @click="handleDelete(shoppingList.id)">
           <Icon name="streamline-freehand:remove-delete-sign-bold" />
         </BaseButton>
       </template>

@@ -1,27 +1,14 @@
 <script generic="Suggestion extends Item" lang="ts" setup>
-import { autoUpdate, flip, offset, shift, size, useFloating } from "@floating-ui/vue";
-import { onClickOutside, useDebounceFn } from "@vueuse/core";
+import { autoUpdate, flip, offset, shift, size, useFloating } from '@floating-ui/vue'
+import type { Item } from '@ui/types/item'
+import { onClickOutside, useDebounceFn } from '@vueuse/core'
 
-import type { Item } from "~/types/item";
+import type { BaseAutocompleteProps, Query, Suggestions as SuggestionsWithGeneric } from '../types/typesField'
 
-type Query = string;
 type Properties = keyof Suggestion;
-type Suggestions = Suggestion[];
-
-interface Props {
-  modelValue?: Query;
-  suggestions: Suggestions;
-  isLoading?: boolean;
-  placeholder?: string;
-  wrapperClass?: string;
-  debounceMs?: number;
-  labelKey?: string;
-  minLengthQuery?: number;
-  listId: string;
-  matchBy?: (suggestion: Suggestion, query: Query) => boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+type Suggestions = SuggestionsWithGeneric<Suggestion>
+// ToDo: ogarnij cva
+const props = withDefaults(defineProps<BaseAutocompleteProps<Suggestion>>(), {
   modelValue: "",
   wrapperClass: "",
   suggestions: () => [],
@@ -29,7 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: "Wyszukaj...",
   labelKey: "label",
   debounceMs: 300,
-  minLengthQuery: 3,
+  minLengthQuery: 0,
 });
 
 const emit = defineEmits<{
@@ -233,19 +220,21 @@ watch(
       :value="query"
       name="input"
     >
-      <div ref="reference" class="flex items-center gap-2 input input-ghost w-full">
-        <input
+      <div ref="reference" class="flex items-center gap-2 input input-primary w-full">
+        <!-- biome-ignore lint/a11y/useAriaPropsForRole: ToDo: resolve later -->
+        <input role="combobox"
           v-model="query"
           :aria-controls="listId"
+          :aria-expanded="isOpen"
           :placeholder="placeholder"
           aria-autocomplete="list"
           autocomplete="off"
-          role="combobox"
           type="text"
           v-bind="$attrs"
           @click="handleClick"
           @input="handleInput"
           @keydown="handleKeydown"
+          :title="placeholder"
         />
         <Icon class="autocomplete-arrow" name="mdi:chevron-down" />
       </div>
@@ -256,7 +245,7 @@ watch(
         v-if="isOpen"
         ref="floating"
         :style="floatingStyles"
-        class="absolute z-50 w-full bg-base-100 rounded-box shadow-lg border-1 overflow-hidden"
+        class="absolute z-50 w-full bg-base-100 rounded-box shadow-lg border overflow-hidden"
       >
         <ul
           :id="listId"

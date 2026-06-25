@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { Category, CategoryWithProducts, ShoppingListDetails } from "@bill/Bill-shoppingList";
-import BaseButton from "@ui/components/BaseButton.vue";
 import type { DraggableEvent } from "vue-draggable-plus";
 
+import CategoryDescriptor from "#layers/category/components/CategoryDescriptor.vue";
+import BaseButton from "#layers/ui/components/BaseButton.vue";
 import BaseCollapse from "~/components/BaseCollapse.vue";
-import CategoryDescriptor from "~/components/CategoryDescriptor.vue";
 import DraggableList from "~/components/DraggableList.vue";
 import { isNil } from "~/utils/isNil";
 
@@ -96,16 +96,21 @@ function handleToggleInCart(productId: string) {
         <template #item="{ item: product }">
           <BaseButton
             size="sm"
-            class="handle relative -my-3"
+            class="handle -ml-4"
+            appearance="soft"
+            circle
+            color="info"
             @click.stop
           >
             <Icon name="streamline-freehand:data-transfer-vertical" />
           </BaseButton>
-          <span class="list-col-grow -ml-10">{{ product.name }} </span>
+          <span class="list-col-grow ">{{ product.name }} </span>
           <span>{{ product.quantity }} {{ product.baseUnit }}</span>
           <BaseButton
             size="sm"
-            class="-m-4"
+            class="-mr-4"
+            appearance="soft"
+            color="error"
             circle
             @click.stop="onDeleteProduct(product.id)">
             <Icon name="streamline-freehand:remove-delete-sign-bold" />
@@ -118,7 +123,5 @@ function handleToggleInCart(productId: string) {
 </template>
 
 <style scoped>
-.handle {
-  left: calc(var(--card-p, 1.5rem) * -1);
-}
+.handle {}
 </style>

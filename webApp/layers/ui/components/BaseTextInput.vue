@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { BaseInputProps } from "../types/typesField";
 import { type TextInputVariants, textInputVariants } from "./textInputVarinats";
-import type { BaseInputProps } from "./typesField";
 
 export interface BaseTextInputProps extends BaseInputProps<string> {
   type: "text" | "password" | "email" | "tel";

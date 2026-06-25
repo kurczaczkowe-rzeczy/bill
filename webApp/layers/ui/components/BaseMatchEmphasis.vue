@@ -28,7 +28,7 @@ const parts = computed(() => {
   if (!searchRegex.value) return [{ text: props.text, match: false }];
   return props.text.split(searchRegex.value).map((part) => ({
     text: part,
-    match: searchRegex.value.test(part),
+    match: searchRegex.value?.test(part),
   }));
 });
 

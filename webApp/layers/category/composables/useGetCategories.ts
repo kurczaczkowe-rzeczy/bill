@@ -2,7 +2,8 @@ import type { Category, CategoryClient } from "@bill/Bill-shoppingList";
 
 import { useKtClientData } from "~/composables/useKtClientData";
 import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
-import { useCategoryClient } from "~~/layers/category/composables/useCategoryClient";
+
+import { useCategoryClient } from "./useCategoryClient";
 
 type UseGetCategoriesOptions = CategoryOptions;
 

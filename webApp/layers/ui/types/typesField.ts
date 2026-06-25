@@ -16,3 +16,19 @@ export interface BaseInputProps<TValue extends string | number | boolean | (stri
   modelValue: TValue;
   class?: string;
 }
+
+export type Query = string;
+export type Suggestions<T> = T[];
+
+export interface BaseAutocompleteProps<T> {
+  modelValue?: Query;
+  suggestions: Suggestions<T>;
+  isLoading?: boolean;
+  placeholder?: string;
+  wrapperClass?: string;
+  debounceMs?: number;
+  labelKey?: string;
+  minLengthQuery?: number;
+  listId: string;
+  matchBy?: (suggestion: T, query: Query) => boolean;
+}

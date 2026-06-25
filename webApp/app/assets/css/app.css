@@ -61,6 +61,12 @@
       }
     }
   }
+  .btn.btn-disabled.btn-outline,
+  .btn:disabled.btn-outline,
+  .btn[disabled].btn-outline {
+    border-color: color-mix(in oklab, var(--btn-color) 25%, transparent);
+    background-color: color-mix(in oklab, var(--btn-color) 20%, #000);
+  }
   :root {
     scrollbar-color: var(--color-success)
       color-mix(in oklab, var(--color-success-content) 5%, transparent);

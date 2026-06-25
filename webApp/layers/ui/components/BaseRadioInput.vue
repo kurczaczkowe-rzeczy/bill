@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { BaseInputProps, Options } from "../types/typesField.ts";
 import { type RadioVariants, radioVariants } from "./radioVariants";
-import type { BaseInputProps, Options } from "./typesField.ts";
 
 type Value = string | number;
 

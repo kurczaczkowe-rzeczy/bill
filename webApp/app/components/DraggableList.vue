@@ -8,7 +8,7 @@ import {
   VueDraggable,
 } from "vue-draggable-plus";
 
-import type { Item } from "~/types/item";
+import type { Item } from "~~/layers/ui/types/item";
 
 // biome-ignore lint/correctness/noUnusedVariables: It is used but biome not recognize it
 type SortableEventHandler = (e: SortableEvent) => void;

@@ -1,30 +1,19 @@
 <script lang="ts" setup>
-import {
-  type Category,
-  type CategoryWithProducts,
-  DisplayUnit,
-  type Product,
-} from "@bill/Bill-shoppingList";
-import BaseMatchEmphasis from "@ui/components/BaseMatchEmphasis.vue";
+import type { Category, CategoryWithProducts } from '@bill/Bill-shoppingList'
 
-import BaseAutocomplete from "~/components/BaseAutocomplete.vue";
-import BaseCollapse from "~/components/BaseCollapse.vue";
-import CategoryDescriptor from "~/components/CategoryDescriptor.vue";
-import CategoryWithProductList from "~/components/CategoryWithProductList.vue";
-import { INITIAL_DISPLAY_UNITS, useDisplayUnits } from "~/composables/useDisplayUnits";
-import { useProductClient } from "~/composables/useProductClient";
-import { type AddToShoppingListParameters, useShoppingList } from "~/composables/useShoppingList";
-import { getStringParam } from "~/utils/getStringParam";
-import type { KtList } from "~/utils/ktListToArray";
-import { ktToJs } from "~/utils/ktToJs";
-import { useGetCategories } from "~~/layers/category/composables/useGetCategories";
-import BaseButton from "~~/layers/ui/components/BaseButton.vue";
+import SearchCategory from '#layers/category/components/SearchCategory.vue'
+import SearchProduct from '#layers/product/components/SearchProduct.vue'
+import { INITIAL_DISPLAY_UNITS, useDisplayUnits } from '#layers/product/composables/useDisplayUnits'
+import type { ProductSuggestion } from '#layers/product/types'
+import BaseButton from '#layers/ui/components/BaseButton.vue'
+import BaseCollapse from '~/components/BaseCollapse.vue'
+import CategoryWithProductList from '~/components/CategoryWithProductList.vue'
+import { type AddToShoppingListParameters, useShoppingList } from '~/composables/useShoppingList'
+import { getStringParam } from '~/utils/getStringParam'
 
 definePageMeta({
   nav: "shopping-lists",
 });
-
-const productClient = useProductClient();
 
 const COLLAPSED_ADD_FORM_LIST_IDS = "collapsedAddFormListIds";
 
@@ -71,107 +60,19 @@ const errors = computed(() =>
   [shoppingListDetailsError.value, categoriesError.value].filter(Boolean),
 );
 
-interface ProductSuggestion extends Omit<Product, "baseUnit"> {
-  baseUnit: DisplayUnit;
-}
-
-const suggestions = ref<ProductSuggestion[]>([]);
-const suggestionsOpen = ref(false);
-const suggestionsLoading = ref(false);
-const highlightedIndex = ref(-1);
-
-function openSuggestions() {
-  if (suggestions.value.length > 0) {
-    suggestionsOpen.value = true;
-  }
-}
-
-function closeSuggestions() {
-  suggestionsOpen.value = false;
-  highlightedIndex.value = -1;
-}
-
 function selectSuggestion(s: ProductSuggestion) {
   try {
     addToShoppingListParameters.name = s.name;
     addToShoppingListParameters.baseUnit = s.baseUnit;
-    closeSuggestions();
   } catch (e) {
     console.error("selectSuggestion->", e);
   }
 }
 
-async function fetchSuggestions(query: string) {
-  // ToDo: jak już wcześniej nie znaleziono i dopisujesz litery to weź nie puszczaj rq bo to nie ma sensu
-  // ToDo 2: Najlepiej jak se zrobisz testy pod to bo trzeba kilka warunków ogarnąć które i tak zapomnisz :D
-  if (!query || query.trim().length < 2) {
-    suggestions.value = [];
-    closeSuggestions();
-    return;
-  }
-  suggestionsLoading.value = true;
-  try {
-    const response = await productClient.getProductSuggestionAsync(
-      addToShoppingListParameters.name,
-    );
-
-    if ("error" in response) {
-      suggestions.value = [];
-      closeSuggestions();
-      return;
-    }
-    if (!("result" in response)) {
-      suggestions.value = [];
-      closeSuggestions();
-      return;
-    }
-
-    const result = ktToJs(response.result as KtList<Product>) as Product[];
-    const mappedSuggestions = result.map((suggestion) => {
-      const unit =
-        displayUnits.value?.find(
-          ({ baseUnit, multiplier }) => baseUnit === suggestion.baseUnit && multiplier === 1,
-        ) ?? new DisplayUnit(suggestion.baseUnit, suggestion.baseUnit, suggestion.baseUnit, 1);
-
-      return {
-        ...suggestion,
-        baseUnit: unit,
-      } as ProductSuggestion;
-    });
-
-    suggestions.value = mappedSuggestions || [];
-
-    openSuggestions();
-  } finally {
-    suggestionsLoading.value = false;
-  }
-}
-
-const { data: categories, error: categoriesError, status: categoriesStatus } = useGetCategories();
-
-function normalizeText(value: string) {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-}
-
-const selectedCategory = ref<Category | null>(null);
-const categoryNameQuery = ref("");
-const categoriesFilterDownByQuery = computed(() => {
-  if (!categoryNameQuery.value || categoryNameQuery.value === selectedCategory.value?.name) {
-    return categories.value;
-  }
-
-  return categories.value?.filter(({ name }) =>
-    normalizeText(name).includes(normalizeText(categoryNameQuery.value)),
-  );
-});
+const { data: categories, error: categoriesError } = useGetCategories();
 
 const selectCategory = (category: Category) => {
-  selectedCategory.value = category;
   addToShoppingListParameters.categoryId = category.id;
-  categoryNameQuery.value = category.name;
 };
 
 async function handleAddToShoppingList(e: Event) {
@@ -274,10 +175,10 @@ function useCollapsedAddForm(listId: string) {
 
 <template>
   <div class="card flex flex-col max-w-xl m-auto max-h-screen">
-    <div class="card-body bg-base-100 rounded-box shadow-md w-full overflow-y-auto">
+    <div class="card-body bg-base-100 rounded-box shadow-md w-full overflow-y-auto gap-4">
       <BaseCollapse v-model:open="isAddProductFormHidden" :toggleable="false" class="shrink-0">
         <template #summary>
-          <div class="grid items-center gap-2 grid-cols-[45px_1rem_auto_45px] text-base">
+          <div class="grid items-center gap-4 grid-cols-[45px_1rem_auto_45px] text-base">
             <BaseButton circle class="relative" to="/">
               <Icon name="streamline-freehand:keyboard-arrow-return" />
             </BaseButton>
@@ -298,87 +199,35 @@ function useCollapsedAddForm(listId: string) {
         </template>
         <template #content>
           <form
-            class="list-row-separator grid grid-cols-[80px_100px_minmax(0,auto)_45px]"
+            class="list-row-separator grid grid-cols-[45px_45px_100px_auto_auto_45px] pt-4"
             @submit.prevent="handleAddToShoppingList"
           >
-            <BaseButton circle>
+            <BaseButton circle type="submit" class="col-span-1">
               <Icon name="streamline-freehand:add-sign-bold" />
             </BaseButton>
-            <BaseAutocomplete
+            <SearchProduct
               v-model="addToShoppingListParameters.name"
-              :is-loading="suggestionsLoading"
               :match-by="matchProductSuggestionBy"
-              :suggestions="suggestions"
-              label-key="name"
-              list-id="suggestions"
-              name="product"
-              placeholder="Nazwa produktu"
-              wrapperClass="col-span-3"
-              @search="fetchSuggestions"
+              wrapperClass="col-span-5"
               @select="selectSuggestion"
-            >
-              <template #item="{ item: suggestion }">
-                <span class="list-col-grow">
-                  <BaseMatchEmphasis
-                    :text="suggestion.name"
-                    :query="addToShoppingListParameters.name"
-                  />
-                </span>
-                <span class="badge badge-ghost badge-sm">{{ suggestion.baseUnit.shortName || 'szt.' }}</span>
-              </template>
-            </BaseAutocomplete>
+            />
             <input
               v-model="addToShoppingListParameters.quantity"
-              class="input input-ghost"
+              class="input input-ghost col-span-2"
               min="1"
               name="quantity"
               required
               type="number"
             />
-            <select v-model="addToShoppingListParameters.baseUnit" class="select select-ghost w-full" name="unit">
+            <select v-model="addToShoppingListParameters.baseUnit" class="select select-ghost w-full col-span-1" name="unit">
               <option disabled selected>Wybierz jednostkę</option>
               <option v-for="unit in displayUnits" :key="unit.name" :value="unit">{{ unit.shortName }}</option>
             </select>
 
-            <BaseAutocomplete
-              v-model="categoryNameQuery"
-              :is-loading="categoriesStatus === 'pending'"
-              :suggestions="categoriesFilterDownByQuery ?? []"
-              label-key="name"
-              list-id="categories"
-              name="category"
-              wrapperClass="col-span-2"
+            <SearchCategory
               @select="selectCategory"
-            >
-              <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef, attrs }">
-                <div :ref="bindFieldRef" class="flex items-center gap-2 input input-ghost w-full">
-                  <CategoryDescriptor
-                    :color="selectedCategory?.color ?? '323232'"
-                    :name="selectedCategory?.name ?? query"
-                  >
-                    <template #label>
-                      <input
-                        :aria-controls="listId"
-                        :value="query"
-                        aria-autocomplete="list"
-                        autocomplete="off"
-                        placeholder="Wybierz kategorię"
-                        role="combobox"
-                        type="text"
-                        v-bind="attrs"
-                        @click="handleClick"
-                        @input="handleInput"
-                        @keydown="handleKeydown"
-                      />
-                    </template>
-                  </CategoryDescriptor>
-                  <Icon class="autocomplete-arrow" name="mdi:chevron-down" />
-                </div>
-              </template>
-              <template #item="{ item: selectedCategory }">
-                <CategoryDescriptor :name="selectedCategory.name" :color="selectedCategory.color" />
-              </template>
-            </BaseAutocomplete>
+              wrapperClass="col-span-3"
+            />
           </form>
         </template>
       </BaseCollapse>
@@ -410,15 +259,11 @@ function useCollapsedAddForm(listId: string) {
 
 <style>
 .list-row-separator {
-  margin-bottom: var(--radius-box);
+  gap: var(--radius-box);
   border-bottom: var(--border) solid;
   border-color: var(--color-base-content);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in oklab, var(--color-base-content) 5%, transparent);
-  }
-
-  & > * {
-    margin-bottom: var(--radius-box);
   }
 }
 

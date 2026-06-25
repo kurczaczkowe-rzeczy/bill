@@ -1,10 +1,9 @@
 import { fileURLToPath } from "node:url";
-import { defineNuxtConfig } from "nuxt/config";
+
 export default defineNuxtConfig({
   alias: {
-    "@ui": fileURLToPath(new URL(".", import.meta.url)),
+    "@product": fileURLToPath(new URL(".", import.meta.url)),
   },
-
   typescript: {
     tsConfig: {
       compilerOptions: {

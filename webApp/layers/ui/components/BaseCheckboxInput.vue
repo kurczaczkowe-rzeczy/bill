@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { BaseInputProps } from "../types/typesField";
 import { type CheckboxVariants, checkboxVariants } from "./checkboxVarinats";
-import type { BaseInputProps } from "./typesField";
 
 export interface BaseCheckboxInputProps extends BaseInputProps<boolean> {
   // ToDo: handle tristate

@@ -29,6 +29,8 @@ watchEffect(() => {
       v-if="toggleable"
       :aria-expanded="isOpen"
       class="collapse-title cursor-pointer"
+      appearance="soft"
+      color="info"
       @click="isOpen = !isOpen"
     >
       <slot name="summary"></slot>

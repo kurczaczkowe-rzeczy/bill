@@ -22,8 +22,10 @@ import { getStringParam } from "~/utils/getStringParam";
 import { ktToJs } from "~/utils/ktToJs";
 import { readResponse } from "~/utils/readResponse";
 import { useGetCategories } from "~~/layers/category/composables/useGetCategories";
-
-import { INITIAL_DISPLAY_UNITS, useDisplayUnits } from "./useDisplayUnits";
+import {
+  INITIAL_DISPLAY_UNITS,
+  useDisplayUnits,
+} from "~~/layers/product/composables/useDisplayUnits";
 
 type ListenerType = "shoppingListChanges";
 

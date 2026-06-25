@@ -1,16 +1,15 @@
 <script lang="ts" setup>
 import type { Category } from "@bill/Bill-shoppingList";
 
-// ToDo: to powinno być w komponentach
 interface CategoryDescriptorProps {
-  name: Category["name"];
-  color: Category["color"];
+  name?: Category["name"];
+  color?: Category["color"];
 }
 
 const props = defineProps<CategoryDescriptorProps>();
 const initials = computed(() => {
   if (!props.name) {
-    return "";
+    return "-";
   }
 
   const words = props.name.split(" ");
@@ -29,7 +28,7 @@ const initials = computed(() => {
   <span class="inline-flex items-center gap-2 w-full">
     <span
       :style="{ backgroundColor: `#${color}` }"
-      class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold aspect-square text-white shadow-sm"
+      class="w-8 h-8 rounded-full flex items-center justify-center text-sm text-primary font-bold aspect-square shadow-sm bg-primary-soft"
     >
       {{ initials }}
     </span>
@@ -38,3 +37,12 @@ const initials = computed(() => {
     </slot>
   </span>
 </template>
+
+<style>
+.bg-primary-soft {
+  background-color: color-mix( in oklab, var(--input-color, var(--color-base-content)) 8%, var(--color-base-100) );
+}
+.text-primary {
+  color: var(--input-color, var(--color-base-content));
+}
+</style>

@@ -1,6 +1,8 @@
 import { DisplayUnit, type ProductClient } from "@bill/Bill-shoppingList";
 
-import { useKtClientData } from "./useKtClientData";
+import { useKtClientData } from "~/composables/useKtClientData";
+
+import { useProductClient } from "./useProductClient";
 
 type ListenerType = "displayUnits";
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { FieldProps } from "../types/typesField.ts";
 import { labelVariants } from "./labelVarinats";
-import type { FieldProps } from "./typesField.ts";
 
 export interface LabelProps extends FieldProps {
   floating?: boolean;

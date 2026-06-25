@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="TItem extends Item">
 import type { LiHTMLAttributes } from "vue";
 
-import type { Item } from "~/types/item";
+import type { Item } from "#layers/ui/types/item";
 
 interface Props {
   items: TItem[] | readonly TItem[];

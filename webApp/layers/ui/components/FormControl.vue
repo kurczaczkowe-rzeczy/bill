@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Options } from "@ui/types/typesField.ts";
 import { computed } from "vue";
 
 import BaseCheckboxInput, { type BaseCheckboxInputProps } from "./BaseCheckboxInput.vue";
@@ -9,7 +10,6 @@ import BaseRadioInput, { type BaseRadioInputProps } from "./BaseRadioInput.vue";
 import BaseSelect, { type BaseSelectInputProps } from "./BaseSelect.vue";
 import BaseTextarea, { type BaseTextareaProps } from "./BaseTextarea.vue";
 import BaseTextInput, { type BaseTextInputProps } from "./BaseTextInput.vue";
-import type { Options } from "./typesField.ts";
 
 type SelectValue = string | number | (string | number)[];
 type RadioValue = string | number;
@@ -41,6 +41,13 @@ type TextareaProps = BaseTextareaProps & {
   options?: never;
 };
 
+// ToDo: change this control to be jujst wrapper for all inputs, not a combined input component
+interface CustomInputProps {
+  type?: never
+  inputClass?: never
+  class?: string
+}
+
 type CombinedInputProps = FormControlProps &
   (
     | BaseTextInputProps
@@ -49,6 +56,7 @@ type CombinedInputProps = FormControlProps &
     | CheckboxInputProps
     | RadioInputProps
     | TextareaProps
+    | CustomInputProps
   );
 
 type InputProps = CombinedInputProps & {
@@ -66,7 +74,7 @@ const props = withDefaults(defineProps<InputProps>(), {
 
 const model = defineModel<Value>();
 
-const isTextLike = computed(() => ["text", "password", "email", "tel"].includes(props.type));
+const isTextLike = computed(() => !!props.type && ["text", "password", "email", "tel"].includes(props.type));
 const isTextarea = computed(() => props.type === "textarea");
 const isNumber = computed(() => props.type === "number");
 const isSelect = computed(() => props.type === "select");
@@ -79,15 +87,19 @@ const isRadio = computed(() => props.type === "radio");
     class="grid gap-2"
     :class="classMerge(props.wide && 'w-full', props.class)"
   >
-    <BaseLabel
-      v-if="label"
-      :name="name"
-      :required="required"
-      :floating="labelProps?.floating"
-      v-bind="$attrs"
-    >
-      {{ label }}
-    </BaseLabel>
+    <slot name="label">
+      <BaseLabel
+        v-if="label"
+        :name="name"
+        :required="required"
+        :floating="labelProps?.floating"
+        v-bind="$attrs"
+      >
+        {{ label }}
+      </BaseLabel>
+    </slot>
+
+    <slot />
 
     <BaseTextInput
       v-if="isTextLike"
