@@ -2,6 +2,8 @@
 @plugin "daisyui";
 
 @source "../../../layers/ui";
+@source "../../../layers/category";
+@source "../../../layers/product";
 
 @plugin "daisyui/theme" {
   name: tinymist;
