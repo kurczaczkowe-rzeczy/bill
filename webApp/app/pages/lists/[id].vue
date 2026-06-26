@@ -54,7 +54,7 @@ const addToShoppingListParameters = reactive<AddToShoppingListParameters>({
   name: "",
   quantity: 1,
   baseUnit: INITIAL_DISPLAY_UNITS[0],
-  categoryId: "00000000-0000-0000-0000-000000000000",
+  categoryId: "",
 });
 
 const errors = computed(() =>
@@ -75,6 +75,8 @@ const { data: categories, error: categoriesError } = useGetCategories();
 const selectCategory = (category: Category) => {
   addToShoppingListParameters.categoryId = category.id;
 };
+
+const addButtonShouldBeDisabled = computed(() => addToShoppingListParameters.name.length === 0 || addToShoppingListParameters.categoryId === "");
 
 async function handleAddToShoppingList(e: Event) {
   addToShoppingList(
@@ -203,7 +205,7 @@ function useCollapsedAddForm(listId: string) {
             class="list-row-separator grid grid-cols-[45px_45px_auto_auto_auto] pt-4"
             @submit.prevent="handleAddToShoppingList"
           >
-            <BaseButton circle type="submit" class="col-span-1">
+            <BaseButton circle type="submit" class="col-span-1" :disabled="addButtonShouldBeDisabled">
               <Icon name="streamline-freehand:add-sign-bold" />
             </BaseButton>
             <SearchProduct

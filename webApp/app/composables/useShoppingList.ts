@@ -146,7 +146,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
             id: jsPayload.record!.id,
             createdAt: new Date().toISOString(),
             quantity: jsPayload.record!.quantity,
-            baseUnit: INITIAL_DISPLAY_UNITS[0],
+            baseUnit: "",
             name: `Ładowanie...`, //ToDo: Add shrimmerlike thing
             inCart: jsPayload.record!.inCart,
             category,
