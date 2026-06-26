@@ -3,6 +3,7 @@ import type { Category, CategoryWithProducts } from '@bill/Bill-shoppingList'
 
 import SearchCategory from '#layers/category/components/SearchCategory.vue'
 import SearchProduct from '#layers/product/components/SearchProduct.vue'
+import SearchUnit from '#layers/product/components/SearchUnit.vue'
 import { INITIAL_DISPLAY_UNITS, useDisplayUnits } from '#layers/product/composables/useDisplayUnits'
 import type { ProductSuggestion } from '#layers/product/types'
 import BaseButton from '#layers/ui/components/BaseButton.vue'
@@ -83,7 +84,7 @@ async function handleAddToShoppingList(e: Event) {
     },
     () => {
       const target = (e.currentTarget as HTMLFormElement) || (e.target as HTMLFormElement | null);
-      target?.reset();
+
       (target?.elements.namedItem("product") as HTMLInputElement)?.focus();
       resetAddToShoppingListParameters();
     },
@@ -183,7 +184,7 @@ function useCollapsedAddForm(listId: string) {
               <Icon name="streamline-freehand:keyboard-arrow-return" />
             </BaseButton>
             <Icon
-              :class="shoppingListDetailsLoading ? '' : 'invisible'"
+              :class="{'invisible': !shoppingListDetailsLoading }"
               class="animate-spin text-info"
               name="streamline-freehand:loading-star-1"
             />
@@ -199,7 +200,7 @@ function useCollapsedAddForm(listId: string) {
         </template>
         <template #content>
           <form
-            class="list-row-separator grid grid-cols-[45px_45px_100px_auto_auto_45px] pt-4"
+            class="list-row-separator grid grid-cols-[45px_45px_auto_auto_auto] pt-4"
             @submit.prevent="handleAddToShoppingList"
           >
             <BaseButton circle type="submit" class="col-span-1">
@@ -208,25 +209,20 @@ function useCollapsedAddForm(listId: string) {
             <SearchProduct
               v-model="addToShoppingListParameters.name"
               :match-by="matchProductSuggestionBy"
-              wrapperClass="col-span-5"
+              wrapperClass="col-span-4"
               @select="selectSuggestion"
             />
-            <input
+            <BaseNumberInput
               v-model="addToShoppingListParameters.quantity"
-              class="input input-ghost col-span-2"
+              class="col-span-2"
               min="1"
               name="quantity"
               required
-              type="number"
             />
-            <select v-model="addToShoppingListParameters.baseUnit" class="select select-ghost w-full col-span-1" name="unit">
-              <option disabled selected>Wybierz jednostkę</option>
-              <option v-for="unit in displayUnits" :key="unit.name" :value="unit">{{ unit.shortName }}</option>
-            </select>
-
+            <SearchUnit v-model="addToShoppingListParameters.baseUnit.name" class="col-span-3" name="unit" />
             <SearchCategory
               @select="selectCategory"
-              wrapperClass="col-span-3"
+              wrapperClass="col-span-full"
             />
           </form>
         </template>

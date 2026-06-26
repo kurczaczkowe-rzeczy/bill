@@ -40,7 +40,7 @@ function onSelectCategory(category: Category) {
 
 <template>
   <BaseAutocomplete
-    v-model="categoryNameQuery"
+    v-model="query"
     :is-loading="categoriesStatus === 'pending'"
     :suggestions="categoriesFilterDownByQuery ?? []"
     label-key="name"

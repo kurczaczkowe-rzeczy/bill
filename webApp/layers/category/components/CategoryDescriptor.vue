@@ -28,7 +28,7 @@ const initials = computed(() => {
   <span class="inline-flex items-center gap-2 w-full">
     <span
       :style="{ backgroundColor: `#${color}` }"
-      class="w-8 h-8 rounded-full flex items-center justify-center text-sm text-primary font-bold aspect-square shadow-sm bg-primary-soft"
+      class="w-8 h-8 rounded-full flex items-center justify-center text-sm text-white font-bold aspect-square shadow-sm bg-primary-soft"
     >
       {{ initials }}
     </span>
@@ -41,8 +41,5 @@ const initials = computed(() => {
 <style>
 .bg-primary-soft {
   background-color: color-mix( in oklab, var(--input-color, var(--color-base-content)) 8%, var(--color-base-100) );
-}
-.text-primary {
-  color: var(--input-color, var(--color-base-content));
 }
 </style>
