@@ -4,6 +4,7 @@
 @source "../../../layers/ui";
 @source "../../../layers/category";
 @source "../../../layers/product";
+@source "../../../layers/menu";
 
 @plugin "daisyui/theme" {
   name: tinymist;

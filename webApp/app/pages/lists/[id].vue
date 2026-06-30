@@ -205,6 +205,7 @@ function useCollapsedAddForm(listId: string) {
             class="list-row-separator grid grid-cols-[45px_45px_auto_auto_auto] pt-4"
             @submit.prevent="handleAddToShoppingList"
           >
+            <!--ToDo: Najlepiej jak ten formularz będzie w wersji mobilnej w bottomszicie a na większych ekranach zboku, nie będzie to wtedy przeszkadzało przeglądać liste-->
             <BaseButton circle type="submit" class="col-span-1" :disabled="addButtonShouldBeDisabled">
               <Icon name="streamline-freehand:add-sign-bold" />
             </BaseButton>

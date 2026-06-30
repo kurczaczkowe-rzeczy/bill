@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@bill':
         specifier: file:../build/js/packages
-        version: packages@file:../build/js/packages
+        version: '@bill/packages@file:../build/js/packages'
       '@floating-ui/vue':
         specifier: ^1.1.11
         version: 1.1.11(vue@3.5.34(typescript@5.8.3))
@@ -741,6 +741,10 @@ packages:
   '@babel/types@7.29.7':
     resolution: {integrity: sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==}
     engines: {node: '>=6.9.0'}
+
+  '@bill/packages@file:../build/js/packages':
+    resolution: {directory: ../build/js/packages, type: directory}
+    bundledDependencies: []
 
   '@biomejs/biome@2.4.16':
     resolution: {integrity: sha512-x9ajFh1zChVybCiM3TN6OD4phAqLgtPZjFrZF+aTMYCPjwBO+k529TX7PPsAqtGNLeV4UgzwQnowEgS7bGmzcA==}
@@ -4404,9 +4408,6 @@ packages:
   package-manager-detector@1.6.0:
     resolution: {integrity: sha512-61A5ThoTiDG/C8s8UMZwSorAGwMJ0ERVGj2OjoW5pAalsNOg15+iQiPzrLJ4jhZ1HJzmC2PIHT2oEiH3R5fzNA==}
 
-  packages@file:../build/js/packages:
-    resolution: {directory: ../build/js/packages, type: directory}
-
   parse-gitignore@2.0.0:
     resolution: {integrity: sha512-RmVuCHWsfu0QPNW+mraxh/xjQVw/lhUCUru8Zni3Ctq3AoMhpDTq0OVdKS6iesd6Kqb7viCV3isAL43dciOSog==}
     engines: {node: '>=14'}
@@ -6758,6 +6759,8 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
+
+  '@bill/packages@file:../build/js/packages': {}
 
   '@biomejs/biome@2.4.16':
     optionalDependencies:
@@ -10600,8 +10603,6 @@ snapshots:
   package-json-from-dist@1.0.1: {}
 
   package-manager-detector@1.6.0: {}
-
-  packages@file:../build/js/packages: {}
 
   parse-gitignore@2.0.0:
     optional: true

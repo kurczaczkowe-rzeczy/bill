@@ -43,6 +43,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
   const channelName = computed(() => getShoppingListChannelName(toValue(parsedListId)));
   const loading = ref(false);
   const error = ref<Error | null>(null);
+  // ToDO: czy to nie powinna być tylko jedna subskrypcja?
   const channel = ref<Channels>(new Map() as Channels);
 
   const { mapUnitToDisplayUnit } = useDisplayUnits();
@@ -253,8 +254,11 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
     onError?: (error: Error) => void,
     onFinally?: () => void,
   ): Promise<void> {
+    // ToDo: Gdzie kufa kufajka jest optimistic update?!?!?!
+
     // Prevent multiple requests on the same product
     if (loading.value) {
+      // ToDo: Super prevent taki, że nawet dodanie innego produktu zabroni
       return;
     }
 
@@ -311,6 +315,7 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
       });
   }
 
+  // ToDo: to trza przekcić na apdejt a słicz dać na widoku
   async function switchProductCategory(id: string, category: Category) {
     loading.value = true;
     blockAction(id, "update");
@@ -323,9 +328,11 @@ export function useShoppingList(listId?: MaybeRefOrGetter<unknown>, options?: Op
     shoppingListClient
       .updateInShoppingListAsync(id, parsedListId.value, null, null, null, category.id)
       .then((response) => {
+        // ToDo: Kurła gdzie je podmiana na żywe
         readResponse(response);
       })
       .catch((error) => {
+        // ToDo: Kurła gdzie je rollback zmian
         console.error(error);
       })
       .finally(() => {
