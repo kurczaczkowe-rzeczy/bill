@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Ingredient } from '@bill/Bill-shoppingList'
+import type { Ingredient } from '@bill/packages/Bill-shoppingList'
 import BaseButton from '@ui/components/BaseButton.vue'
 import BaseCard from '@ui/components/BaseCard.vue'
 

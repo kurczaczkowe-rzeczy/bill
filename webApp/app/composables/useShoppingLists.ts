@@ -8,7 +8,7 @@ import {
   type ShoppingList,
   type ShoppingListClient,
   type Subscription,
-} from "@bill/Bill-shoppingList";
+} from "@bill/packages/Bill-shoppingList";
 
 import type { Channels, ClientOptionsWithAutoListener } from "~/composables/types";
 import { useKtClientData } from "~/composables/useKtClientData";

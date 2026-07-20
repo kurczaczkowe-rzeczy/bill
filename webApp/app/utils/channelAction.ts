@@ -1,4 +1,4 @@
-import type { JsPostgresAction } from "@bill/Bill-shoppingList";
+import type { JsPostgresAction } from "@bill/packages/Bill-shoppingList";
 
 import { isNil } from "~/utils/isNil";
 

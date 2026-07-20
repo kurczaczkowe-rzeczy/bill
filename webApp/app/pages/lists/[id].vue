@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Category, CategoryWithProducts } from '@bill/Bill-shoppingList'
+import type { Category, CategoryWithProducts } from '@bill/packages/Bill-shoppingList'
 
 import SearchCategory from '#layers/category/components/SearchCategory.vue'
 import SearchProduct from '#layers/product/components/SearchProduct.vue'
@@ -25,6 +25,8 @@ const {
   toggle: toggleAddForm,
   hasEverToggled: hasEverToggledAddForm,
 } = useCollapsedAddForm(getStringParam(route.params.id));
+
+const isAddProductFormOpen = computed(() => !isAddProductFormHidden.value);
 
 const { data: displayUnits } = useDisplayUnits();
 
@@ -118,6 +120,10 @@ function handleVisibilityChange() {
   }
 }
 
+function refreshList() {
+  refresh();
+}
+
 onMounted(() => {
   // ToDo: If ls is empty and shopping list has product in cart but they isn't already fetched, form stays open.
   //  Probably using cookies solves it.
@@ -179,11 +185,14 @@ function useCollapsedAddForm(listId: string) {
 <template>
   <div class="card flex flex-col max-w-xl m-auto max-h-screen">
     <div class="card-body bg-base-100 rounded-box shadow-md w-full overflow-y-auto gap-4">
-      <BaseCollapse v-model:open="isAddProductFormHidden" :toggleable="false" class="shrink-0">
+      <BaseCollapse v-model:open="isAddProductFormOpen" :toggleable="false" class="shrink-0">
         <template #summary>
-          <div class="grid items-center gap-4 grid-cols-[45px_1rem_auto_45px] text-base">
+          <div class="grid items-center gap-4 grid-cols-[45px_45px_1rem_auto_45px] text-base">
             <BaseButton circle class="relative" to="/">
               <Icon name="streamline-freehand:keyboard-arrow-return" />
+            </BaseButton>
+            <BaseButton circle class="relative" @click="refreshList">
+              <Icon name="streamline-freehand:synchronize-arrows" />
             </BaseButton>
             <Icon
               :class="{'invisible': !shoppingListDetailsLoading }"

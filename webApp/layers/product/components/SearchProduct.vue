@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { DisplayUnit, type Product } from "@bill/Bill-shoppingList"
+import { DisplayUnit, type Product } from "@bill/packages/Bill-shoppingList"
 import { useDisplayUnits } from "@product/composables/useDisplayUnits";
 import { useProductClient } from "@product/composables/useProductClient";
 import type { ProductSuggestion } from "@product/types"
+import type { BaseAutocompleteProps } from "@ui/types/typesField"
 
 import BaseAutocomplete from "#layers/ui/components/BaseAutocomplete.vue"
 import BaseMatchEmphasis from "#layers/ui/components/BaseMatchEmphasis.vue"
-import type { BaseAutocompleteProps } from "#layers/ui/types/typesField"
 import type { KtList } from "~/utils/ktListToArray"
 import { ktToJs } from "~/utils/ktToJs"
 

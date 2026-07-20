@@ -1,4 +1,4 @@
-import type { AuthState } from "@bill/Bill-shoppingList/kotlin/Bill-core";
+import type { AuthState } from "@bill/packages/Bill-shoppingList/kotlin/Bill-core";
 
 export function useAuth() {
   const { $authViewModel } = useNuxtApp();

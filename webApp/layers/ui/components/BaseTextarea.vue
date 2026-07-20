@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { BaseInputProps } from "../types/typesField";
+import type { BaseInputProps } from "@ui/types/typesField";
+
 import { type TextareaVariants, textareaVariants } from "./textareaVariants";
 
 export interface BaseTextareaProps extends BaseInputProps<string> {

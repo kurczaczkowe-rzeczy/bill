@@ -39,20 +39,24 @@ function useNavigation() {
 
 <template>
   <slot />
-  <nav v-if="routes.size > 1" class="fixed bottom-2 left-0 right-0 flex justify-center gap-4 p-4 pointer-events-none">
-    <BaseButton
-      v-for="[routeName, route] in routes"
-      :active="currentRoute.meta.nav === routeName || (typeof currentRoute.meta.nav === 'object' && currentRoute.meta.nav.name === routeName)"
-      :to="route.to"
-      appearance="soft"
-      circle
-      class="pointer-events-auto"
-      color="primary"
-      size="lg"
-    >
-      <Icon :name="route.icon" size="1.5em" />
-    </BaseButton>
-  </nav>
+  <dev-only>
+    <nav v-if="routes.size > 1" class="fixed bottom-0 pointer-events-none w-full">
+      <div class="stack stack-end h-13.5 hover:grid-cols-3 hover:gap-2 transition-all pointer-events-auto">
+        <BaseButton
+          v-for="[routeName, route] in routes"
+          :active="currentRoute.meta.nav === routeName || (typeof currentRoute.meta.nav === 'object' && currentRoute.meta.nav.name === routeName)"
+          :to="route.to"
+          appearance="soft"
+          circle
+          class="border border-primary/25 col-span-1 row-start-1"
+          color="primary"
+          size="lg"
+        >
+          <Icon :name="route.icon" size="1.5em" />
+        </BaseButton>
+      </div>
+    </nav>
+  </dev-only>
 </template>
 
 <style scoped>

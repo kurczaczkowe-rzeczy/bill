@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: "auth" });
 
-import { AuthAuthenticated } from "@bill/Bill-shoppingList/kotlin/Bill-core";
+import { AuthAuthenticated } from "@bill/packages/Bill-shoppingList/kotlin/Bill-core";
 import BaseButton from "@ui/components/BaseButton.vue";
 import BaseFieldset from "@ui/components/BaseFieldset.vue";
 import FormControl from "@ui/components/FormControl.vue";

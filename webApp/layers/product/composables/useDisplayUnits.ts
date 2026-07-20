@@ -1,4 +1,4 @@
-import { DisplayUnit, type ProductClient } from "@bill/Bill-shoppingList";
+import { DisplayUnit, type ProductClient } from "@bill/packages/Bill-shoppingList";
 
 import { useKtClientData } from "~/composables/useKtClientData";
 

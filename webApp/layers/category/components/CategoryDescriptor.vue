@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Category } from "@bill/Bill-shoppingList";
+import type { Category } from "@bill/packages/Bill-shoppingList";
 
 interface CategoryDescriptorProps {
   name?: Category["name"];

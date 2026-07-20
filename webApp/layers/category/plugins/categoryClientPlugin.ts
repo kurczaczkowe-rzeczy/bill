@@ -1,8 +1,8 @@
 export default defineNuxtPlugin(async () => {
-  const supabaseRemoteClient = (await import("@bill/Bill-shoppingList/kotlin/Bill-core"))
+  const supabaseRemoteClient = (await import("@bill/packages/Bill-shoppingList/kotlin/Bill-core"))
     .supabaseRemoteClient;
   const clientLoader = createKmpClientLoader(
-    () => import("@bill/Bill-shoppingList"),
+    () => import("@bill/packages/Bill-shoppingList"),
     (module) => new module.CategoryClient(supabaseRemoteClient.get()),
   );
 

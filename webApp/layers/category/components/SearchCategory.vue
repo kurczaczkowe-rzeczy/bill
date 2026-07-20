@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Category } from '@bill/Bill-shoppingList'
+import type { Category } from '@bill/packages/Bill-shoppingList'
+import type { BaseAutocompleteProps } from '@ui/types/typesField'
 
 import BaseAutocomplete from '#layers/ui/components/BaseAutocomplete.vue'
-import type { BaseAutocompleteProps } from '#layers/ui/types/typesField'
 import { normalizeText } from '~/utils/normalizeText'
 
 import CategoryDescriptor from './CategoryDescriptor.vue'

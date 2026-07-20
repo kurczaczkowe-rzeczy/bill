@@ -1,7 +1,7 @@
-import type { MenuClient, UserMealWithIngredients } from "@bill/Bill-shoppingList";
+import type { MenuClient, UserMealWithIngredients } from "@bill/packages/Bill-shoppingList";
 
 import { useKtClientData } from "~/composables/useKtClientData";
-import { getStringParam } from '~/utils/getStringParam'
+import { getStringParam } from "~/utils/getStringParam";
 // import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
 
 import { useMenuClient } from "./useMenuClient";
@@ -17,5 +17,9 @@ export function useGetMeal(listId?: MaybeRefOrGetter<unknown>, options?: UseGetM
   const parsedListId = computed(() => getStringParam(toValue(listIdRef)));
   const menuClient = client ?? useMenuClient();
 
-  return useKtClientData(`meals:${parsedListId.value}`, () => menuClient.getMealAsync(toValue(parsedListId)), asyncDataOptions);
+  return useKtClientData(
+    `meals:${parsedListId.value}`,
+    () => menuClient.getMealAsync(toValue(parsedListId)),
+    asyncDataOptions,
+  );
 }

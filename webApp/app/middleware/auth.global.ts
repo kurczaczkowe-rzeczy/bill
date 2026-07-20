@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(async (to, _from) => {
-  const AuthAuthenticated = (await import("@bill/Bill-shoppingList/kotlin/Bill-core"))
+  const AuthAuthenticated = (await import("@bill/packages/Bill-shoppingList/kotlin/Bill-core"))
     .AuthAuthenticated;
 
   const { $authViewModel } = useNuxtApp();

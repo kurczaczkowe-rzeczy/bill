@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BaseInputProps } from "../types/typesField";
+import type { BaseInputProps } from "@ui/types/typesField";
 import { type CheckboxVariants, checkboxVariants } from "./checkboxVarinats";
 
 export interface BaseCheckboxInputProps extends BaseInputProps<boolean> {

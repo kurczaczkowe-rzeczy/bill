@@ -35,12 +35,13 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
     optimizeDeps: {
       include: [
-        "@bill/Bill-shoppingList",
-        "@bill/Bill-shoppingList/kotlin/Bill-core",
+        "@bill/packages/Bill-shoppingList",
+        "@bill/packages/Bill-shoppingList/kotlin/Bill-core",
         "@floating-ui/vue",
         "@vueuse/core",
         "class-variance-authority",
         "clsx",
+        "date-fns",
         "eruda", // CJS
         "tailwind-merge",
         "vue-draggable-plus",

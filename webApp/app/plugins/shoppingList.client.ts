@@ -2,7 +2,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const { $supabaseClient } = nuxtApp;
 
   const clientLoader = createKmpClientLoader(
-    () => import("@bill/Bill-shoppingList"),
+    () => import("@bill/packages/Bill-shoppingList"),
     (module) => {
       return new module.ShoppingListClient($supabaseClient);
     },

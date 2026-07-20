@@ -3,7 +3,7 @@ import type {
   CreateUserMealIngredient,
   DisplayUnit,
   Nullable,
-} from '@bill/Bill-shoppingList'
+} from '@bill/packages/Bill-shoppingList'
 import { useDisplayUnits } from '@product/composables/useDisplayUnits'
 import type { ProductSuggestion } from '@product/types'
 import BaseButton from '@ui/components/BaseButton.vue'

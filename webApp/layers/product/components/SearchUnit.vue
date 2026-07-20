@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
-import type { DisplayUnit } from "@bill/Bill-shoppingList";
+import type { DisplayUnit } from "@bill/packages/Bill-shoppingList";
 import { useDisplayUnits } from "@product/composables/useDisplayUnits"
+import type { Query } from "@ui/types/typesField"
 
 import BaseAutocomplete from "#layers/ui/components/BaseAutocomplete.vue"
-import type { Query } from "#layers/ui/types/typesField"
 
 const { data: displayUnits } = useDisplayUnits();
 const query = defineModel<Query>();

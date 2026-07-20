@@ -1,4 +1,4 @@
-import type { NetworkError, Result } from "@bill/Bill-core";
+import type { NetworkError, Result } from "@bill/packages/Bill-core";
 
 import type { AsyncDataOptions } from "#app";
 import type { AsyncDataWithTimestamp } from "~/composables/types";

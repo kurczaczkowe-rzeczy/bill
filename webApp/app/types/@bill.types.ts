@@ -1,4 +1,4 @@
-declare module "@bill/Bill-shoppingList" {
+declare module "@bill/packages/Bill-shoppingList" {
   interface ShoppingListClient {
     listenForShoppingListChanges(
       listId: string,

@@ -1,4 +1,4 @@
-import type { MenuClient, UserMeal } from "@bill/Bill-shoppingList";
+import type { MenuClient, UserMeal } from "@bill/packages/Bill-shoppingList";
 
 import { useKtClientData } from "~/composables/useKtClientData";
 // import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";

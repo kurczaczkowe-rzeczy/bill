@@ -8,7 +8,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     SignOutUseCase,
     SignUpUseCase,
     SupabaseAuthRepository,
-  } = await import("@bill/Bill-shoppingList/kotlin/Bill-core");
+  } = await import("@bill/packages/Bill-shoppingList/kotlin/Bill-core");
 
   const authRepo = new SupabaseAuthRepository(supabaseClient);
 

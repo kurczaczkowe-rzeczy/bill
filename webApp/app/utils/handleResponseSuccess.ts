@@ -1,4 +1,4 @@
-import type { NetworkError, Result } from "@bill/Bill-shoppingList";
+import type { NetworkError, Result } from "@bill/packages/Bill-shoppingList";
 
 import type { AsyncDataWithTimestamp } from "~/composables/types";
 import { ktToJs } from "~/utils/ktToJs";

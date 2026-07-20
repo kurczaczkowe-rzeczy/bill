@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category, CategoryWithProducts, ShoppingListDetails } from "@bill/Bill-shoppingList";
+import type { Category, CategoryWithProducts, ShoppingListDetails } from "@bill/packages/Bill-shoppingList";
 import type { DraggableEvent } from "vue-draggable-plus";
 
 import CategoryDescriptor from "#layers/category/components/CategoryDescriptor.vue";
@@ -19,15 +19,15 @@ interface Props {
 const props = defineProps<Props>();
 
 const allProductsInCart = computed(() =>
-  props.categoryWithProducts.products.every((product) => product.inCart),
+  (props.categoryWithProducts.products as unknown as ShoppingListDetails[]).every((product) => product.inCart),
 );
 
 const isCollapseOpen = ref(
-  !(allProductsInCart.value && props.categoryWithProducts.products.length > 0),
+  !(allProductsInCart.value && (props.categoryWithProducts.products as unknown as ShoppingListDetails[]).length > 0),
 );
 
 watch(allProductsInCart, (allInCart) => {
-  if (allInCart && props.categoryWithProducts.products.length > 0) {
+  if (allInCart && (props.categoryWithProducts.products as unknown as ShoppingListDetails[]).length > 0) {
     isCollapseOpen.value = false;
   }
 });
@@ -87,7 +87,7 @@ function handleToggleInCart(productId: string) {
       <DraggableList
         v-bind="draggableOptions"
         :data-category-id="categoryWithProducts.category.id"
-        :itemProps="(product) => ({
+        :itemProps="(product: ShoppingListDetails) => ({
           class: [{ 'line-through': product.inCart }, 'items-center'],
           onClick: () => handleToggleInCart( product.id )
         })"
@@ -123,5 +123,4 @@ function handleToggleInCart(productId: string) {
 </template>
 
 <style scoped>
-.handle {}
 </style>

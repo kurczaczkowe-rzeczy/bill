@@ -1,4 +1,4 @@
-import type { Subscription } from "@bill/Bill-shoppingList";
+import type { Subscription } from "@bill/packages/Bill-shoppingList";
 
 import type { KtClientDataOptions } from "~/composables/useKtClientData";
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AuthError, AuthLoading } from "@bill/Bill-shoppingList/kotlin/Bill-core";
+import { AuthError, AuthLoading } from "@bill/packages/Bill-shoppingList/kotlin/Bill-core";
 
 const auth = useAuth();
 </script>

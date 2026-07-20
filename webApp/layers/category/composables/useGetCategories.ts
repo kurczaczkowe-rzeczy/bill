@@ -1,4 +1,4 @@
-import type { Category, CategoryClient } from "@bill/Bill-shoppingList";
+import type { Category, CategoryClient } from "@bill/packages/Bill-shoppingList";
 
 import { useKtClientData } from "~/composables/useKtClientData";
 import { useOptimisticUpdatedList } from "~/composables/useOptimisticUpdatedList";
