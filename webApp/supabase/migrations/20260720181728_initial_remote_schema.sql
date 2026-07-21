@@ -648,61 +648,64 @@ $$;
 ALTER FUNCTION "public"."get_shopping_lists"() OWNER TO "postgres";
 
 
-CREATE OR REPLACE FUNCTION "public"."get_user_meal"("p_user_meal_id" "uuid") RETURNS "json"
-    LANGUAGE "plpgsql"
-    AS $$
+
+create or replace function public.get_user_meal(
+    p_user_meal_id uuid
+)
+    returns json
+    language plpgsql
+as $$
 declare
-  json_result json;
+    json_result json;
 begin
 
-  select jsonb_build_object(
-    'id', um.id,
-    'original_meal_id', um.meal_id,
-    'name', coalesce(um.name, m.name),
-    'type', coalesce(um.type, m.type),
-    'receipe_desc', coalesce(um.receipe_desc, m.receipe_desc),
-    'receipe_link', coalesce(um.receipe_link, m.receipe_link),
-    'servings', coalesce(um.servings, m.servings),
-    'servings_multiplier', coalesce(um.servings_multiplier, m.servings_multiplier),
-    'created_at', coalesce(um.created_at, m.created_at),
-    'updated_at', coalesce(um.updated_at, m.updated_at),
+    select jsonb_build_object(
+                   'id', um.id,
+                   'original_meal_id', um.meal_id,
+                   'name', coalesce(um.name, m.name),
+                   'type', coalesce(um.type, m.type),
+                   'receipe_desc', coalesce(um.receipe_desc, m.receipe_desc),
+                   'receipe_link', coalesce(um.receipe_link, m.receipe_link),
+                   'servings', coalesce(um.servings, m.servings),
+                   'servings_multiplier', coalesce(um.servings_multiplier, m.servings_multiplier),
+                   'created_at', um.created_at,
+                   'updated_at', um.updated_at,
 
-    'ingredients', (
-      select coalesce(
-        jsonb_agg(
-          jsonb_build_object(
-            'id', umin.id,
-            'meal_ingredient_id', umin.meal_ingredient_id,
-            'product_id', coalesce(umin.product_id, mi.product_id),
-            'name', coalesce(umin.name, pr.name),
-            'quantity', coalesce(umin.quantity, mi.quantity),
-            'base_unit', coalesce(umin.base_unit, pr.base_unit)
-          )
-        ),
-        '[]'::jsonb
-      )
-      from public.user_meal_ingredient umin
-      left join public.meal_ingredient mi
-        on mi.id = umin.meal_ingredient_id
-        and mi.deleted_at is null
-      left join public.product pr
-        on pr.id = umin.product_id
-        or pr.id = mi.product_id
-      where umin.user_meal_id = um.id
-        and umin.deleted_at is null
-        and umin.overrider_uuid = auth.uid()
-    )
-  )
-  into json_result
-  from public.meal m
-  left join public.user_meal um
-    on um.meal_id = m.id
-   and um.overrider_uuid = auth.uid()
-   and um.deleted_at is null
-  where m.deleted_at is null
-    and m.id = p_user_meal_id;
+                   'ingredients', (
+                       select coalesce(
+                                      jsonb_agg(
+                                              jsonb_build_object(
+                                                      'id', umin.id,
+                                                      'meal_ingredient_id', umin.meal_ingredient_id,
+                                                      'product_id', coalesce(umin.product_id, mi.product_id),
+                                                      'name', coalesce(umin.name, pr.name),
+                                                      'quantity', coalesce(umin.quantity, mi.quantity),
+                                                      'base_unit', coalesce(umin.base_unit, pr.base_unit)
+                                              )
+                                      ),
+                                      '[]'::jsonb
+                              )
+                       from public.user_meal_ingredient umin
+                                left join public.meal_ingredient mi
+                                          on mi.id = umin.meal_ingredient_id
+                                              and mi.deleted_at is null
+                                left join public.product pr
+                                          on pr.id = umin.product_id
+                                              or pr.id = mi.product_id
+                       where umin.user_meal_id = um.id
+                         and umin.deleted_at is null
+                         and umin.overrider_uuid = auth.uid()
+                   )
+           )
+    into json_result
+    from public.user_meal um
+             join public.meal m
+                  on m.id = um.meal_id
+    where um.id = p_user_meal_id
+      and um.deleted_at is null
+      and um.overrider_uuid = auth.uid();
 
-  return get_array_result(json_result);
+    return get_array_result(json_result);
 end;
 $$;
 
@@ -1166,6 +1169,7 @@ CREATE TABLE IF NOT EXISTS "public"."user_meal_ingredient" (
 
 ALTER TABLE "public"."user_meal_ingredient" OWNER TO "postgres";
 
+create extension if not exists unaccent with schema extensions;
 
 ALTER TABLE ONLY "public"."category"
     ADD CONSTRAINT "category_id_uniq" UNIQUE ("id");
