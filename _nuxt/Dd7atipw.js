@@ -1,2 +1,0 @@
-import{e as r,f as u,bv as c,v as i,D as f}from"./SIsfjUDr.js";const p=r({__name:"default",setup(l){o(),u();function o(){const a=c();return{routes:f(()=>a.getRoutes().filter(e=>e.meta.nav).reduce((e,n)=>{const t=n.meta.nav;return typeof t=="string"||t===void 0||e.has(t.name)||e.set(t.name,{label:t.label,to:n.path,icon:t.icon}),e},new Map))}}return(a,s)=>i(a.$slots,"default")}});export{p as default};
-//# sourceMappingURL=Dd7atipw.js.map
