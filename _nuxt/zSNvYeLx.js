@@ -1,2 +1,0 @@
-import{e as a,c as t,t as l,s as n,v as r,o as s}from"./Bbiu5uus.js";const d={class:"fieldset border border-primary/25 rounded-lg px-4 pb-4"},i={key:0,class:"fieldset-legend"},c=a({__name:"BaseFieldset",props:{title:{}},setup(e){return(o,m)=>(s(),t("fieldset",d,[e.title?(s(),t("legend",i,l(e.title),1)):n("",!0),r(o.$slots,"default")]))}}),_=Object.assign(c,{__name:"BaseFieldset"});export{_ as B};
-//# sourceMappingURL=zSNvYeLx.js.map
