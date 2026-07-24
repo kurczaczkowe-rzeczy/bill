@@ -203,12 +203,8 @@ function getSuggestionIndexBaseOn(suggestions: Suggestions, query: Query): numbe
   });
 }
 
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    query.value = newValue;
-  },
-);
+function handleKeyUpOnItem(_event: KeyboardEvent) {
+}
 </script>
 
 <template>
