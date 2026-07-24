@@ -25,7 +25,7 @@ const initials = computed(() => {
 });
 </script>
 <template>
-  <span class="inline-flex items-center gap-2 w-full">
+  <div class="flex items-center gap-2 w-full">
     <span
       :style="{ backgroundColor: `#${color}` }"
       class="w-8 h-8 rounded-full flex items-center justify-center text-sm text-white font-bold aspect-square shadow-sm bg-primary-soft"
@@ -35,7 +35,7 @@ const initials = computed(() => {
     <slot name="label">
       <span class="self-center">{{ name }}</span>
     </slot>
-  </span>
+  </div>
 </template>
 
 <style>

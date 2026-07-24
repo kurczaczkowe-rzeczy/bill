@@ -21,7 +21,6 @@ export type Query = string;
 export type Suggestions<T> = T[];
 
 export interface BaseAutocompleteProps<T> {
-  modelValue?: Query;
   suggestions: Suggestions<T>;
   isLoading?: boolean;
   placeholder?: string;

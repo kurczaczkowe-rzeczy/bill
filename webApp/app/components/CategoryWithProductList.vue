@@ -18,9 +18,10 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const allProductsInCart = computed(() =>
-  (props.categoryWithProducts.products as unknown as ShoppingListDetails[]).every((product) => product.inCart),
+const countProductsInCart = computed(() =>
+  (props.categoryWithProducts.products as unknown as ShoppingListDetails[]).reduce((sum, product) => sum + Number(!product.inCart), 0),
 );
+const allProductsInCart = computed(() => countProductsInCart.value === 0);
 
 const isCollapseOpen = ref(
   !(allProductsInCart.value && (props.categoryWithProducts.products as unknown as ShoppingListDetails[]).length > 0),
@@ -81,17 +82,24 @@ function handleToggleInCart(productId: string) {
 <template>
   <BaseCollapse v-model:open="isCollapseOpen" class="shrink-0">
     <template #summary>
-      <CategoryDescriptor :name="categoryWithProducts.category.name" :color="categoryWithProducts.category.color" />
+      <CategoryDescriptor :name="categoryWithProducts.category.name" :color="categoryWithProducts.category.color">
+        <template #label>
+          <div class="w-full flex justify-between items-center">
+            <span>{{ categoryWithProducts.category.name }}</span>
+            <span>Pozostało: {{ countProductsInCart }}</span>
+          </div>
+        </template>
+      </CategoryDescriptor>
     </template>
     <template #content>
       <DraggableList
         v-bind="draggableOptions"
         :data-category-id="categoryWithProducts.category.id"
-        :itemProps="(product: ShoppingListDetails) => ({
+        :item-props="(product: ShoppingListDetails) => ({
           class: [{ 'line-through': product.inCart }, 'items-center'],
           onClick: () => handleToggleInCart( product.id )
         })"
-        :items="categoryWithProducts.products as unknown as ShoppingListDetails[]"
+        v-model="categoryWithProducts.products as unknown as ShoppingListDetails[]"
       >
         <template #item="{ item: product }">
           <BaseButton

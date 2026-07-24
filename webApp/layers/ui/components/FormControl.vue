@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Options } from "@ui/types/typesField.ts";
+import type { BaseInputProps, Options } from '@ui/types/typesField'
 import { computed } from "vue";
 
 import BaseCheckboxInput, { type BaseCheckboxInputProps } from "./BaseCheckboxInput.vue";
@@ -90,8 +90,8 @@ const isRadio = computed(() => props.type === "radio");
     <slot name="label">
       <BaseLabel
         v-if="label"
-        :name="name"
-        :required="required"
+        :name="(props as BaseInputProps<Value>).name"
+        :required="(props as BaseInputProps<Value>).required"
         :floating="labelProps?.floating"
         v-bind="$attrs"
       >
@@ -103,9 +103,9 @@ const isRadio = computed(() => props.type === "radio");
 
     <BaseTextInput
       v-if="isTextLike"
-      :required="required"
-      :disabled="disabled"
-      :name="name"
+      :required="(props as BaseInputProps<Value>).required"
+      :disabled="(props as BaseInputProps<Value>).disabled"
+      :name="(props as BaseInputProps<Value>).name"
       :type="type as BaseTextInputProps['type']"
       :wide="(props as BaseTextInputProps).wide"
       :color="(props as BaseTextInputProps).color"
@@ -119,9 +119,9 @@ const isRadio = computed(() => props.type === "radio");
     <BaseTextarea
       v-if="isTextarea"
       type="textarea"
-      :required="required"
-      :disabled="disabled"
-      :name="name"
+      :required="(props as BaseInputProps<Value>).required"
+      :disabled="(props as BaseInputProps<Value>).disabled"
+      :name="(props as BaseInputProps<Value>).name"
       :wide="(props as TextareaProps).wide"
       :color="(props as TextareaProps).color"
       :appearance="(props as TextareaProps).appearance"
@@ -134,9 +134,9 @@ const isRadio = computed(() => props.type === "radio");
     <BaseNumberInput
       v-if="isNumber"
       type="number"
-      :required="required"
-      :disabled="disabled"
-      :name="name"
+      :required="(props as BaseInputProps<Value>).required"
+      :disabled="(props as BaseInputProps<Value>).disabled"
+      :name="(props as BaseInputProps<Value>).name"
       :wide="(props as NumberInputProps).wide"
       :color="(props as NumberInputProps).color"
       :appearance="(props as NumberInputProps).appearance"
@@ -149,9 +149,9 @@ const isRadio = computed(() => props.type === "radio");
     <BaseSelect
       v-if="isSelect"
       type="select"
-      :required="required"
-      :disabled="disabled"
-      :name="name"
+      :required="(props as BaseInputProps<Value>).required"
+      :disabled="(props as BaseInputProps<Value>).disabled"
+      :name="(props as BaseInputProps<Value>).name"
       :options="(props as SelectInputProps).options"
       :wide="(props as SelectInputProps).wide"
       :color="(props as SelectInputProps).color"
@@ -166,9 +166,9 @@ const isRadio = computed(() => props.type === "radio");
     <BaseCheckboxInput
       v-if="isCheckbox"
       type="checkbox"
-      :required="required"
-      :disabled="disabled"
-      :name="name"
+      :required="(props as BaseInputProps<Value>).required"
+      :disabled="(props as BaseInputProps<Value>).disabled"
+      :name="(props as BaseInputProps<Value>).name"
       :color="(props as CheckboxInputProps).color"
       :size="(props as CheckboxInputProps).size"
       :class="props.inputClass"
@@ -179,9 +179,9 @@ const isRadio = computed(() => props.type === "radio");
     <BaseRadioInput
       v-if="isRadio"
       type="radio"
-      :required="required"
-      :disabled="disabled"
-      :name="name"
+      :required="(props as BaseInputProps<Value>).required"
+      :disabled="(props as BaseInputProps<Value>).disabled"
+      :name="(props as BaseInputProps<Value>).name"
       :color="(props as RadioInputProps).color"
       :size="(props as RadioInputProps).size"
       :options="(props as RadioInputProps).options"

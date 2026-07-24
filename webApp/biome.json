@@ -30,7 +30,7 @@
   "linter": {
     "enabled": true,
     "domains": {
-      "vue": "all"
+      "vue": "recommended"
     },
     "rules": {
       "preset": "recommended",

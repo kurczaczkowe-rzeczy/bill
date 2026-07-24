@@ -3,7 +3,7 @@ import { DisplayUnit, type Product } from "@bill/packages/Bill-shoppingList"
 import { useDisplayUnits } from "@product/composables/useDisplayUnits";
 import { useProductClient } from "@product/composables/useProductClient";
 import type { ProductSuggestion } from "@product/types"
-import type { BaseAutocompleteProps } from "@ui/types/typesField"
+import type { BaseAutocompleteProps, Query } from "@ui/types/typesField"
 
 import BaseAutocomplete from "#layers/ui/components/BaseAutocomplete.vue"
 import BaseMatchEmphasis from "#layers/ui/components/BaseMatchEmphasis.vue"
@@ -13,8 +13,6 @@ import { ktToJs } from "~/utils/ktToJs"
 type AutocompleteProps = BaseAutocompleteProps<ProductSuggestion>;
 
 type SearchProductProps = /* @vue-ignore */Pick<AutocompleteProps, "matchBy" | "wrapperClass">
-
-type Query = AutocompleteProps["modelValue"];
 
 const props = withDefaults(defineProps<SearchProductProps>(), {
 });
@@ -100,7 +98,7 @@ function onSelect(item: ProductSuggestion) {
     list-id="suggestions"
     name="product"
     placeholder="Nazwa produktu"
-    :wrapperClass="props.wrapperClass"
+    :wrapper-class="props.wrapperClass"
     @search="fetchSuggestions"
     @select="onSelect"
   >
@@ -108,7 +106,7 @@ function onSelect(item: ProductSuggestion) {
       <span class="list-col-grow">
         <BaseMatchEmphasis
           :text="suggestion.name"
-          :query="query"
+          :query="query ?? ''"
         />
       </span>
       <span class="badge badge-ghost badge-sm">{{ suggestion.baseUnit.shortName || "szt." }}</span>

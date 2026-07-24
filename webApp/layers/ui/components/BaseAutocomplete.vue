@@ -1,15 +1,22 @@
 <script generic="Suggestion extends Item" lang="ts" setup>
 import { autoUpdate, flip, offset, shift, size, useFloating } from '@floating-ui/vue'
 import type { Item } from '@ui/types/item'
-import { onClickOutside, useDebounceFn } from '@vueuse/core'
+import { deepToRaw } from '@ui/utils/deepToRaw'
+import { onClickOutside, watchDebounced } from '@vueuse/core'
 
 import type { BaseAutocompleteProps, Query, Suggestions as SuggestionsWithGeneric } from '../types/typesField'
 
 type Properties = keyof Suggestion;
 type Suggestions = SuggestionsWithGeneric<Suggestion>
+interface BaseAutocompleteEmits<Suggestion extends Item> {
+  search: [ query: Query ];
+  select: [ item: Suggestion ];
+}
+
+const query = defineModel<Query>({ default: "" });
+
 // ToDo: ogarnij cva
 const props = withDefaults(defineProps<BaseAutocompleteProps<Suggestion>>(), {
-  modelValue: "",
   wrapperClass: "",
   suggestions: () => [],
   isLoading: false,
@@ -19,19 +26,14 @@ const props = withDefaults(defineProps<BaseAutocompleteProps<Suggestion>>(), {
   minLengthQuery: 0,
 });
 
-const emit = defineEmits<{
-  "update:modelValue": [value: Query];
-  search: [query: Query];
-  select: [item: Suggestion];
-}>();
+const emit = defineEmits<BaseAutocompleteEmits<Suggestion>>();
 
-const query = ref<Query>(props.modelValue);
 const isOpen = ref(false);
 const highlightedIndex = ref(-1);
 const containerRef = ref<HTMLElement>();
 const listRef = ref<HTMLElement>();
 
-const reference = ref();
+const reference = ref<Element | ComponentPublicInstance | null>();
 const floating = ref();
 
 const { floatingStyles } = useFloating(reference, floating, {
@@ -52,21 +54,23 @@ const { floatingStyles } = useFloating(reference, floating, {
   whileElementsMounted: autoUpdate,
 });
 
-const debouncedSearch = useDebounceFn((value: string) => {
+watchDebounced(
+  query,
+  (value) => {
+    search(value)
+  }, {
+    debounce: props.debounceMs,
+  }
+)
+
+
+function search(value: string) {
   emit("search", value);
   highlightedIndex.value = 0;
-}, props.debounceMs);
+};
 
-function handleInput(event: Event) {
+function handleInput() {
   isOpen.value = true;
-
-  const value = (event.target as HTMLInputElement).value;
-  query.value = value;
-  emit("update:modelValue", value);
-
-  if (value.length >= props.minLengthQuery) {
-    debouncedSearch(value);
-  }
 }
 
 function scrollToHighlighted() {
@@ -86,7 +90,7 @@ function scrollToHighlighted() {
 }
 
 function changeHighlightPosition(type: "increase" | "decrease") {
-  const suggestionLength = props.suggestions.length;
+  const suggestionLength = props.suggestions?.length ?? 0;
 
   if (suggestionLength < 1) {
     highlightedIndex.value = -1;
@@ -162,10 +166,9 @@ function selectItem(item?: Suggestion) {
   if (!item) {
     return;
   }
-  emit("select", item);
 
+  emit("select", deepToRaw(item));
   query.value = `${item[props.labelKey as Properties]}` || item.toString();
-  emit("update:modelValue", query.value);
 
   if (isOpen.value) {
     highlightedIndex.value = props.suggestions.findIndex((suggestion) => suggestion.id === item.id);
@@ -186,14 +189,14 @@ onClickOutside(containerRef, () => {
   isOpen.value = false;
 });
 
-function bindFieldRef(el: HTMLElement) {
+function bindFieldRef(el: Element | ComponentPublicInstance | null) {
   reference.value = el;
 }
 
 function getSuggestionIndexBaseOn(suggestions: Suggestions, query: Query): number {
   return suggestions.findIndex((suggestion) => {
     if (props.matchBy) {
-      return props.matchBy?.(suggestion, query);
+      return props.matchBy?.(deepToRaw(suggestion), query);
     }
 
     return suggestion[props.labelKey as Properties] === query;
@@ -221,7 +224,6 @@ watch(
       name="input"
     >
       <div ref="reference" class="flex items-center gap-2 input input-primary w-full">
-        <!-- biome-ignore lint/a11y/useAriaPropsForRole: ToDo: resolve later -->
         <input role="combobox"
           v-model="query"
           :aria-controls="listId"
@@ -273,11 +275,12 @@ watch(
             v-else
             :key="item.id.toString() || index"
             :class="[
-          'list-row cursor-pointer transition-colors',
-          highlightedIndex === index ? 'bg-base-200' : 'hover:bg-base-200'
-        ]"
+              'list-row cursor-pointer transition-colors',
+              highlightedIndex === index ? 'bg-base-200' : 'hover:bg-base-200'
+            ]"
             @click="selectItem(item)"
             @mouseenter="highlightedIndex = index"
+            @keyup="handleKeyUpOnItem"
           >
             <slot :highlighted="highlightedIndex === index" :index="index" :item="item" name="item">
               {{ item[ labelKey as Properties ] }}

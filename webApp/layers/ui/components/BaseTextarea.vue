@@ -3,7 +3,7 @@ import type { BaseInputProps } from "@ui/types/typesField";
 
 import { type TextareaVariants, textareaVariants } from "./textareaVariants";
 
-export interface BaseTextareaProps extends BaseInputProps<string> {
+export interface BaseTextareaProps extends /* @vue-ignore */ BaseInputProps<string> {
   color?: TextareaVariants["color"];
   appearance?: TextareaVariants["appearance"];
   size?: TextareaVariants["size"];

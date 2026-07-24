@@ -44,6 +44,7 @@ function useNavigation() {
       <div class="stack stack-end h-13.5 hover:grid-cols-3 hover:gap-2 transition-all pointer-events-auto">
         <BaseButton
           v-for="[routeName, route] in routes"
+          :key="routeName"
           :active="currentRoute.meta.nav === routeName || (typeof currentRoute.meta.nav === 'object' && currentRoute.meta.nav.name === routeName)"
           :to="route.to"
           appearance="soft"

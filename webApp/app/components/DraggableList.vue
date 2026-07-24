@@ -1,6 +1,7 @@
 <script setup lang="ts" generic="TItem extends Item">
+import type { Item } from '@ui/types/item'
 import type { MoveEvent } from "sortablejs";
-import type { LiHTMLAttributes } from "vue";
+import type { HTMLAttributes, LiHTMLAttributes } from "vue";
 import {
   type DraggableEvent,
   type SortableEvent,
@@ -31,25 +32,23 @@ type DraggableOptions = Partial<
 >;
 
 interface Props extends /* @vue-ignore */ DraggableOptions {
-  items: TItem[] | readonly TItem[];
   itemProps?: (item: TItem) => LiHTMLAttributes;
+  listProps?: HTMLAttributes
+  wrapperClass?: string;
+  itemClass?: string
+  debug?: boolean | string
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  wrapperClass: "list",
+  itemClass: "list-row",
+});
 const slots = defineSlots();
 
-const localItems = ref<TItem[]>([...props.items]);
-
-watch(
-  () => props.items,
-  (newItems) => {
-    localItems.value = [...newItems];
-  },
-  { deep: true },
-);
+const items = defineModel<TItem[]>({ default: () => [] as TItem[] });
 
 const propsDraggableOptions = computed(() => {
-  const { items, itemProps, ...options } = props ?? {};
+  const { itemProps, wrapperClass, itemClass, ...options } = props ?? {};
   return options;
 });
 
@@ -104,7 +103,12 @@ function onMove(evt: MoveEvent, originalEvent: Event) {
 function onChange(e: DraggableEvent<TItem>) {
   emit("change", e);
 }
+
 function clone(item: TItem) {
+  if (props.clone) {
+    return props.clone(item)
+  }
+
   if (item === undefined || item === null) {
     return item;
   }
@@ -117,7 +121,7 @@ function clone(item: TItem) {
 
 <template>
   <VueDraggable
-    v-model="localItems"
+    v-model="items"
     v-bind="propsDraggableOptions"
     :clone="clone"
     @update="onUpdate as SortableEventHandler"
@@ -133,23 +137,26 @@ function clone(item: TItem) {
     @move="onMove"
     @change="onChange as SortableEventHandler"
     target=".transition-group"
+    class="overflow-y-auto"
   >
     <TransitionGroup
       type="transition"
       tag="ul"
       name="fade"
-      class="transition-group list"
+      class="transition-group"
+      :class="wrapperClass"
+      v-bind="props.listProps"
     >
       <li
-        class="list-row"
-        v-for="item in localItems"
+        :class="itemClass"
+        v-for="item in items"
         v-bind="props.itemProps?.(item as TItem)"
-        :key="item.id.toString()"
-        v-if="localItems?.length"
+        :key="item.id?.toString()"
+        v-if="items?.length"
       >
         <slot name="item" :item="item"></slot>
       </li>
-      <li class="list-row" v-if="!localItems?.length && slots.empty">
+      <li class="list-row" v-if="!items?.length && slots.empty">
         <slot name="empty"></slot>
       </li>
     </TransitionGroup>

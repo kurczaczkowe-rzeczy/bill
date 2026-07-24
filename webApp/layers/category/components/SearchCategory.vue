@@ -46,19 +46,19 @@ function onSelectCategory(category: Category) {
     label-key="name"
     list-id="categories"
     name="category"
-    :wrapperClass="props.wrapperClass"
+    :wrapper-class="props.wrapperClass"
     @select="onSelectCategory"
   >
-    <template #input="{ value: query, listId, handleKeydown, handleClick, handleInput, bindFieldRef, attrs }">
+    <template #input="{ value: queryValue, listId, handleKeydown, handleClick, handleInput, bindFieldRef, attrs }">
       <div :ref="bindFieldRef" class="flex items-center gap-2 input input-primary w-full">
         <CategoryDescriptor
           :color="selectedCategory?.color"
-          :name="selectedCategory?.name ?? query"
+          :name="selectedCategory?.name ?? queryValue"
         >
           <template #label>
             <input
               :aria-controls="listId"
-              :value="query"
+              :value="queryValue"
               aria-autocomplete="list"
               autocomplete="off"
               placeholder="Kategoria"
@@ -66,7 +66,10 @@ function onSelectCategory(category: Category) {
               type="text"
               v-bind="attrs"
               @click="handleClick"
-              @input="handleInput"
+              @input="(e) => {
+                query = (e.target as HTMLInputElement).value;
+                handleInput()
+              }"
               @keydown="handleKeydown"
             />
           </template>

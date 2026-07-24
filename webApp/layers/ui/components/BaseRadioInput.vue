@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { BaseInputProps, Options } from "@ui/types/typesField";
+
 import { type RadioVariants, radioVariants } from "./radioVariants";
 
 type Value = string | number;
 
-export interface BaseRadioInputProps extends BaseInputProps<Value> {
+export interface BaseRadioInputProps extends /* @vue-ignore */ BaseInputProps<Value> {
   type: "radio";
   options: Options;
   color?: RadioVariants["color"];

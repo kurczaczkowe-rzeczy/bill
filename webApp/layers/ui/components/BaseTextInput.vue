@@ -3,7 +3,7 @@ import type { BaseInputProps } from "../types/typesField";
 import { type TextInputVariants, textInputVariants } from "./textInputVarinats";
 
 export interface BaseTextInputProps extends BaseInputProps<string> {
-  type: "text" | "password" | "email" | "tel";
+  type?: "text" | "password" | "email" | "tel";
   color?: TextInputVariants["color"];
   appearance?: TextInputVariants["appearance"];
   size?: TextInputVariants["size"];
@@ -14,7 +14,10 @@ type BaseTextInputEmit = (e: "update:modelValue", value: string) => void;
 
 const textInputProps = withDefaults(defineProps<BaseTextInputProps>(), {
   wide: true,
+  type: "text",
 });
+
+const emit = defineEmits<BaseTextInputEmit>();
 
 const textInputAppConfig = useAppConfig().ui?.textInput ?? {};
 
@@ -24,8 +27,6 @@ const textInputConfig = computed(() => ({
   size: textInputProps.size ?? textInputAppConfig.size,
   wide: textInputProps.wide ?? textInputAppConfig.wide,
 }));
-
-const emit = defineEmits<BaseTextInputEmit>();
 
 function handleInput(event: Event): void {
   const target = event.target as HTMLInputElement;

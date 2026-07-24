@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Category, CategoryWithProducts } from '@bill/packages/Bill-shoppingList'
+import type { Category, CategoryWithProducts, DisplayUnit } from '@bill/packages/Bill-shoppingList'
 
 import SearchCategory from '#layers/category/components/SearchCategory.vue'
 import SearchProduct from '#layers/product/components/SearchProduct.vue'
@@ -144,6 +144,10 @@ function matchProductSuggestionBy(suggestion: ProductSuggestion, query: string):
   return suggestion.name === query && suggestion.baseUnit === addToShoppingListParameters.baseUnit;
 }
 
+function onSelectUnit(unit: DisplayUnit) {
+  addToShoppingListParameters.baseUnit = unit
+}
+
 function useCollapsedAddForm(listId: string) {
   const collapsedAddFormListIds = useCookie<Set<string>>(COLLAPSED_ADD_FORM_LIST_IDS, {
     default: () => new Set(),
@@ -221,7 +225,7 @@ function useCollapsedAddForm(listId: string) {
             <SearchProduct
               v-model="addToShoppingListParameters.name"
               :match-by="matchProductSuggestionBy"
-              wrapperClass="col-span-4"
+              wrapper-class="col-span-4"
               @select="selectSuggestion"
             />
             <BaseNumberInput
@@ -231,10 +235,10 @@ function useCollapsedAddForm(listId: string) {
               name="quantity"
               required
             />
-            <SearchUnit v-model="addToShoppingListParameters.baseUnit.name" class="col-span-3" name="unit" />
+            <SearchUnit v-model="addToShoppingListParameters.baseUnit.name" class="col-span-3" name="unit" @select="onSelectUnit" />
             <SearchCategory
               @select="selectCategory"
-              wrapperClass="col-span-full"
+              wrapper-class="col-span-full"
             />
           </form>
         </template>
@@ -242,7 +246,6 @@ function useCollapsedAddForm(listId: string) {
       <ul class="list category-lists">
         <li
           v-for="categoryWithProducts in categoriesWithProducts"
-          v-if="categoriesWithProducts.length"
           :key="categoryWithProducts.category.id.toString()"
           class="category-list"
         >
@@ -254,10 +257,10 @@ function useCollapsedAddForm(listId: string) {
             :switch-product-category="switchProductCategory"
           />
         </li>
-        <li v-else class="list-row">Brak produktów na liście</li>
+        <li v-if="categoriesWithProducts.length === 0" class="list-row">Brak produktów na liście</li>
       </ul>
       <div v-if="errors.length" class="flex flex-col gap-1">
-        <span v-for="error in errors" class="text-error">
+        <span v-for="error in errors" :key="error?.toString() ?? 'unkerr'" class="text-error">
           {{ error }}
         </span>
       </div>

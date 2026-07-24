@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { BaseInputProps } from "@ui/types/typesField";
+
 import { type CheckboxVariants, checkboxVariants } from "./checkboxVarinats";
 
-export interface BaseCheckboxInputProps extends BaseInputProps<boolean> {
+export interface BaseCheckboxInputProps extends /* @vue-ignore */ BaseInputProps<boolean> {
   // ToDo: handle tristate
   // ToDo: should value be in separate from checked?
   color?: CheckboxVariants["color"];

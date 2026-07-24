@@ -92,8 +92,10 @@ onUnmounted(() => {
         </p>
       </div>
       <form class="flex items-center gap-4 w-full" @submit.prevent="handleAddShoppingList">
-        <label class="w-full">
+        <label class="w-full" for="shopping-list-name">
           <BaseTextInput
+            id="shopping-list-name"
+            name="shopping-list-name"
             class="validator"
             v-model="nameRef"
             :aria-invalid="!!formNameError"

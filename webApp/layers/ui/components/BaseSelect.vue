@@ -5,7 +5,7 @@ import { type SelectVariants, selectVariants } from "./selectVariants";
 
 type Value = string | number | (string | number)[];
 
-export interface BaseSelectInputProps extends BaseInputProps<Value> {
+export interface BaseSelectInputProps extends /* @vue-ignore */ BaseInputProps<Value> {
   options: Options;
   multiple?: boolean;
   color?: SelectVariants["color"];
